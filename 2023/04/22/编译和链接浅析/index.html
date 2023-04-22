@@ -19,23 +19,54 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Next">
-<meta property="og:url" content="http://example.com/index.html">
+    <meta name="description" content="1.解释语言和编译语言差别编译语言把某一种高级语言程序等价地转换成另一种低级语言程序(如汇编语言或机器语言程序)的程序  解释性语言把源语言写的源程序作为输入，但不产生目标程序，而是边解释边执行源程序  2.程序是怎么运行起来的1234567&#x2F;&#x2F; hello.c#include &lt;stdio.h&gt;int main() &amp;#123;    printf(&quot;Hello World">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译和链接浅析">
+<meta property="og:url" content="http://example.com/2023/04/22/%E7%BC%96%E8%AF%91%E5%92%8C%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/index.html">
 <meta property="og:site_name" content="Next">
+<meta property="og:description" content="1.解释语言和编译语言差别编译语言把某一种高级语言程序等价地转换成另一种低级语言程序(如汇编语言或机器语言程序)的程序  解释性语言把源语言写的源程序作为输入，但不产生目标程序，而是边解释边执行源程序  2.程序是怎么运行起来的1234567&#x2F;&#x2F; hello.c#include &lt;stdio.h&gt;int main() &amp;#123;    printf(&quot;Hello World">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c1ef403d063841e3a3ac3060483c2356~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/52d055131b3d432cab78af4739363d79~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/50657750c10a4526836813b508355374~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/73083cd119fa4b02b3cebd8305d310b6~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a4926d4c703343608e08fbe317bae368~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/52d67137f8fb41e78ca2509a5069952e~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3f3307b4861b4c68a8ad133e2a358b66~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bf6515b9fa32489fa8789d25518abbaf~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/501a04b3cb734d5eb91d66649e0816b2~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3d5b83165eb5457182adc43e5fb9e188~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/da3dc4b2aed546ac902a729087274252~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/21b84afad36d42488113a9ec5de7c8b3~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dff1e44703c849198a2fd222e9a65a5d~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/50d3f5bdc4f042408deb55055bcf5e47~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1fc10b0c22f849e997b5346d3b720dd7~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6aa2606ed86144aa901fb634fa21f4d1~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/20b53dc46d914c72981178fe0bdd6b64~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/22c04db183db46129047b39b0c7f7217~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2b73d7f5394f452b82bd5dae1f99b2f2~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/97cd9f5226c74da79818fbedf7f06000~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e2babb13fe0c46e8863d55e3e908055c~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cae2e58954504f18b262f28f6620e2b9~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d97dd173f71d47e7b397e2e34288e8f6~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/817fa9363ab9436d988434e0f917739c~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2f9a3ef4266d481b9d0f2311f9d28c6d~tplv-k3u1fbpfcp-watermark.image">
+<meta property="article:published_time" content="2023-04-22T02:23:50.162Z">
+<meta property="article:modified_time" content="2023-04-22T02:23:50.162Z">
 <meta property="article:author" content="kyan">
+<meta property="article:tag" content="编译原理">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c1ef403d063841e3a3ac3060483c2356~tplv-k3u1fbpfcp-watermark.image">
 
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2023/04/22/%E7%BC%96%E8%AF%91%E5%92%8C%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/04/22/%E7%BC%96%E8%AF%91%E5%92%8C%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/","path":"2023/04/22/编译和链接浅析/","title":"编译和链接浅析"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Next</title>
+<title>编译和链接浅析 | Next</title>
   
 
 
@@ -65,7 +96,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Next</h1>
+      <p class="site-title">Next</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -87,7 +118,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -100,6 +131,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E8%A7%A3%E9%87%8A%E8%AF%AD%E8%A8%80%E5%92%8C%E7%BC%96%E8%AF%91%E8%AF%AD%E8%A8%80%E5%B7%AE%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">1.解释语言和编译语言差别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E8%AF%AD%E8%A8%80"><span class="nav-number">1.0.1.</span> <span class="nav-text">编译语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E6%80%A7%E8%AF%AD%E8%A8%80"><span class="nav-number">1.0.2.</span> <span class="nav-text">解释性语言</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%A8%8B%E5%BA%8F%E6%98%AF%E6%80%8E%E4%B9%88%E8%BF%90%E8%A1%8C%E8%B5%B7%E6%9D%A5%E7%9A%84"><span class="nav-number">2.</span> <span class="nav-text">2.程序是怎么运行起来的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">3.编译流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%A2%84%E7%BC%96%E8%AF%91%EF%BC%88%E9%A2%84%E5%A4%84%E7%90%86%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">1.预编译（预处理）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BC%96%E8%AF%91"><span class="nav-number">3.2.</span> <span class="nav-text">2.编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%B1%87%E7%BC%96"><span class="nav-number">3.4.</span> <span class="nav-text">3.汇编</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%93%BE%E6%8E%A5"><span class="nav-number">3.5.</span> <span class="nav-text">4.链接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-2%E7%BC%96%E8%AF%91%E5%99%A8%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">4.</span> <span class="nav-text">3.2编译器做了什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-number">4.0.1.</span> <span class="nav-text">1.词法分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-number">4.0.2.</span> <span class="nav-text">2.语法分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90"><span class="nav-number">4.0.3.</span> <span class="nav-text">3.语义分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%B8%AD%E9%97%B4%E8%AF%AD%E8%A8%80%E7%94%9F%E6%88%90"><span class="nav-number">4.0.4.</span> <span class="nav-text">4.中间语言生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%9B%AE%E6%A0%87%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="nav-number">4.0.5.</span> <span class="nav-text">5.目标代码生成与优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-3-%E7%BC%96%E8%AF%91%E5%99%A8%E5%89%8D%E7%AB%AF-%E5%90%8E%E7%AB%AF"><span class="nav-number">5.</span> <span class="nav-text">3.3 编译器前端 后端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#-1"><span class="nav-number">6.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E9%93%BE%E6%8E%A5%E5%99%A8"><span class="nav-number">7.</span> <span class="nav-text">4.链接器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5"><span class="nav-number">7.1.</span> <span class="nav-text">4.1 静态链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%9C%B0%E5%9D%80%E5%88%86%E9%85%8D"><span class="nav-number">7.1.1.</span> <span class="nav-text">1.空间与地址分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E5%9C%B0%E5%9D%80%E7%A1%AE%E5%AE%9A"><span class="nav-number">7.1.2.</span> <span class="nav-text">符号地址确定</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-2-%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="nav-number">8.</span> <span class="nav-text">4.2 动态链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E6%AD%A5%E9%AA%A4"><span class="nav-number">8.0.1.</span> <span class="nav-text">具体步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D"><span class="nav-number">8.0.2.</span> <span class="nav-text">地址空间分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%85%E8%BD%BD%E9%87%8D%E5%AE%9A%E4%BD%8D"><span class="nav-number">8.0.3.</span> <span class="nav-text">装载重定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E6%97%A0%E5%85%B3%E4%BB%A3%E7%A0%81"><span class="nav-number">8.0.4.</span> <span class="nav-text">地址无关代码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B1-%E6%A8%A1%E5%9D%97%E5%86%85%E9%83%A8%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="nav-number">8.0.4.0.1.</span> <span class="nav-text">类型1 模块内部函数调用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B4-%E6%A8%A1%E5%9D%97%E9%97%B4%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="nav-number">8.0.4.0.2.</span> <span class="nav-text">类型4 模块间函数调用</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E8%8B%B9%E6%9E%9C%E7%9A%84%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%99%A8"><span class="nav-number">9.</span> <span class="nav-text">5.苹果的动态链接器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%BA%94%E7%94%A8"><span class="nav-number">10.</span> <span class="nav-text">6.应用</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -137,301 +169,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/22/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8BCrash%E6%94%B6%E9%9B%86%E4%B8%8E%E9%98%B2%E6%8A%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="kyan">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Next">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Next">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/22/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8BCrash%E6%94%B6%E9%9B%86%E4%B8%8E%E9%98%B2%E6%8A%A4/" class="post-title-link" itemprop="url">性能优化之Crash收集与防护</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-04-22 10:23:50" itemprop="dateCreated datePublished" datetime="2023-04-22T10:23:50+08:00">2023-04-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">性能优化</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
-<p>crash指标是项目稳定性的一个重要指标，本文主要针对crash崩溃原理以及防护做了总结和初步研究。</p>
-</blockquote>
-<h1 id="如何让crash变得可控"><a href="#如何让crash变得可控" class="headerlink" title="如何让crash变得可控"></a>如何让crash变得可控</h1><p>针对这个问题我们需要从以下几方面着手</p>
-<ul>
-<li>崩溃发生的原因有哪些</li>
-<li>崩溃底层触发流程</li>
-<li>崩溃的归类</li>
-<li>怎么防护崩溃</li>
-</ul>
-<h2 id="一-崩溃发生的原因有哪些"><a href="#一-崩溃发生的原因有哪些" class="headerlink" title="一.崩溃发生的原因有哪些"></a>一.崩溃发生的原因有哪些</h2><h2 id="1-cpu无法执行的代码"><a href="#1-cpu无法执行的代码" class="headerlink" title="1.cpu无法执行的代码"></a>1.cpu无法执行的代码</h2><ul>
-<li>执行了非法指令，通常是因为可执行文件本身出现错误, 或者试图执行数据段. 堆栈溢出时也有可能产生这个信号</li>
-<li>无效指令或操作、访问无效地址及不具有权限的内存地址、除以0等 </li>
-<li>僵尸对象，野指针导致的访问无效内存地址等等</li>
-</ul>
-<h2 id="2-被系统强杀"><a href="#2-被系统强杀" class="headerlink" title="2.被系统强杀"></a>2.被系统强杀</h2><p>  1.应用内存消耗过高 </p>
-<p>  2.主线程长时间无法响应 </p>
-<ul>
-<li>操作系统采用看门狗来监控应用程序的响应能力。如果应用程序没有响应，看门狗会终止它，这会使用0x8badf00d终止原因中的代码创建崩溃报告</li>
-</ul>
-<p> 3.资源异常 </p>
-<ul>
-<li>1.线程频繁唤醒 ，Wakeups 是“资源异常”下的一个子类，指的是频繁唤醒线程，消耗cpu资源并增加 功耗，在超过阈值并处于 FATAL CONDITION 的条件下触发崩溃;如果300秒内的 总wakeup数超过45000(300 * 150)就会被判定为超出阈值;</li>
-<li>2.进程中的线程过多的占用了cpu，限制为 50% ，时间不超过 180秒 ;</li>
-<li>3.线程短时间过多的磁盘写入</li>
-</ul>
-<ol start="4">
-<li>死锁</li>
-<li>非法的应用签名<br> 6.后台执行超时</li>
-</ol>
-<p> </p>
-<ul>
-<li>1.App退至后台后若执行时间过⻓就会导致被系统被杀，比如 Backgroud Task 方式可以在后台 执行3min，若超过3min还未运行完成就会被系统强杀</li>
-</ul>
-<p>7.设备总内存吃紧</p>
-<ul>
-<li>因为Mac平台存在内存交换机制，而iOS平台没有，就导致整个设备内存吃紧的时候，系统就 会杀掉优先级不高且占用内存多大的应用</li>
-</ul>
-<p> </p>
-<p>8.设备过热</p>
-<ul>
-<li>一般见于低端的设备</li>
-</ul>
-<h2 id="3-语言触发异常"><a href="#3-语言触发异常" class="headerlink" title="3.语言触发异常"></a>3.语言触发异常</h2><p>1.OC语言抛出异常 </p>
-<ul>
-<li>1.数组越界</li>
-<li>2.未找到的方法或者 NSDictionary 添加 nil 对象等导致的非法参数异 常 NSInvalidArgumentException </li>
-<li>3.KVC未找到相对应的 key 抛出 NSUnknownKeyException ）</li>
-</ul>
-<ol start="2">
-<li>C++抛出异常</li>
-</ol>
-<ul>
-<li>如图为c++环境下的一些异常类</li>
-</ul>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1ce8112423b14a92b7025945a36f9467~tplv-k3u1fbpfcp-watermark.image" alt="image.png"><br>语言异常抛出后最后都会调用到 abort 来终止应用，调用栈如下图所示</p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/169908fe86b8438a8d499e57976f6005~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h2 id="4-开发者触发-（断言，-NSAssert-或者-asset-函数等-）"><a href="#4-开发者触发-（断言，-NSAssert-或者-asset-函数等-）" class="headerlink" title="4.开发者触发 （断言， NSAssert 或者 asset 函数等 ）"></a>4.开发者触发 （断言， NSAssert 或者 asset 函数等 ）</h2><h2 id="5-…（其他）"><a href="#5-…（其他）" class="headerlink" title="5 …（其他）"></a>5 …（其他）</h2><h2 id="二-崩溃如何发生"><a href="#二-崩溃如何发生" class="headerlink" title="二.崩溃如何发生"></a>二.崩溃如何发生</h2><p>大部分应用程序都可能崩溃，在Unix中崩溃和一个信号有关系，但是追究其根本原因，是来自于内核，内核发现进程无法继续执行时，生成这个信号作为最后的补救办法。</p>
-<h3 id="系统是如何把异常转换成singnal呢"><a href="#系统是如何把异常转换成singnal呢" class="headerlink" title="系统是如何把异常转换成singnal呢"></a>系统是如何把异常转换成singnal呢</h3><p><strong>Mach-&gt;singnal-&gt;异常</strong></p>
-<p>程序的崩溃都会转换为异常，被cpu通过中断向量表指定的异常类型捕获，进而触发异常处理程序处理， 比如cpu无效指令、无效的地址或者无权限的访问，这些都是<strong>硬件产生的异常</strong>;被系统强杀的崩溃最终 会调用到 kill 函数发送 SIGKILL 信号进而引发应用被强杀;语言及开发者触发崩溃最终会通过 abort 函数毅然会最终调用到 kill 函数发送 SIGABRT 信号引发应用被杀，这都是<strong>软件引发的异常</strong>。</p>
-<p><strong>Mach层</strong></p>
-<p>Mach在系统中处于最接近底层的模块，是XNU内核的内核，被BSD包裹。Mach内核作为系统一个底层的基础，仅与驱动操作系统所需的最低需要有关。 其他所有内容都由操作系统的更高层来实现，然后再利用Mach并以其认为合适的任何方式对其进行操作。</p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/545dcb36f3144e73bf8b60ca6f1e168c~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6deaa5690e514bb5855d7ce12a5e8149~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p>整个操作系统核心包括了 Mach 微内核、BSD层(大家熟悉的 POSIX 接口就在这一层)、I&#x2F;O Kit设备驱动框 架以及核心库，其中 Mach 微内核负责进程和线程抽象、虚拟内存管理、任务管理以及进程间通信和消息 传递机制，所以 Mach 微内核就是整个操作系统的核心。</p>
-<p>如runloop mach port 的消息就是基于mach微内核的消息机制的体现 </p>
-<p>Mach 异常是在已有的消息传递架构上实现的一种独有的异常处理方法，是一种轻量级的架构。</p>
-<p><strong>信号处理流程图</strong></p>
-<ul>
-<li>异常封装、转换、发送。</li>
-<li>异常消息接收处理。</li>
-<li>异常消息转换为BSD信号。</li>
-</ul>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/696143ddcb9d401c9767733bc559b228~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h2 id="三-崩溃的归类"><a href="#三-崩溃的归类" class="headerlink" title="三.崩溃的归类"></a>三.崩溃的归类</h2><p><strong>根据上图可以总结为以下几大类</strong></p>
-<ul>
-<li>1.mach exception</li>
-<li>2.signal（BSD信号）</li>
-<li>3.NSException</li>
-<li>4.其他 如c++异常 和 主线程死锁</li>
-</ul>
-<p>最终不管是硬件异常还是语言异常及用户抛出异常都会产生信号，那信号与Mach异常有何关 系?首先来带大家了解下什么是 Mach 异常。</p>
-<h3 id="1-mach-异常"><a href="#1-mach-异常" class="headerlink" title="1.mach 异常"></a>1.mach 异常</h3><ul>
-<li><p>Mach 异常是指最底层的内核级异常。用户态的开发者可以直接通过Mach API设置thread，task，host的异常端口，来捕获Mach异常</p>
-</li>
-<li><p>Mach异常由处理器陷阱引发，在异常发生后会被异常处理程序转换成Mach消息，接着依次投递到thread、task和host端口。如果没有一个端口处理这个异常并返回KERN_SUCCESS，那么应用将被终止。每个端口拥有一个异常端口数组，系统暴露了后缀为task_set_exception_ports的多个API让我们注册对应的异常处理到端口中。</p>
-</li>
-</ul>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a8df719508014be891bcd0c34fd15ca7~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="Mach异常处理流程"><a href="#Mach异常处理流程" class="headerlink" title="Mach异常处理流程"></a>Mach异常处理流程</h3><p>针对mach 异常处理参考开源库有完整的crash处理流程。<br><a target="_blank" rel="noopener" href="https://github.com/kstenerud/KSCrash">https://github.com/kstenerud/KSCrash</a></p>
-<h4 id="KSCrash处理流程"><a href="#KSCrash处理流程" class="headerlink" title="KSCrash处理流程"></a><strong>KSCrash处理流程</strong></h4><ul>
-<li>备份当前异常端口</li>
-<li>分配新的异常端口并设置给task作为新的接收异常的端口</li>
-<li>创建两个线程用于监听异常端口</li>
-<li>线程中监听并处理异常</li>
-</ul>
-<h5 id="1-备份当前异常端口"><a href="#1-备份当前异常端口" class="headerlink" title="1.备份当前异常端口"></a>1.备份当前异常端口</h5><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d94f44faacb846e9a7a94db855990c52~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h5 id="2-分配新的异常端口并设置给task作为新的接收异常的端口"><a href="#2-分配新的异常端口并设置给task作为新的接收异常的端口" class="headerlink" title="2.分配新的异常端口并设置给task作为新的接收异常的端口"></a>2.分配新的异常端口并设置给task作为新的接收异常的端口</h5><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/53117766804443c9a6d752a9df0c5d9d~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h5 id="3-创建两个线程用于监听异常端口，线程中监听并处理异常"><a href="#3-创建两个线程用于监听异常端口，线程中监听并处理异常" class="headerlink" title="3.创建两个线程用于监听异常端口，线程中监听并处理异常"></a>3.创建两个线程用于监听异常端口，线程中监听并处理异常</h5><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2820fb1b43b4403ea54ab34e031e5655~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6f6a7441127941599ea52659388209d1~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h5 id="4-所有Mach异常未处理，它将在host层被ux-exception转换为相应的Unix信号，并通过threadsignal将信号投递到出错的线程。"><a href="#4-所有Mach异常未处理，它将在host层被ux-exception转换为相应的Unix信号，并通过threadsignal将信号投递到出错的线程。" class="headerlink" title="4.所有Mach异常未处理，它将在host层被ux_exception转换为相应的Unix信号，并通过threadsignal将信号投递到出错的线程。"></a>4.所有Mach异常未处理，它将在host层被ux_exception转换为相应的Unix信号，并通过threadsignal将信号投递到出错的线程。</h5><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ba911c392a36487687a5934ac1cf4d58~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="2-signal（UNIX信号）"><a href="#2-signal（UNIX信号）" class="headerlink" title="2.signal（UNIX信号）"></a>2.signal（UNIX信号）</h3><p>信号是什么?信号是一种异步处理的软中断，内核会发送给进程某些异步事件，这些异步事件可能 来自硬件，比如除0或者访问了非法地址;也可能来自其他进程或用户输入，比如 ctrl+c ，就会产 生 SIGINT 信号由内核发送至当前终端执行进程，若进程未处理该信号，就会导致进程退<br>出; ctrl+\ 就会产生 SIGQUIT 退出信号来终止进程执行，并且会产生崩溃日志报告，如下图所 示:</p>
-<p>信号(signal)是一种POSIX标准通信方式。通常用于<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unix">Unix</a>、<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unix-like">类 Unix</a>和其他<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unix-like">符合</a><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/POSIX">POSIX</a>的操作系统。信号是发送到<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Process_(computing)">进程</a>或同一进程内的特定<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Thread_(computer_science)">线程</a>以通知其事件的<a target="_blank" rel="noopener" href="https://en.wiktionary.org/wiki/asynchronous">异步</a>通知。</p>
-<p><strong>那最终信号如何处理呢?</strong> </p>
-<p>上面我们讲到用户态进程若指定了信号处理函数(比如 SIGINT )则可以自己来处理，若未指定呢?比较有 意思的地方开始了，内核发现信号未存在异常处理函数，就会将其抛给崩溃报告守护进<br>程 ReportCrash </p>
-<p>因此异常消息是通过 Mach 消息的形式发送出去的，那我们就可以截获这个消息</p>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/390f71e396714a46b11a83713d6d1a66~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="3-NSException-异常捕获（应用级别的异常）"><a href="#3-NSException-异常捕获（应用级别的异常）" class="headerlink" title="3.NSException 异常捕获（应用级别的异常）"></a>3.NSException 异常捕获（应用级别的异常）</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c57ffd4e3ca411f9acb4c97a4ecbccf~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/182b6857cc8449b4a96263c4e0f43ec6~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2e635293da1f4aaea21c865bb5bee10e~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="4-c-异常"><a href="#4-c-异常" class="headerlink" title="4.c++异常"></a>4.c++异常</h3><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b64cd3d5f3ba4d3bb408469a3e4ef9fd~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="5-主线程死锁"><a href="#5-主线程死锁" class="headerlink" title="5.主线程死锁"></a>5.主线程死锁</h3><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/038582f01d7f4f7195825a854b43b8a5~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b4de7c1390d14fc5a4cb34a9a989f0df~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h2 id="四-怎么防护崩溃"><a href="#四-怎么防护崩溃" class="headerlink" title="四. 怎么防护崩溃?"></a>四. 怎么防护崩溃?</h2><ul>
-<li>1.crash防护 增加程序的健壮性（代码规范，cr等等…）</li>
-<li>2.crash拦截 尽可能多的拦截所有的crash类型</li>
-<li>3.crash上报日志</li>
-<li>4.crash 后续流程 优雅的crash 提升用户体验度</li>
-</ul>
-<h3 id="crash拦截"><a href="#crash拦截" class="headerlink" title="crash拦截"></a>crash拦截</h3><h4 id="主动防护"><a href="#主动防护" class="headerlink" title="主动防护"></a><strong>主动防护</strong></h4><ul>
-<li>在将要执行的api前增加异常处理判断等（如通过扩展分类添加异常判断）</li>
-<li>通过其他手段如中间类处理（如通过weakProxy 处理timer 强引用）</li>
-<li>通过proxy类处理kvc 安全添加移除</li>
-<li>……..</li>
-</ul>
-<h4 id="AOP拦截防护"><a href="#AOP拦截防护" class="headerlink" title="AOP拦截防护"></a><strong>AOP拦截防护</strong></h4><ul>
-<li>通过拦截调用添加异常判断，之后再调用本身的Selector</li>
-</ul>
-<h3 id="AOP拦截调用"><a href="#AOP拦截调用" class="headerlink" title="AOP拦截调用"></a>AOP拦截调用</h3><p>1.Hook的类添加Category，在各个分类中通过Method Swizzling拦截容易造成崩溃的系统方法</p>
-<p>2.将系统原有方法与添加的防护方法的selector（方法选择器）与IMP（函数实现指针）进行对调</p>
-<p>3.然后在替换方法中添加防护操作，从而达到避免复崩溃的目的。</p>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ff798207f1a64c8cb8e3a887e4e863df~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="目前可以处理掉的crash类型"><a href="#目前可以处理掉的crash类型" class="headerlink" title="目前可以处理掉的crash类型"></a><strong>目前可以处理掉的crash类型</strong></h3><ul>
-<li>1.unrecognized selector crash</li>
-<li>2.KVO</li>
-<li>3.NSNotification</li>
-<li>4.NSTimer</li>
-<li>5.Container crash（数组越界，插nil等）</li>
-<li>6.NSString crash （字符串操作的crash）</li>
-<li>7.Bad Access crash （野指针）</li>
-</ul>
-<h3 id="1-Unrecognized-Selector类型crash防护"><a href="#1-Unrecognized-Selector类型crash防护" class="headerlink" title="1.Unrecognized Selector类型crash防护"></a>1.Unrecognized Selector类型crash防护</h3><ul>
-<li>原因: 通常是因为一个对象调用了一个不属于它方法的方法导致的是</li>
-<li>方法的查找流程-&gt;runtime消息转发流程-&gt;最终未处理-&gt;程序报错crash</li>
-<li>防护方案:在消息转发过程中拦截</li>
-</ul>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a8e4f9a52a864b55ad00cbc0c2b91257~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p>所以当函数找不到时，runtime提供了三种方式去补救：</p>
-<p>1.调用resolveInstanceMethod给个机会让类添加这个实现这个函数。<br>2.调用forwardingTargetForSelector让别的对象去执行这个函数。</p>
-<p>3.调用forwardInvocation（函数执行器）灵活的将目标函数以其他形式执行。</p>
-<p><strong>优缺点</strong></p>
-<ul>
-<li>resolveInstanceMethod需要在类的本身上动态添加它本身不存在的方法，这些方法对于该类本身来说冗余的。</li>
-<li>forwardInvocation可以通过NSInvocation的形式将消息转发给多个对象，但是其开销较大，需要创建新的NSInvocation对象，并且forwardInvocation的函数经常被使用者调用，来做多层消息转发选择机制，不适合多次重写。</li>
-<li>forwardingTargetForSelector可以将消息转发给一个对象，开销较小，并且被重写的概率较低，适合重写。</li>
-</ul>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3c7d52b15e9d4529b6b7ae1f3d9b2586~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<ul>
-<li><p>动态创建一个桩类。  </p>
-</li>
-<li><p>动态为桩类添加对应的Selector，用一个通用的返回0的函数来实现该SEL的IMP。  </p>
-</li>
-<li><p>将消息直接转发到这个桩类对象上。</p>
-</li>
-</ul>
-<p><strong>注意：如果对象的类本事如果重写了forwardInvocation方法的话，就不应该对forwardingTargetForSelector进行重写了，否则会影响到该类型的对象原本的消息转发流程。</strong></p>
-<h3 id="2-KVO-crash"><a href="#2-KVO-crash" class="headerlink" title="2.KVO crash"></a>2.KVO crash</h3><p>  ** crash原因**</p>
-<ul>
-<li>1.添加KVO重复添加观察者或重复移除观察者。</li>
-<li>2.KVO的被观察者dealloc时仍然注册着KVO导致的crash。</li>
-<li>解决方法</li>
-<li>通过中间delegate来进行管理，delegate通过建立一张map来维护KVO整个关系。</li>
-</ul>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/73016e20946f40eda4572c727c3b4db9~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec1e0d2e55a04f66968e2fd811e931a0~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<ul>
-<li>由于是分类会在多个地方使用，添加移除kvo 需要加线程锁。</li>
-</ul>
-<h3 id="3-KVC"><a href="#3-KVC" class="headerlink" title="3.KVC"></a>3.KVC</h3><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b653935e35d3413989228fbb40db704c~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<ul>
-<li>1.重写- (void)setValue:(id)value forUndefinedKey:(NSString *)key</li>
-<li>2.重写- (nullable id)valueForUndefinedKey:(NSString *)key</li>
-<li><ol start="3">
-<li>key 为 nil 可以通过hook setValue:forKey:</li>
-</ol>
-</li>
-<li>4.value 为nil重写setNilValueForKey:</li>
-</ul>
-<p> <em><strong>1和2可以解决key不是对象的属性和keyPath不正确情况</strong></em></p>
-<h3 id="4-NSNotification-crash"><a href="#4-NSNotification-crash" class="headerlink" title="4.NSNotification crash"></a>4.NSNotification crash</h3><ul>
-<li>原因:由于dealloc时候没有移除通知导致。</li>
-<li>解决方法：保证dealloc移除通知。</li>
-</ul>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5bd9fdaebef4469a8f46a470f3887696~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="5-NSTimer-crash"><a href="#5-NSTimer-crash" class="headerlink" title="5.NSTimer crash"></a>5.NSTimer crash</h3><p>1.NSTimer所产生的问题的主要原因是因为其没有再一个合适的时机invalidate。</p>
-<p>2.同时还有NSTimer对target的强引用导致的内存泄漏问题。</p>
-<p>解决方法一般通过中间对象 弱引用</p>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a88a3f4510fc49c286cd0821f38b244c~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="6-Container类型-NSString-类型-crash"><a href="#6-Container类型-NSString-类型-crash" class="headerlink" title="6.Container类型,NSString 类型 crash"></a>6.Container类型,NSString 类型 crash</h3><h3 id=""><a href="#" class="headerlink" title=""></a></h3><ul>
-<li>Container 类型的crash 指的是容器类的crash，常见的有NSArray／NSMutableArray／NSDictionary／NSMutableDictionary／NSCache的crash。 一些常见的越界、插入nil等错误操作均会导致此类crash发生(容易排查 但是crash概率高)</li>
-<li>Container crash 类型的防护方案也比较简单，针对于NSArray／NSMutableArray／NSDictionary／NSMutableDictionary／NSCache的一些常用的会导致崩溃的API进行method swizzling，然后在swizzle的新方法中加入一些条件限制和判断，(或者通过添加相关分类方法处理)从而让这些API变的安全。</li>
-</ul>
-<h3 id="7-野指针crash"><a href="#7-野指针crash" class="headerlink" title="7.野指针crash"></a>7.野指针crash</h3><p>如果一个指针先前指向一个对象，但这个对象随后被释放了，如果该指针没有做任何的修改，导致仍然指向着那块内存地址，则该指针已成为了野指针。</p>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d0dbdfa4b67c4ee8ba91f7b4b4b5b470~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d9e61bb978494fa8a44cbee2a556a5c6~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p>可以利用<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/objectivec/nsobject/1571947-dealloc">dealloc</a>方法会自动实现父类的dealloc方法的特性，hook住NSObject和NSProxy两个oc的根类的dealloc方法，然后在调剂方法中将本来即将释放的对象的isa指针改为指向我们创建的一个新的僵尸类，然后外界对这个僵尸类发送任何消息(objc_msgSend)都会走方法调用流程，可以在此流程做处理。（需要考虑Zombie池子的释放）</p>
-<p>参考 ：<a target="_blank" rel="noopener" href="http://sindrilin.com/2017/11/01/local_zombie.html">http://sindrilin.com/2017/11/01/local_zombie.html</a></p>
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec20cbe686bc4c6d8c5d54c8b2bcc0db~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/22/%E7%BC%96%E8%AF%91%E5%92%8C%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -445,13 +193,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Next">
+      <meta itemprop="name" content="编译和链接浅析 | Next">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/22/%E7%BC%96%E8%AF%91%E5%92%8C%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/" class="post-title-link" itemprop="url">编译和链接浅析</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          编译和链接浅析
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -483,7 +231,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="1-解释语言和编译语言差别"><a href="#1-解释语言和编译语言差别" class="headerlink" title="1.解释语言和编译语言差别"></a>1.解释语言和编译语言差别</h1><h3 id="编译语言"><a href="#编译语言" class="headerlink" title="编译语言"></a>编译语言</h3><p>把某一种高级语言程序等价地转换成另一种低级语言程序(如汇编语言或机器语言程序)的程序</p>
+        <h1 id="1-解释语言和编译语言差别"><a href="#1-解释语言和编译语言差别" class="headerlink" title="1.解释语言和编译语言差别"></a>1.解释语言和编译语言差别</h1><h3 id="编译语言"><a href="#编译语言" class="headerlink" title="编译语言"></a>编译语言</h3><p>把某一种高级语言程序等价地转换成另一种低级语言程序(如汇编语言或机器语言程序)的程序</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c1ef403d063841e3a3ac3060483c2356~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
 <h3 id="解释性语言"><a href="#解释性语言" class="headerlink" title="解释性语言"></a>解释性语言</h3><p>把源语言写的源程序作为输入，但不产生目标程序，而是边解释边执行源程序</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/52d055131b3d432cab78af4739363d79~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
@@ -829,7 +577,6 @@
 <p><a target="_blank" rel="noopener" href="https://www.dllhook.com/post/238.html">https://www.dllhook.com/post/238.html</a></p>
 <h1 id="6-应用"><a href="#6-应用" class="headerlink" title="6.应用"></a>6.应用</h1><p>启动优化<br>静态分析</p>
 
-      
     </div>
 
     
@@ -837,252 +584,28 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag"># 编译原理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/22/hello-world/" rel="prev" title="Hello World">
+                  <i class="fa fa-chevron-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/22/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8BCrash%E6%94%B6%E9%9B%86%E4%B8%8E%E9%98%B2%E6%8A%A4/" rel="next" title="性能优化之Crash收集与防护">
+                  性能优化之Crash收集与防护 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
   </article>
 </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/22/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="kyan">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Next">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Next">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/22/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-04-22 10:23:50" itemprop="dateCreated datePublished" datetime="2023-04-22T10:23:50+08:00">2023-04-22</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/19/%E4%B8%80%E6%AC%A1AppDelegate%E8%A7%A3%E8%80%A6%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="kyan">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Next">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Next">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/19/%E4%B8%80%E6%AC%A1AppDelegate%E8%A7%A3%E8%80%A6%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">一次AppDelegate解耦学习</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-04-19 16:13:28" itemprop="dateCreated datePublished" datetime="2023-04-19T16:13:28+08:00">2023-04-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-04-22 10:23:50" itemprop="dateModified" datetime="2023-04-22T10:23:50+08:00">2023-04-22</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="1-背景-amp-问题"><a href="#1-背景-amp-问题" class="headerlink" title="1.背景&amp;问题"></a>1.背景&amp;问题</h1><p>在传统的 iOS 应用开发中，往往会将所有的应用逻辑都写在一个文件中，即 App Delegate 文件中。这种方式虽然简单直观，但是当应用程序越来越复杂时，这个文件会变得非常庞大和难以维护，同时也容易引入不必要的耦合和依赖关系。</p>
-<h2 id="存在问题："><a href="#存在问题：" class="headerlink" title="存在问题："></a>存在问题：</h2><h2 id="1-难以扩展"><a href="#1-难以扩展" class="headerlink" title="1.  难以扩展"></a>1.  难以扩展</h2><p>   当两个或多个模块之间高度耦合或具有强依赖关系时，很难添加新的模块或功能，因为修改一个模块可能会影响到其他模块，需要对整个系统进行重新设计、测试和部署。</p>
-<h2 id="2-难以维护"><a href="#2-难以维护" class="headerlink" title="2.  难以维护"></a>2.  难以维护</h2><p>   高度耦合或具有强依赖关系的代码通常难以理解和维护。这意味着开发人员需要花费更多的时间来诊断和修复错误，从而降低了生产力。</p>
-<h2 id="3-缺乏灵活性"><a href="#3-缺乏灵活性" class="headerlink" title="3.  缺乏灵活性"></a>3.  缺乏灵活性</h2><p>   当代码耦合和依赖严重时，系统变得僵化和静态，很难适应变化和不同的需求。这也使得在不破坏现有代码的情况下进行改进变得更加困难。</p>
-<h2 id="4-代码可读性差"><a href="#4-代码可读性差" class="headerlink" title="4.  代码可读性差"></a>4.  代码可读性差</h2><p>   重度耦合和依赖会导致代码结构混乱，使得代码难以阅读和理解。这增加了调试问题的难度，并使得代码更加难以维护。</p>
-<h2 id="5-可测试性差"><a href="#5-可测试性差" class="headerlink" title="5.  可测试性差"></a>5.  可测试性差</h2><p>   当代码耦合和依赖严重时，很难编写有效的单元测试，因为测试可能需要依赖于太多的其他代码。这意味着测试套件可能不够充分，从而增加了系统出错的风险。</p>
-<p>因此，随着 iOS 应用程序规模的不断扩大和功能的不断增加，模块化设计变得越来越重要。模块化能够将一个大型的应用程序分解成独立的、可重用的模块，每个模块负责自己的职责和功能，并通过明确定义的接口与其他模块进行通信和协作。</p>
-<h1 id="2-目标-amp-收益"><a href="#2-目标-amp-收益" class="headerlink" title="2.目标&amp;收益"></a>2.目标&amp;收益</h1><p>对于 App Delegate 来说，模块化可以帮助解决以下一些问题：</p>
-<h2 id="1-代码膨胀和可维护性"><a href="#1-代码膨胀和可维护性" class="headerlink" title="1.  代码膨胀和可维护性"></a>1.  代码膨胀和可维护性</h2><p>   将 App Delegate 中的职责和事件处理分解为多个独立的模块，可以避免代码膨胀和提高代码的可维护性。</p>
-<h2 id="2-耦合度降低"><a href="#2-耦合度降低" class="headerlink" title="2.  耦合度降低"></a>2.  耦合度降低</h2><p>   模块化可以降低模块之间的耦合度，从而使得各个模块更加独立和灵活。</p>
-<h2 id="3-可测试性"><a href="#3-可测试性" class="headerlink" title="3.  可测试性"></a>3.  可测试性</h2><p>   模块化可以提高代码的可测试性，让开发人员更容易进行单元测试和集成测试。</p>
-<h2 id="4-可扩展性"><a href="#4-可扩展性" class="headerlink" title="4.  可扩展性"></a>4.  可扩展性</h2><p>   模块化可以使得应用程序更容易进行功能扩展和组件替换，同时也方便开发人员进行代码重构和维护。</p>
-<h2 id="5-模块化设计"><a href="#5-模块化设计" class="headerlink" title="5.  模块化设计"></a>5.  模块化设计</h2><p>   App壳工程通常采用模块化设计，可以方便地添加、删除或替换某些功能模块，实现定制化开发和灵活调整。</p>
-<h2 id="6-未来实现平台化提供基础"><a href="#6-未来实现平台化提供基础" class="headerlink" title="6.  未来实现平台化提供基础"></a>6.  未来实现平台化提供基础</h2><h2 id="7-定制性强"><a href="#7-定制性强" class="headerlink" title="7.  定制性强"></a>7.  定制性强</h2><p>   开发者仍然可以根据自己的需求进行修改和定制，以满足特定的业务场景或用户需求。</p>
-<p>因此，App Delegate 模块化可以帮助开发人员更好地管理和维护 iOS 应用程序，增强应用程序的可维护性、可测试性和可扩展性。</p>
-<h1 id="3-常见解决方案"><a href="#3-常见解决方案" class="headerlink" title="3.常见解决方案"></a>3.常见解决方案</h1><p>在 iOS 应用程序开发中，解耦 App Delegate 的常用方案包括以下几个方面：</p>
-<h2 id="1-模块化设计"><a href="#1-模块化设计" class="headerlink" title="1.  模块化设计"></a>1.  模块化设计</h2><p>   将 App Delegate 中的职责和事件处理分解为多个独立的模块，每个模块负责自己的职责和功能，并通过明确定义的接口与其他模块进行通信和协作。例如，可以将网络请求、推送消息等功能模块独立出来，使用面向协议编程的方式进行调用。</p>
-<h2 id="2-代理模式"><a href="#2-代理模式" class="headerlink" title="2.  代理模式"></a>2.  代理模式</h2><p>   将 App Delegate 中的职责和事件处理委托给其他对象，实现事件响应和数据传递的解耦。例如，在应用程序启动时，可以创建一个独立的对象作为代理，来处理应用程序的生命周期事件。</p>
-<h2 id="3-注册机制"><a href="#3-注册机制" class="headerlink" title="3.  注册机制"></a>3.  注册机制</h2><p>   通过注册机制实现事件响应和数据传递的解耦。例如，可以在应用程序初始化时，使用 NSNotificationCenter 注册通知，然后在各个模块中监听和处理通知，从而实现解耦。</p>
-<h2 id="4-面向服务的架构"><a href="#4-面向服务的架构" class="headerlink" title="4.  面向服务的架构"></a>4.  面向服务的架构</h2><p>   采用面向服务的架构，将应用程序的各个功能模块封装成独立的服务，通过 Service API 进行通信和调用。这种方式可以实现应用程序的可扩展性和可维护性，并同时解耦 App Delegate。</p>
-<p>需要注意的是，在解耦 App Delegate 的过程中，需要确保各个模块之间的接口约定清晰、可靠和封装良好，避免出现依赖关系混乱、重复代码等问题。同时，还需要注意防止循环引用和内存泄漏等问题。</p>
-<h1 id="4-优缺点"><a href="#4-优缺点" class="headerlink" title="4.优缺点"></a>4.优缺点</h1><h2 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h2><ol>
-<li>模块化设计可以降低耦合度，提高代码的复用性和可维护性，使得各个模块更加独立和灵活。</li>
-<li>代理模式可以将 App Delegate 中的职责和事件处理委托给其他对象，实现事件响应和数据传递的解耦，减少代码的冗余和依赖关系。</li>
-<li>注册机制可以通过通知的方式实现解耦，各个模块之间只需要订阅、发布自己感兴趣的事件即可，避免了直接使用 App Delegate 的问题。</li>
-<li>面向服务的架构可以将应用程序的各个功能模块封装成独立的服务，通过 Service API 进行通信和调用，实现了应用程序的可扩展性和可维护性。</li>
-</ol>
-<h2 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h2><ol>
-<li>模块化设计可能导致代码分散、难以维护和测试，需要对模块之间的依赖关系进行仔细管理和测试。</li>
-<li>代理模式和注册机制可能会引入过多的事件通知和回调，降低代码的执行效率和性能。</li>
-<li>注册机制需要非常小心地管理通知的订阅和取消，否则容易出现内存泄漏、循环引用等问题。</li>
-<li>面向服务的架构可能会带来额外的开销和复杂性，需要进行更多的设计和实现工作。</li>
-</ol>
-<h1 id="5-当前项目存在的问题"><a href="#5-当前项目存在的问题" class="headerlink" title="5.当前项目存在的问题"></a>5.当前项目存在的问题</h1><p>appdelegate 模块流程过多，分工不明确</p>
-<h1 id="6-如何解决"><a href="#6-如何解决" class="headerlink" title="6.如何解决"></a>6.如何解决</h1><h2 id="业界第三方实现思路"><a href="#业界第三方实现思路" class="headerlink" title="业界第三方实现思路"></a>业界第三方实现思路</h2><p>一.BeeHive (框架过于庞大，用到了自动注册，其他类似)</p>
-<p>1.可以通过plist获取模块项，自动注册，或者创建注册</p>
-<p>2.通过manager 分发app生命周期</p>
-<p>地址:<a target="_blank" rel="noopener" href="https://github.com/lincode/FRDModuleManager">https://github.com/lincode/FRDModuleManager</a>（类似）</p>
-<p>二.FRDModuleManager </p>
-<p>1.注册通过plist获取模块项</p>
-<p>2.通过manager 分发app生命周期</p>
-<p>两者共同点:</p>
-<p>可以使得留在 AppDelegate 的钩子方法被统一管理。实现了协议 UIApplicationDelegate 的 AppDelegate 是我知晓应用生命周期的重要途径。如果，某个模块需要在应用启动时初始化，那么我们就需要在 AppDelegate 的 application:didFinishLaunchingWithOptions: 调用一个该模块的初始化方法。模块多了，调用的初始化方法也会增多。最后，AppDelegate 会越来越臃肿。FRDModuleManager 提供了一个统一的接口，让各模块知晓应用的生命周期。在 AppDelegate 中留下钩子，在特定的生命周期调用模块的对应方法。这样将使得 AppDelegate 更简单。对于应用生命周期的使用也更清晰。</p>
-<h1 id="7-优化思路"><a href="#7-优化思路" class="headerlink" title="7.优化思路:"></a>7.优化思路:</h1><p>1.Manager手动注册各个模块，方便控制</p>
-<p>2.划分各个模块，通过分类扩展各个子模块的差异功能</p>
-<p>3.通过协议接口实现方法调用</p>
-<p>模块化 （单一职责原则）+ 分类 + 协议 </p>
-<p>具体流程:</p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e6a8d426b74348aeae84e6d66316b02f~tplv-k3u1fbpfcp-watermark.image" alt="appdelegate.png"></p>
-<p>1.通过模块管理类注册所有启动模块，需要设置先后顺序依赖，可使用数组添加，保证顺序设置。</p>
-<p>2.档app 启动后 进入声明周期代理方法，此时 在各个生命周期方法内，统一使用moduleManager 调用， 如果有自定义流程如 首次启动的引导页等，都可以在modulemnager 增加</p>
-<p>3.模块管理者收到了生命周期方法调用 ，此时，在内部方法内，依次调用提前注册的类，需要判断是否实现了协议方法，这样能灵活调用不同需求的模块。</p>
-<p>4.模块管理者 可以提供两种方法设置模块调用 ，同步或者异步，各个模块根据需求按需实现协议即可。</p>
-<p>5.模块本身通过分类分离自己的功能，如crash sdk模块 有多种 bugly 其他，那个模块A就可以创建 module+buglly，module+其他 划分子功能。</p>
-<p>关键类图:</p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f0f4f3b532a34d9a99f550bb8566e52c~tplv-k3u1fbpfcp-watermark.image" alt="启动模块类图.png"></p>
-<p>后续使用扩展</p>
-<p>1.如果协议方法不满足增加协议方法，</p>
-<p>2.Manager增加生命周期转发方法，内部实现协议接口调用</p>
-<p>3.新增模块直接在注册方法追加模块即可</p>
-<p>关键代码:</p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9c4cdb2913764dcbb28a79269eb6f11c~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic.png"></p>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/991f340a3a334901a7d73015d2ec9236~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 1.png"></p>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8dd035a4b437468a8e517cdd7652df71~tplv-k3u1fbpfcp-watermark.image" alt="KModulestarturstepTypeisteoType.png"></p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0ff0c514cb2848c18f6f573ade73d473~tplv-k3u1fbpfcp-watermark.image" alt="#import •ModuleA.h®.png"></p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d52d63b11a4241809f042b3ef5276976~tplv-k3u1fbpfcp-watermark.image" alt="Ps KAppDelegate Module.png"></p>
-<h1 id="8-最终结果"><a href="#8-最终结果" class="headerlink" title="8.最终结果"></a>8.最终结果</h1><p>1.各个模块职责单一，独立性强。</p>
-<p>2.后续新增模块方便扩展，不影响appdelegate</p>
-<p>3.如果要实现多app 直接根据模块管理类 增加或者减少即可</p>
-<p>过程总结</p>
-<p>1.业界方案很多，找到适合自己项目的方法</p>
-<p>2.跟据实际情况选择合适时机去追求模块化代码</p>
-<p>3.考虑当前的实际场景，来设计适合自己的模块化方式</p>
-<p>参考：<br>1.<a target="_blank" rel="noopener" href="https://github.com/lincode/FRDModuleManager">https://github.com/lincode/FRDModuleManager</a><br>2.<a target="_blank" rel="noopener" href="https://github.com/alibaba/BeeHive">https://github.com/alibaba/BeeHive</a></p>
-<p>最终结果</p>
-<p>1.各个模块职责单一，独立性强。</p>
-<p>2.后续新增模块方便扩展，不影响appdelegate</p>
-<p>3.如果要实现多app 直接根据模块管理类 增加或者减少即可</p>
-<p>过程总结</p>
-<p>1.业界方案很多，找到适合自己项目的方法</p>
-<p>2.跟据实际情况选择合适时机去追求模块化代码</p>
-<p>3.考虑当前的实际场景，来设计适合自己的模块化方式</p>
-<blockquote>
-<p>移动应用的业务模块化架构设计，其真正的目标是提升开发质量和效率。单从实现角度来看并没有什么黑魔法或技术难点，更多的是结合团队实际开发协作方式和业务场景的具体考量——“适合自己的才是最好的”。某移动团队通过过往3年的实践，发现一味的追求性能，绝对的追求模块间编译隔离，过早的追求模块代码管理隔离等方式都偏离了模块化设计的真正目的，是得不偿失的。更合适的方式是在可控的改造代价下，一定程度考虑未来的优化方式，更多的考虑当前的实际场景，来设计适合自己的模块化方式。希望大家都能找到适合自己应用的业务模块化之路。</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
