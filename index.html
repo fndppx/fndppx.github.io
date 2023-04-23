@@ -112,7 +112,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -138,6 +138,230 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/23/iOS-%E7%BB%84%E4%BB%B6%E5%8C%96%E6%8E%A2%E7%A9%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="kyan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Next">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Next">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/23/iOS-%E7%BB%84%E4%BB%B6%E5%8C%96%E6%8E%A2%E7%A9%B6/" class="post-title-link" itemprop="url">iOS 组件化探究</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-04-23 23:45:07 / Modified: 23:45:34" itemprop="dateCreated datePublished" datetime="2023-04-23T23:45:07+08:00">2023-04-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>iOS 组件化的背景是为了解决单一应用日益庞大、复杂度不断提高导致开发效率低下、维护成本高等问题，项目如果单纯的只是为了开发功能而忽略了模块复用以及架构相关的细节那么可能会造成以下问题。</p>
+<ol>
+<li>降低了开发效率和代码质量，增加了开发和维护的成本。</li>
+<li>导致项目体积过大、启动时间增长等性能问题。</li>
+<li>出现组件版本兼容性问题和稳定性问题，影响了整个应用的稳定运行。</li>
+<li>增加了多人协作的困难度，影响了团队协作效率。</li>
+<li>降低了应用的整体测试覆盖率和质量，增加了上线风险。</li>
+<li>功能代码之间的依赖复杂，可维护性差</li>
+<li>协同开发过程中，并行开发存在阻塞情况</li>
+<li>功能界限不清晰，基础功能模块变动，会导致上层业务受到影响</li>
+<li>各团队负责功能模块，在主工程中有耦合代码</li>
+<li>上层业务会出现反向提供功能给底层情况</li>
+<li>代码分析优化，随代码增加变得困难</li>
+</ol>
+<p>为了解决这些问题就出现了组件化的方案，组件化可以将一个大型应用拆分成多个小模块，每个模块都是独立的组件，具有明确的职责和功能，可以独立开发、测试和部署。这样可以提高开发效率和协作效率，同时也方便了代码的维护和升级。</p>
+<h1 id="组件化的优势"><a href="#组件化的优势" class="headerlink" title="组件化的优势"></a>组件化的优势</h1><ol>
+<li>开发效率提高：通过组件化，可以将开发任务分解成多个小模块，每个团队或者开发者只需负责自己的组件开发和迭代，不需要关心整个应用的其他部分。这样可以减少沟通成本、加快迭代速度，提高开发效率。</li>
+<li>维护成本降低：随着应用规模的增大，代码维护难度也会逐渐增加。通过组件化，可以将应用拆分成多个小模块，每个模块都是独立的组件，有清晰的职责和功能。这样可以减少代码耦合度，降低代码修改的风险，同时也方便了代码的维护和升级。</li>
+<li>协作效率提高：在一个大型的项目中，多个团队或者开发者可能同时进行开发工作。通过组件化，可以将应用拆分成多个小模块，每个模块都是独立的组件，可以独立开发、测试和部署。这样可以避免多人同时修改同一份代码文件的冲突，提高协作效率。</li>
+<li>代码复用性增强：在组件化架构中，每个组件都是独立的，可以被其他应用或者项目所复用。这样可以减少代码的重复编写，提高代码的复用性和可维护性。</li>
+<li>功能模块化：通过组件化，可以将一个大型应用拆分成多个小模块，每个模块都是独立的组件，具有明确的职责和功能。这样可以使应用的功能更加模块化、清晰、易于扩展和维护。</li>
+</ol>
+<h1 id="问题挑战"><a href="#问题挑战" class="headerlink" title="问题挑战"></a>问题挑战</h1><p>虽然 iOS 组件化已经有了一定的发展，但是在实际应用中还存在以下问题或挑战：</p>
+<ol>
+<li>代码冗余：组件化架构中，每个组件都是独立的，具有独立的代码库。当多个组件需要使用同一个功能时，可能会出现代码冗余的情况，导致项目体积过大、编译时间增长等问题。</li>
+<li>模块间通信复杂：不同模块之间可能需要进行数据传递和事件交互，这就需要引入通信机制。但是不同的组件之间通信复杂度不同，需要根据实际情况选择合适的通信方式。</li>
+<li>组件版本管理：在一个大型应用中，不同的组件可能由不同的开发者或团队维护，并且会存在不同的版本。如何管理各个组件的版本与依赖关系，确保组件的兼容性和稳定性，是一个比较大的问题。</li>
+<li>多人协作困难：在组件化开发中，不同组件的开发负责人可能分布在不同的地区，加上组件之间的依赖关系，多人协作会变得非常困难。</li>
+<li>单元测试问题：组件化架构下，不同的组件具有独立性，可以进行单独的单元测试。但是在整个应用集成测试时，可能会出现不同组件之间的依赖关系问题，导致测试结果不准确。</li>
+</ol>
+<p>以上问题或挑战都需要在实践中逐步解决和优化，以提高组件化架构的效率和稳定性。</p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>iOS 组件化常用方案</p>
+<p>两个关键点问题：</p>
+<h2 id="1-中间件"><a href="#1-中间件" class="headerlink" title="1.中间件"></a>1.中间件</h2><h2 id="2-整体app设计"><a href="#2-整体app设计" class="headerlink" title="2.整体app设计"></a>2.整体app设计</h2><h3 id="关于App-整体架构"><a href="#关于App-整体架构" class="headerlink" title="关于App 整体架构"></a>关于App 整体架构</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/885438316b704cf99499ccca694107a2~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>可以按照三层结构划分</p>
+<p>1.业务模块</p>
+<p>2.通用的业务模块</p>
+<p>3.独立于app的模块</p>
+<p>4.中间件模块（此模块主要是贯穿整个组件模块调用）</p>
+<h3 id="关于中间件"><a href="#关于中间件" class="headerlink" title="关于中间件"></a>关于中间件</h3><h4 id="1-URL-路由："><a href="#1-URL-路由：" class="headerlink" title="1.  URL 路由："></a>1.  URL 路由：</h4><p>通过定义一系列 URL scheme，不同的组件对应不同的 URL，然后在应用中注册路由表，在接收到特定 URL 时，根据路由表将请求转发到相应的组件中。</p>
+<h4 id="2-Target-Action："><a href="#2-Target-Action：" class="headerlink" title="2.  Target-Action："></a>2.  Target-Action：</h4><p>通过在编译期间生成各个组件之间的依赖关系，然后再通过 Runtime 动态加载组件，实现模块之间解耦。</p>
+<h4 id="3-依赖注入"><a href="#3-依赖注入" class="headerlink" title="3. 依赖注入"></a>3. 依赖注入</h4><p>  依赖注入（Dependency Injection，简称 DI）是一种常见的解决组件化中依赖关系管理问题的方案。在 iOS 组件化场景下，常见的 DI 方案有以下几种：</p>
+<p>  a.通过协议和遵循者实现依赖注入：将各个组件之间需要使用的接口抽象出来，定义成协议，然后在应用启动时，通过注册表将不同的实例与相应的协议对应起来。这样，当组件需要使用其他组件提供的服务时，只需要通过协议获得对应的实例即可。</p>
+<p>   b.使用属性注入：将需要注入的对象定义成类的属性，然后在外部创建实例时，将需要注入的对象作为参数传入，或者在初始化方法中进行注入。</p>
+<p> c. 使用构造函数注入：将需要注入的对象作为构造函数的参数，当外部调用构造函数创建实例时，将需要注入的对象作为参数传入即可。</p>
+<p>  d.  使用框架：一些流行的框架，如 Swinject、Dagger 等，提供了更加便捷的依赖注入功能，并且可以结合反射机制、代码生成等技术，自动生成注入代码，大大提高了开发效率。</p>
+<p>  e. 比较具有通用性的方法是使用「协议」 &lt;-&gt; 「类」绑定的方式，对于要注入的对象会有对应的 Protocol 进行约束，会经常看到一些RegisterClass:ForProtocol：和classFromProtocol的代码。在需要使用注入对象时，用框架提供的接口以协议作为入参从容器中获得初始化后的所需对象。也可以在 Register 的时候直接注册一段 Block-Code，这个代码块用来初始化自己，作为id类型的返回值返回，可以支持一些编译检查来确保对应代码被编译。</p>
+<p>  <strong>可以将一些运行时加载的操作前移至编译时</strong>，比如将各项注册从 +load 改为在编译期使用__attribute((used,section(“__DATA,key”))) 写入 mach-O 文件 Data 的 Segment 中来减少冷启动的时间消耗。下图参考BeeHive思路</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d9bc345a2844414d9dfa5e1f80fd287c~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>以上都是比较常见的 DI 方案，选择哪种方案取决于具体的项目需求和开发团队的技术栈。需要注意的是，DI 可以解决组件之间依赖关系的问题，但过度依赖 DI 也会增加代码复杂度和维护成本。</p>
+<p>以上方式都可以实现 iOS 组件化中间件，选择哪种方式取决于具体的需求和项目情况</p>
+<h3 id="3-库文件管理"><a href="#3-库文件管理" class="headerlink" title="3.库文件管理"></a>3.库文件管理</h3><ol>
+<li>CocoaPods：使用 CocoaPods 进行库依赖管理，并且将每个组件封装成一个独立的 Pod。这样当需要使用某个组件时，只需在 Podfile 中添加对应的 Pod 即可。</li>
+<li>Framework：将每个组件封装成独立的 Framework，然后在应用中动态链接需要使用的 Framework，避免了组件之间的直接引用。</li>
+</ol>
+<h2 id="3-中间件优缺点"><a href="#3-中间件优缺点" class="headerlink" title="3.中间件优缺点"></a>3.中间件优缺点</h2><h3 id="1-URL-路由"><a href="#1-URL-路由" class="headerlink" title="1.  URL 路由"></a>1.  URL 路由</h3><p>优点：</p>
+<ul>
+<li>实现简单，易于理解和使用；</li>
+<li>可以根据 URL 的特定格式来管理组件之间的依赖关系。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>需要手动维护路由表，容易出现冗余和错误；</li>
+<li>依赖于 URL scheme，存在命名空间冲突的风险。</li>
+</ul>
+<h3 id="2-Target-Action"><a href="#2-Target-Action" class="headerlink" title="2.  Target-Action"></a>2.  Target-Action</h3><p>优点：</p>
+<ul>
+<li>编译期生成依赖关系，保证了类型安全；</li>
+<li>可以使用反射机制进行运行时注入。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>代码量较大，需要手动处理每个模块间的依赖关系；</li>
+<li>对于多层嵌套的依赖关系，使用起来比较繁琐。</li>
+</ul>
+<h3 id="3-依赖注入-1"><a href="#3-依赖注入-1" class="headerlink" title="3.依赖注入"></a>3.依赖注入</h3><p>优点:</p>
+<ul>
+<li>面向协议接口编程，可以传递任何类型参数。</li>
+<li>模块依赖只需要依赖接口头文件即可。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>代码块存取的性能消耗较大。</li>
+<li>并且协议与类的绑定关系的维护需要花费更多的时间成本。</li>
+</ul>
+<h2 id="4-工具优缺点"><a href="#4-工具优缺点" class="headerlink" title="4.工具优缺点"></a>4.工具优缺点</h2><h3 id="1-CocoaPods"><a href="#1-CocoaPods" class="headerlink" title="1.  CocoaPods"></a>1.  CocoaPods</h3><p>优点：</p>
+<ul>
+<li>管理依赖关系简单，易于维护；</li>
+<li>可以将每个组件封装成 Pod，方便其他应用或项目复用。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>不能在应用内动态加载组件，需要重新编译整个应用；</li>
+<li>需要引入外部依赖库，增加了应用的大小和启动时间。</li>
+</ul>
+<h3 id="2-Framework"><a href="#2-Framework" class="headerlink" title="2.  Framework"></a>2.  Framework</h3><p>优点：</p>
+<ul>
+<li>集成方便，只需要动态链接需要使用的 Framework 即可；</li>
+<li>可以将每个组件封装成独立的 Framework，降低了耦合度。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>维护多个 Framework 需要一定的技术水平；</li>
+<li>不能动态加载和卸载组件，需要重新编译整个应用。</li>
+</ul>
+<p>总的来说，每种方案都有其优劣，选择哪种方案取决于具体的项目需求和开发团队的技术栈。需要权衡各种因素，选择最适合自己的方案。</p>
+<h2 id="5-业内组件化中间件方案细节"><a href="#5-业内组件化中间件方案细节" class="headerlink" title="5.业内组件化中间件方案细节"></a>5.业内组件化中间件方案细节</h2><h3 id="1-URL-Router"><a href="#1-URL-Router" class="headerlink" title="1.URL-Router"></a>1.URL-Router</h3><p><a target="_blank" rel="noopener" href="https://github.com/lightory/HHRouter">https://github.com/lightory/HHRouter</a></p>
+<p>URL Router 是一种常用的 iOS 开发模式，用于实现基于 URL 的页面跳转、参数传递等功能。其大致实现流程可以概括如下：</p>
+<ol>
+<li>定义每个页面对应的 URL 地址，并在 URL Router 中注册这些地址和对应的控制器类。</li>
+<li>当用户点击某个链接或执行某个跳转操作时，将对应的 URL 传递给 URL Router。</li>
+<li>URL Router 根据注册的 URL 与控制器类的映射关系，找到对应的控制器类，并创建该控制器类的实例对象。</li>
+<li>URL Router 将该实例对象返回给调用者，调用者可以通过该实例对象来操作对应的页面。</li>
+</ol>
+<p>以下是 URL Router 实现流程的简单示意图：</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3749890c100f4ebf8de282b7644f634a~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>上述流程图说明了 URL Router 的基本实现流程。需要注意的是，URL Router 可以根据传递的 URL 参数进行页面跳转和参数传递等操作，因此在设计和实现 URL Router 时需要考虑参数的安全性和可靠性。</p>
+<h3 id="2-Target-Action-1"><a href="#2-Target-Action-1" class="headerlink" title="2.Target-Action"></a>2.Target-Action</h3><p><a target="_blank" rel="noopener" href="https://github.com/casatwy/CTMediator">https://github.com/casatwy/CTMediator</a></p>
+<p>CTMediator 是一种常用的 iOS 开发模式，用于实现组件化架构中的组件间通信。其大致实现流程可以概括如下：</p>
+<ol>
+<li>创建一个 CTMediator 对象，并在该对象中定义需要暴露给其他组件使用的方法。</li>
+<li>在其他组件中引入 CTMediator 头文件，并通过 CTMediator 对象调用相应的方法。</li>
+<li>CTMediator 对象根据方法名和参数信息，在运行时动态地创建对应的控制器或执行对应的操作。</li>
+<li>CTMediator 将创建出来的控制器或执行结果返回给调用者。</li>
+</ol>
+<p>以下是 URL Router 实现流程的简单示意图：</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a40b1e67e893487ab6bcb1c16404d415~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>上述流程图说明了 CTMediator 的基本实现流程，其中组件 A 和组件 B 都可以通过 CTMediator 对象调用相应的方法，而 CTMediator 对象会根据方法名和参数信息，在运行时动态地创建对应的控制器或执行对应的操作，并将创建出来的控制器或执行结果返回给调用者。</p>
+<h3 id="3-依赖注入-2"><a href="#3-依赖注入-2" class="headerlink" title="3.依赖注入"></a>3.依赖注入</h3><p><a target="_blank" rel="noopener" href="https://github.com/alibaba/BeeHive">https://github.com/alibaba/BeeHive</a></p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/22d2f707b95b45909a3a8581c3a4fee4~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>Beehive是由阿里巴巴开源的一款基于组件化的框架，用于解决大型复杂应用程序的可维护性、可扩展性和代码复用等问题。Beehive的核心概念是Module（模块），每个Module都包含了一个或多个协议（Protocol）和相应的实现（Implementation），并且在运行时通过Beehive容器对Module进行管理和调用。</p>
+<ol>
+<li>创建Module：创建一个或多个Module，每个Module包含一个或多个Protocol（协议）。</li>
+<li>实现Module：实现Module中所定义的Protocol。</li>
+<li>注册Module：在App启动时将Module注册到Beehive容器中或者推迟到使用时候创建。</li>
+<li>获取Module：需要使用Module时，从Beehive容器中获取该Module的实例。</li>
+<li>使用Module：使用Module提供的接口完成相应的功能。</li>
+</ol>
+<p>总之，使用Beehive实现流程图需要先安装Beehive，然后创建、实现、注册Module并在需要使用Module时从Beehive容器中获取实例。</p>
+<p>在Beehive中，模块（Module）被定义为一组协议（Protocol）和实现（Implementation），Beehive容器则用来管理各个模块的注册、查找和调用等操作。通过Beehive提供的API，应用程序可以方便地获取其他模块提供的服务，并且无需关心具体的实现细节，BeeHive框架实现思路不仅仅有依赖注入还有appdelegate 模块的一些启发，这里不在讲解，有兴趣可以去看源码实现，附上BeeHive的几个模块注册方法和AppDelegate解耦的思路</p>
+<p>注册方案:</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/24ef8867d170459e968353b60c0b4098~tplv-k3u1fbpfcp-watermark.image" alt="image.png"><br><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cc2aef62be214ac19578f792b4e80232~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/76aa435cce764c118432e04f870e0012~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>AppDelegate解耦方案:</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9553123dcbc34106921042e1054a6bd8~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="6-实现细节"><a href="#6-实现细节" class="headerlink" title="6.实现细节"></a>6.实现细节</h2><p>  细节不在讲，有兴趣可以看源码实现。</p>
+<h2 id="7-性能对比"><a href="#7-性能对比" class="headerlink" title="7.性能对比"></a>7.性能对比</h2><h3 id="执行效率"><a href="#执行效率" class="headerlink" title="执行效率"></a>执行效率</h3><p>CTMediator 是用 runtime msgsend 实现的执行效率最优。<br>URL-Router 多了一层解析逻辑因此效率略低于 依赖注入。</p>
+<h3 id="对比排序"><a href="#对比排序" class="headerlink" title="对比排序"></a>对比排序</h3><p>CTMediator&gt;依赖注入&gt;URL-Router</p>
+<h2 id="8-我的理解"><a href="#8-我的理解" class="headerlink" title="8.我的理解"></a>8.我的理解</h2><p>URL Router、Target-Action 和依赖注入都是 iOS 组件化的常见方案。</p>
+<p>URL Router 是一种通过定义一系列 URL Scheme，将各个组件对应到不同的 URL 上，然后在应用中注册路由表，在接收到特定 URL 时，根据路由表将请求转发到相应的组件中的方案。这种方案实现简单，易于理解和使用，但需要手动维护路由表，存在冗余和错误的风险。</p>
+<p>Target-Action 是一种通过在编译期间生成各个组件之间的依赖关系，然后再通过 Runtime 动态加载组件，实现模块之间解耦的方案。这种方案可以保证类型安全，并且可以使用反射机制进行运行时注入，但需要手动处理每个模块之间的依赖关系，对于多层嵌套的依赖关系使用起来比较繁琐。</p>
+<p>依赖注入是一种通过协议和遵循者实现依赖注入的方案。将各个组件之间需要使用的接口抽象出来，定义成协议，然后在应用启动时，通过注册表将不同的实例与相应的协议对应起来。这种方案可以解决组件之间依赖关系的问题，但过度依赖 DI 也会增加代码复杂度和维护成本。</p>
+<p>从性能，可读性，功能性，代码量，规范约束 几个维度综合考虑我建议</p>
+<p>CTMediator &gt; 依赖注入 &gt; URL-Router</p>
+<p>*当然选择哪种方案取决于具体的项目需求和开发团队的技术栈，需要权衡各种因素，选择最适合自己的方案，以上仅代表个人观点。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
