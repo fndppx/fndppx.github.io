@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本文主要梳理iOS UI 核心知识   UITableView 相关    事件传递&amp;视图响应    图像显示原理    卡顿&amp;掉帧原因方案    绘制原理&amp;异步绘制    离屏渲染触发时机&amp;为什么要避免离屏渲染    1.UITableView 相关UITableView核心主要在于 重用机制和数据源同步 重用机制如图列表会维持一个重用池子，当cell从列表消失">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS UI视图">
+<meta property="og:url" content="http://example.com/2023/04/29/iOS-UI%E8%A7%86%E5%9B%BE/index.html">
+<meta property="og:site_name" content="Next">
+<meta property="og:description" content="本文主要梳理iOS UI 核心知识   UITableView 相关    事件传递&amp;视图响应    图像显示原理    卡顿&amp;掉帧原因方案    绘制原理&amp;异步绘制    离屏渲染触发时机&amp;为什么要避免离屏渲染    1.UITableView 相关UITableView核心主要在于 重用机制和数据源同步 重用机制如图列表会维持一个重用池子，当cell从列表消失">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c9c15cc932b4f6ab1a20e2d80698d31~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0749ef1438ad4ec99f3b8316f00f63ee~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9c26ec4bc74e4499a058ba858c24b150~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b8e0e8c031d24c2ba69077ecd065407c~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/78e0774861d54376840a8ea0b9967995~tplv-k3u1fbpfcp-watermark.image">
+<meta property="article:published_time" content="2023-04-29T02:56:34.000Z">
+<meta property="article:modified_time" content="2023-04-29T02:57:15.367Z">
+<meta property="article:author" content="kyan">
+<meta property="article:tag" content="iOS 知识汇总">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c9c15cc932b4f6ab1a20e2d80698d31~tplv-k3u1fbpfcp-watermark.image">
+
+
+<link rel="canonical" href="http://example.com/2023/04/29/iOS-UI%E8%A7%86%E5%9B%BE/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/04/29/iOS-UI%E8%A7%86%E5%9B%BE/","path":"2023/04/29/iOS-UI视图/","title":"iOS UI视图"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>iOS UI视图 | Next</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Next</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-UITableView-%E7%9B%B8%E5%85%B3"><span class="nav-number">1.</span> <span class="nav-text">1.UITableView 相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E7%94%A8%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">重用机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%BA%90%E5%90%8C%E6%AD%A5"><span class="nav-number">1.2.</span> <span class="nav-text">数据源同步</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E8%AE%BF%E9%97%AE%EF%BC%8C%E6%95%B0%E6%8D%AE%E6%8B%B7%E8%B4%9D"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">并发访问，数据拷贝</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%B2%E8%A1%8C%E8%AE%BF%E9%97%AE"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">串行访问</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">1.2.0.3.</span> <span class="nav-text"></span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92-amp-%E8%A7%86%E5%9B%BE%E5%93%8D%E5%BA%94"><span class="nav-number">2.</span> <span class="nav-text">2.事件传递&amp;视图响应</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92"><span class="nav-number">2.0.1.</span> <span class="nav-text">事件传递</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E5%93%8D%E5%BA%94"><span class="nav-number">2.0.2.</span> <span class="nav-text">视图响应</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%9B%BE%E5%83%8F%E6%98%BE%E7%A4%BA%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">3.图像显示原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%8D%A1%E9%A1%BF-amp-%E6%8E%89%E5%B8%A7%E5%8E%9F%E5%9B%A0"><span class="nav-number">4.</span> <span class="nav-text">4.卡顿&amp;掉帧原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%BB%98%E5%88%B6%E5%8E%9F%E7%90%86-amp-%E5%BC%82%E6%AD%A5%E7%BB%98%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text">5.绘制原理&amp;异步绘制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E8%A7%A6%E5%8F%91%E6%97%B6%E6%9C%BA-amp-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%81%BF%E5%85%8D%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93"><span class="nav-number">6.</span> <span class="nav-text">6.离屏渲染触发时机&amp;为什么要避免离屏渲染</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">kyan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/29/iOS-UI%E8%A7%86%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="kyan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Next">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="iOS UI视图 | Next">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iOS UI视图
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-04-29 10:56:34 / Modified: 10:57:15" itemprop="dateCreated datePublished" datetime="2023-04-29T10:56:34+08:00">2023-04-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c9c15cc932b4f6ab1a20e2d80698d31~tplv-k3u1fbpfcp-watermark.image" alt="u=361136753,1329746390&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG.webp"></p>
+<p>本文主要梳理iOS UI 核心知识</p>
+<ul>
+<li><ol>
+<li>UITableView 相关</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>事件传递&amp;视图响应</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>图像显示原理</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>卡顿&amp;掉帧原因方案</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>绘制原理&amp;异步绘制</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>离屏渲染触发时机&amp;为什么要避免离屏渲染</li>
+</ol>
+</li>
+</ul>
+<h2 id="1-UITableView-相关"><a href="#1-UITableView-相关" class="headerlink" title="1.UITableView 相关"></a>1.UITableView 相关</h2><p>UITableView核心主要在于 重用机制和数据源同步</p>
+<h3 id="重用机制"><a href="#重用机制" class="headerlink" title="重用机制"></a><strong>重用机制</strong></h3><p>如图列表会维持一个重用池子，当cell从列表消失的时候会放到重用池里边，后续使用如果重用池里边有直接取出来，否则重新alloc 创建。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0749ef1438ad4ec99f3b8316f00f63ee~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h3 id="数据源同步"><a href="#数据源同步" class="headerlink" title="数据源同步"></a>数据源同步</h3><p>对于多线程情况需要注意的是数据源同步的问题，一般在新闻，咨询类app中，主要考虑问题，如何在tableview解决多线程情况下，数据的处理。</p>
+<h5 id="并发访问，数据拷贝"><a href="#并发访问，数据拷贝" class="headerlink" title="并发访问，数据拷贝"></a><strong>并发访问，数据拷贝</strong></h5><p>对于并发访问，一般在子线程处理数据，如请求网络，在此之前需要先copy原始列表数据，当子线程处理完数据后，再copy回到主任务线程，刷新ui，保证数据完整性。</p>
+<h5 id="串行访问"><a href="#串行访问" class="headerlink" title="串行访问"></a><strong>串行访问</strong></h5><h5 id=""><a href="#" class="headerlink" title=""></a></h5><p>对于串行访问，保证数据请求完成后，再去刷新ui。</p>
+<h2 id="2-事件传递-amp-视图响应"><a href="#2-事件传递-amp-视图响应" class="headerlink" title="2.事件传递&amp;视图响应"></a>2.事件传递&amp;视图响应</h2><h4 id="事件传递"><a href="#事件传递" class="headerlink" title="事件传递"></a>事件传递</h4><p>事件传递核心在于 事件的传递链和响应链</p>
+<p>两个方法</p>
+<ul>
+<li><p>(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {<br>}</p>
+</li>
+<li><p>(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {<br>}</p>
+</li>
+</ul>
+<p>事件传递从uiapplication-&gt;uiwindow-&gt;uiview </p>
+<p>hitTest 返回命中的目标视图，最佳响应者，如果是uiview的子视图，会递归倒序遍历子视图里边的 hitTest（hitTest会判断 alpha &gt; 0.1 ,userInteractionEnabled &#x3D; true , opaque &#x3D; 1），如果有命中，会通过pointInside 判断当前点击区域是否在视图内，如果在就响应事件, 通过 pointInside还可以自定义响应区域。</p>
+<p><strong>需要注意如果点击的一个子视图超出了父试图，那么传递链 在判断父试图的时候已经被中断，因为点击区域不在父试图里边，从而最终丢弃了事件传递。</strong></p>
+<h4 id="视图响应"><a href="#视图响应" class="headerlink" title="视图响应"></a>视图响应</h4><p>响应链从 first view -&gt; super view -&gt; … -&gt; view controller -&gt; window -&gt; Application -&gt; AppDelegate</p>
+<p>简单总结，事件链包含传递链和响应链，事件通过传递链传递上去，通过响应链找到相应的 <code>UIResponse</code>。</p>
+<p><strong>完整流程</strong></p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9c26ec4bc74e4499a058ba858c24b150~tplv-k3u1fbpfcp-watermark.image" alt="3704739-b9721e05e0cda6b2.png"></p>
+<p>主要有uiview和calayer</p>
+<p>uiview 为calayer 提供内容，以及负责处理触摸等事件，参与响应链</p>
+<p>calyer 负责显示内容 contents </p>
+<p>符合单一职责模式</p>
+<p><strong>响应链顺序</strong></p>
+<p>是从当前最上层的view -&gt; superview -&gt; uiviewcontroller -&gt;uiwindow -&gt;uiapplication </p>
+<p><strong>继承关系</strong></p>
+<p>uibutton -&gt;uicontrol-&gt;uiview -&gt;uireponder</p>
+<h2 id="3-图像显示原理"><a href="#3-图像显示原理" class="headerlink" title="3.图像显示原理"></a>3.图像显示原理</h2><p>通过cpu计算 gpu渲染 最终提交到帧缓冲区，通过视图控制器显示到屏幕上。</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b8e0e8c031d24c2ba69077ecd065407c~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="4-卡顿-amp-掉帧原因"><a href="#4-卡顿-amp-掉帧原因" class="headerlink" title="4.卡顿&amp;掉帧原因"></a>4.卡顿&amp;掉帧原因</h2><p><strong>卡顿原因</strong></p>
+<p>在规定的16.7ms之内，下-帧VSync信号到来之前，并没有cpu和gpu共同完成下一帧画面的合成，于是就造成了卡顿和掉帧。</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-ZMCk0_Mc1xKth32GI_mPA">https://mp.weixin.qq.com/s/-ZMCk0_Mc1xKth32GI_mPA</a></p>
+<p><strong>滑动优化方案</strong></p>
+<p>从cpu 和 gpu</p>
+<p>cpu<br>1.对象创建，调整，销毁<br>2.预排班（布局计算，文本计算）<br>3.预渲染（文本等异步绘制，图片编解码等）</p>
+<p>gpu<br>1.纹理渲染<br>2.视图混合</p>
+<p><strong>通用渲染流水线</strong></p>
+<p> <strong>应用阶段</strong></p>
+<p> <strong>几何阶段</strong></p>
+<p> <strong>光栅化阶段</strong></p>
+<p> <strong>像素处理阶段</strong></p>
+<h2 id="5-绘制原理-amp-异步绘制"><a href="#5-绘制原理-amp-异步绘制" class="headerlink" title="5.绘制原理&amp;异步绘制"></a>5.绘制原理&amp;异步绘制</h2><p>[layer.delegate displayLayer:]</p>
+<p>代理负责生成对应的bitmap ，设置该bitmap作为layer.contents属性的值</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/78e0774861d54376840a8ea0b9967995~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p><strong>异步绘制：</strong><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3NzM0NzkxMQ==&mid=2655379516&idx=3&sn=8748f40b2b835a91f11315b321755d10&chksm=84e22d14b395a402eaf9eebde59df55df85988d2b1db09ae471546a07d7a12b432e6d389e5db&scene=27">https://mp.weixin.qq.com/s?__biz=MzA3NzM0NzkxMQ==&amp;mid=2655379516&amp;idx=3&amp;sn=8748f40b2b835a91f11315b321755d10&amp;chksm=84e22d14b395a402eaf9eebde59df55df85988d2b1db09ae471546a07d7a12b432e6d389e5db&amp;scene=27</a></p>
+<h2 id="6-离屏渲染触发时机-amp-为什么要避免离屏渲染"><a href="#6-离屏渲染触发时机-amp-为什么要避免离屏渲染" class="headerlink" title="6.离屏渲染触发时机&amp;为什么要避免离屏渲染"></a><strong>6.离屏渲染触发时机&amp;为什么要避免离屏渲染</strong></h2><p>当我们处理图层的属性在被指定为未被预合成之前不能直接在屏幕上显示，就触发了离屏渲染。离屏渲染的概念起源于gpu层面，指的是gpu在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作。</p>
+<p>何时触发</p>
+<ul>
+<li>圆角 </li>
+<li>图层蒙版</li>
+<li>阴影</li>
+<li>光栏化</li>
+</ul>
+<p>为何要避免</p>
+<p>上下文切换，GPU额外的开销<br>创建新的渲染缓冲区，内存损耗<br>最优回答： 触发离屏渲染会增加GPU的工作量，而增加GPU的工作量很有可能导致GPU和CPU的工作总耗时超过了16.67ms，有可能导致UI的卡顿和掉帧。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS-%E7%9F%A5%E8%AF%86%E6%B1%87%E6%80%BB/" rel="tag"># iOS 知识汇总</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/29/Pod-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%9E%E8%B7%B5/" rel="prev" title="Pod 二进制实践">
+                  <i class="fa fa-chevron-left"></i> Pod 二进制实践
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kyan</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
