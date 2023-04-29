@@ -112,7 +112,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -138,6 +138,358 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/29/Pod-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="kyan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Next">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Next">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/29/Pod-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">Pod 二进制实践</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-29 10:26:52" itemprop="dateCreated datePublished" datetime="2023-04-29T10:26:52+08:00">2023-04-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="pod二进制详细步骤"><a href="#pod二进制详细步骤" class="headerlink" title="pod二进制详细步骤"></a>pod二进制详细步骤</h2><h3 id="使用步骤流程"><a href="#使用步骤流程" class="headerlink" title="使用步骤流程"></a>使用步骤流程</h3><p>这个流程适用于所有符合条件的工程 包括主工程 或者 能独立运行的pod私有库</p>
+<p>源码地址：</p>
+<p><a href="mailto:git@git.zuoyebang.cc">git@git.xxx.cc</a>:native&#x2F;XXSpecs.git</p>
+<p>二进制私有源地址：</p>
+<p><a href="mailto:git@git.zuoyebang.cc">git@git.xxx.cc</a>:XXX_all_lib&#x2F;XXBinarySpecs.git</p>
+<p>二进制服务器地址：</p>
+<p><a target="_blank" rel="noopener" href="http://10.254.12.244:9090/frameworks/%25s/%25s/zip">http://10.254.12.244:9090/frameworks/%s/%s/zip</a>   (打包机配置的环境)</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/321afe3ddbf747708146f007ae4f5187~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="一-环境配置"><a href="#一-环境配置" class="headerlink" title="一.环境配置"></a>一.环境配置</h2><p>二进制服务器搭建</p>
+<h3 id="1-mongodb"><a href="#1-mongodb" class="headerlink" title="1.mongodb"></a>1.mongodb</h3><h4 id="安装mongodb"><a href="#安装mongodb" class="headerlink" title="安装mongodb"></a>安装mongodb</h4><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/580478a0d813480caec2bcd62aa2134b~tplv-k3u1fbpfcp-watermark.image" alt="舞入 usrlocal.png"></p>
+<p>当创建&#x2F;data&#x2F;db 可能会遇到权限问题，直接手动在该目录下新建data和db文件加解决</p>
+<h4 id="启动monogo"><a href="#启动monogo" class="headerlink" title="启动monogo"></a>启动monogo</h4><p>sudo mongod –dbpath&#x3D;&#x2F;Users&#x2F;xxx&#x2F;data&#x2F;db(这个路径为数据库存储的目录，你在哪里创建就指向哪里) 来启动mongod</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4636b78584ee46ce8adfd57bd985a903~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h4 id="开启-node-js-服务"><a href="#开启-node-js-服务" class="headerlink" title="开启 node.js 服务"></a>开启 node.js 服务</h4><p>开启 node.js 服务，保证mongo服务已经开启(最终保存静态库资源)</p>
+<p>1.进入binary-server 目录 执行npm install 成功后 npm start 启动服务器(app.js 为入口文件，可以设置ip地址和端口号)</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f07129ba891d48dbaee917575248a790~tplv-k3u1fbpfcp-watermark.image" alt="YYModel.png"></p>
+<p>2.如果遇到端口被占用就先关闭占用的端口</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b3707f0a3a2c486db58772675397b15f~tplv-k3u1fbpfcp-watermark.image" alt="binary-server - -zsh - 80x24.png"></p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8d1584742e6e4f3aa76fe80e9f71122b~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 9.png"></p>
+<p>3.再次启动，打开浏览器访问对应端口地址，验证是否成功开启，页面访问正常为启动成功</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b93fb2e3f59f4792b02043798e8a6182~tplv-k3u1fbpfcp-watermark.image" alt="conplete 1op of this run can be found 1n.png"></p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec92a54ad9574254970960419dade165~tplv-k3u1fbpfcp-watermark.image" alt="© localhost8081frameworks.png"></p>
+<h3 id="2-创建一个二进制私有源"><a href="#2-创建一个二进制私有源" class="headerlink" title="2.创建一个二进制私有源"></a>2.创建一个二进制私有源</h3><p><a target="_blank" rel="noopener" href="https://git.zuoyebang.cc/yike_all_lib/YKBinarySpecs">https://git.zuoyebang.cc/yike_all_lib/YKBinarySpecs</a></p>
+<p>主要保存二进制资源的版本信息和对应的资源地址  (如zip包的获取地址)</p>
+<h4 id="本地私有源"><a href="#本地私有源" class="headerlink" title="本地私有源"></a>本地私有源</h4><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/858651bda2ba43059165c4cd1e3f9af4~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 13.png"></p>
+<p>私有源json数据，里边对应私有源的静态库zip下载地址和一些信息</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e1f58886e0e349358324600748387946~tplv-k3u1fbpfcp-watermark.image" alt="nane“Brotl1”,.png"></p>
+<h3 id="3-安装打包插件"><a href="#3-安装打包插件" class="headerlink" title="3.安装打包插件"></a>3.安装打包插件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install cocoapods-imy-bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-工程需要的一些配置文件"><a href="#4-工程需要的一些配置文件" class="headerlink" title="4.工程需要的一些配置文件"></a>4.工程需要的一些配置文件</h3><p>目前为了简化流程通过主工程制作，最优的情况应该是 在每个pod库里边这样配置，但是由于目前大部分pod库不能独立编译，所以此插件是支持只 要主工程通过podspec生成 依赖模块，就可以生成podspec里边所有依赖的二进制文件</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fbace522a3564e128d0b1c55ce0554d4~tplv-k3u1fbpfcp-watermark.image" alt="000.png"></p>
+<h4 id="1-BinArchive-json"><a href="#1-BinArchive-json" class="headerlink" title="(1)BinArchive.json"></a>(1)BinArchive.json</h4><p>为制作二进制的白名单配置，可以忽略那些库不制作白名单，或者那些库不支持也可以放进去</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/14a83254b24b4457a15b0f0058caf5a1~tplv-k3u1fbpfcp-watermark.image" alt="archive-wnite-pod-11st 制作二週期自名筆®.png"></p>
+<h4 id="2-podfile-local"><a href="#2-podfile-local" class="headerlink" title="(2)podfile_local"></a>(2)podfile_local</h4><p>此文件只是改插件为了区分本地依赖的库，实际情况可以不用</p>
+<p>声明插件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugin &#x27;cocoapods-imy-bin&#x27;</span><br></pre></td></tr></table></figure>
+<p>使用二进制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use_binaries!</span><br></pre></td></tr></table></figure>
+<p>设置使用源码的库白名单(可选)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set_use_source_pods</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/500bfd87c46b48b4b59ff3eb729421bb~tplv-k3u1fbpfcp-watermark.image" alt="Podfilelocal.png"></p>
+<h4 id="3-主工程-podspec"><a href="#3-主工程-podspec" class="headerlink" title="(3)主工程.podspec"></a>(3)主工程.podspec</h4><p>哪些需要打成二进制的库，就添加进去，真实情况生成二进制最好一个一个打，因为多个同时生成可能会出错，具体需要看错误信息，以下为目前 能制作二进制的库文件</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/74f754938aac4ea982b37bebd65607ce~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="二-开始使用"><a href="#二-开始使用" class="headerlink" title="二.开始使用"></a>二.开始使用</h2><h3 id="1-添加私有库到本地"><a href="#1-添加私有库到本地" class="headerlink" title="1.添加私有库到本地"></a>1.添加私有库到本地</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod repo add xxBinarySpecs  https://git.xxBinarySpecs.git</span><br></pre></td></tr></table></figure>
+<h3 id="2-配置打包变量"><a href="#2-配置打包变量" class="headerlink" title="2.配置打包变量"></a>2.配置打包变量</h3><p>如果是m1 电脑 pod 命令 需要加上arch -x86_64</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(arch -x86_64)pod bin init</span><br></pre></td></tr></table></figure>
+<ol>
+<li> 配置私有库地址</li>
+<li> 配置二进制私有源地址</li>
+<li> 配置二进制服务器地址</li>
+<li> 配置打包二进制的格式 目前就验证了zip，其他格式未验证</li>
+</ol>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/620f246e88b14d9f8b5a9e89766ef0e8~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 19.png"></p>
+<h3 id="3-开始制作二进制"><a href="#3-开始制作二进制" class="headerlink" title="3.开始制作二进制"></a>3.开始制作二进制</h3><p>注意项目根目录的homework.spec文件为需要生成二进制的库，最好一个一个打，因为把所有的库同时打会出现依赖问题，不好查找原因，此外某些 库最好指定版本号，不然生成的二进制对应不上工程podfile指定的版本</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1d815f5daca94a509842e7d93a438d43~tplv-k3u1fbpfcp-watermark.image" alt="s.dependency.png"></p>
+<p>(1)(arch -x86_64)pod bin auto –all-make</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5ba271193db9431e883dfc9c1f2381ca~tplv-k3u1fbpfcp-watermark.image" alt="wit. Tre priottne aiseBteere weesle.png"></p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/946ee37142954f37a2b9f3c1c011f396~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 22.png"></p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9669da8d4ae8491384ea10de2758ca03~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 24.png"></p>
+<p>(2)最终会自动编译完成转换成zip，同时生成对应版本的spec文件上传到二进制私有源和二进制服务器</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e4c17e7ce0e84c3791f9bab177d5f7b2~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 25.png"></p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b2e0434001b847f69f6fcb94e636fd8b~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 26.png"></p>
+<p>(3)同步二进制到工程中</p>
+<p> 把xxx.spec中的注释的库都放开，目前测试发现如果不放开可能有些库同步不过来(此步骤可选)</p>
+<p> 需要update 不然二进制库更新不过来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(arch -x86_64)pod bin update --no-repo-update</span><br></pre></td></tr></table></figure>
+<p>(4)最终如下生成.a</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f15a2ff3dd0d4b6185ed45ce51eebb91~tplv-k3u1fbpfcp-watermark.image" alt="252.png"></p>
+<h2 id="三-结果对比"><a href="#三-结果对比" class="headerlink" title="三.结果对比"></a>三.结果对比</h2><p>目前只是把基础库和第三方库大部分库生成了.a ,业务库由于依赖过多，加上不能独立编译，因此目前无法生成</p>
+<p>通过对比,编译耗时优化了20s左右(之前测试是190s)</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c96ef44e7cd44bd694458dfc52f7e632~tplv-k3u1fbpfcp-watermark.image" alt="Succeeded I 178.659s.png"></p>
+<p>TODO:</p>
+<p>此插件目前也存在一些问题，可能使用过程会遇到一些问题，大部分在pod bin auto 的时候出现，具体问题需要看具体原因了。   此库的源码默认应该安装在目录  &#x2F;Library&#x2F;Ruby&#x2F;Gems&#x2F;2.6.0&#x2F;gems&#x2F;cocoapods-imy-bin-0.3.1.3 有熟悉ruby的可以看看具体实现。</p>
+<p><strong>问题list</strong></p>
+<p>1.不支持spec声明FrameWork ，lipo合并静态库不支持FrameWork会出现问题</p>
+<p>2.遇到执行pod bin auto 生成.a 出现搜索源码spec错误，如源码tag版本过多，超出搜索限制 json被截取导致出错</p>
+<p><a target="_blank" rel="noopener" href="https://docs.github.com/cn/rest/search">https://docs.github.com/cn/rest/search</a></p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6a42bda23d92445cba6600958389f4bb~tplv-k3u1fbpfcp-watermark.image" alt="1E FTOr.png"></p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/139894c3622e4dc091dfcb130737b561~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 30.png"><br>3.遇到编译错误就搜索 关键字 1 error 看看是否是依赖某些库没有声明打成二进制，如果有就在xxx.podspec 里边添加对应库的依赖，前提 是此库支持打成二进制</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9c3dccbf719d430480ecef8a256b783d~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/29/iOS%E7%BC%96%E8%AF%91%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="kyan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Next">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Next">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/29/iOS%E7%BC%96%E8%AF%91%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">iOS编译速度优化实践</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-29 10:26:52" itemprop="dateCreated datePublished" datetime="2023-04-29T10:26:52+08:00">2023-04-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景:"></a>背景:</h1><p>随着业务的发展免不了带来工程代码的飞速增加，程的业务代码数量超过10w行的非常普遍，使用的的二方&#x2F;三方 Pod 库的数量也会持续增加，工程的急速膨胀给我们的日常开发中带来了诸多痛点，在项目体量越来越大的情况下，编译速度也随之增长，工程编译速度降低，clean-build 一次需要 10-15min 左右，目前在大部分项目中xcode全部编译一次少则5分钟，多则10多分钟，甚至更久，严重影响开发效率。有时候一个小的改动也需要等待长达好几分钟的编译时间，打包速度降低，在打包提测窗口增加了等待的时长，在硬件资源有限的情况下，并且在不影响业务方开发习惯的前提下，如何解决这些摆在团队面前的难题，便成了我们迫在眉睫的迫切需求。</p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>针对这个问题，做了多方面的探究，从业界方案参考来看大概有以下几种策略去解决。</p>
+<ol>
+<li>xcode 编译选项优化</li>
+<li>编译生成中间产物CCache优化</li>
+<li>直接生成二进制编译</li>
+</ol>
+<h1 id="一-Xcode-编译选项优化"><a href="#一-Xcode-编译选项优化" class="headerlink" title="一. Xcode 编译选项优化"></a>一. Xcode 编译选项优化</h1><h2 id="1-Xcode配置"><a href="#1-Xcode配置" class="headerlink" title="1.Xcode配置"></a>1.Xcode配置</h2><h3 id="1-1-Enable-build-duration-setting-in-Xcode"><a href="#1-1-Enable-build-duration-setting-in-Xcode" class="headerlink" title="1.1. Enable build duration setting in Xcode"></a>1.1. Enable build duration setting in Xcode</h3><p>你可以直接在 Xcode 的 UI 中启用计时器。默认情况下此计时器不可见，但如果在命令行中运行以下命令，则每次构建应用程序时都会显示一个时间。</p>
+<p>启用计时器后，您将在 Xcode 的构建状态栏中看到编译应用程序所需的时间。</p>
+<p>终端输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults write com.apple.dt.Xcode ShowBuildOperationDuration YES</span><br></pre></td></tr></table></figure>
+
+<p>启用计时器后，重启xcode ，您将在 Xcode 的构建状态栏中看到编译应用程序所需的时间。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cf31cd81c5e443bbb9997874645966eb~tplv-k3u1fbpfcp-watermark.image" alt="Bulld Succeededl 17.3785.png"></p>
+<h3 id="1-2使用新的构建系统"><a href="#1-2使用新的构建系统" class="headerlink" title="1.2使用新的构建系统"></a>1.2使用新的构建系统</h3><p>Apple 在 Xcode 9 中推出了一个新的构建系统，但默认情况下并未激活。Apple 的“New Build System”完全用 Swift 编写，旨在提高整体性能和依赖管理。但是，对于 Xcode 10，新的构建设置已默认激活并从<strong>Xcode Files-&gt; Project&#x2F;Workspace Settings启用</strong></p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4137ce399c00429e96a221bcf57eb4f9~tplv-k3u1fbpfcp-watermark.image" alt="Shared Workspace Settinas.png"><br>您可以在工作区设置中或通过调用以下方式启用它：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcodebuild -UseNewBuildSystem=YES.</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="1-3-添加警告以查看函数或表达式是否导致编译时间变长"><a href="#1-3-添加警告以查看函数或表达式是否导致编译时间变长" class="headerlink" title="1.3. 添加警告以查看函数或表达式是否导致编译时间变长"></a>1.3. 添加警告以查看函数或表达式是否导致编译时间变长</h3><p>Xcode 具有内置功能，可让您识别导致编译时间变长的函数和表达式。您可以指定编译时间限制并确定代码库中超出此限制的区域。</p>
+<p>在项目构建设置“其他 Swift 标志”中添加以下行</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-Xfrontend -warn-long-function-bodies=300 </span><br><span class="line"></span><br><span class="line">-Xfrontend -warn-long-expression-type-checking=300</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/48d5ed1e058f43ec80bb85e9aac9b7a1~tplv-k3u1fbpfcp-watermark.image" alt="0_-IHHautFe768XJpz.webp"></p>
+<p>300 整数表示您对函数和表达式设置的编译时限制。它以毫秒为单位。</p>
+<p>如果函数或表达式花费的时间超过您指定的时间，这些标志将警告您。这意味着您必须优化您的函数或表达式。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/95fe13a6447248da9f7808a0a51e4bc0~tplv-k3u1fbpfcp-watermark.image" alt="0N9qavcIVkF05XZ29.png"></p>
+<h3 id="1-4-增加-Xcode-线程数"><a href="#1-4-增加-Xcode-线程数" class="headerlink" title="1.4. 增加 Xcode 线程数"></a>1.4. 增加 Xcode 线程数</h3><p>默认情况下，Xcode 将使用与 CPU 内核数相同的线程数。增加 Xcode 使用的线程数可以显着提高编译性能。这利用了一些处理器的多线程或模拟额外内核的能力。请记住，您可能需要进行试验以确定使用代码库进行并行构建的收益是否递减，然后相应地调整线程数。让我们尝试将 Xcode 配置为使用 3、4 或 8 个线程，看看哪一个为您的用例提供最佳性能。</p>
+<p>您可以设置 Xcode 从终端使用的进程数，如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$defaults write com.apple.Xcode PBXNumberOfParallelBuildSubtasks 4</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 1.5. 增加为 Swift 项目运行的并发构建任务的数量</span><br><span class="line"></span><br><span class="line">在 Xcode 9.2 中，Apple 引入了一项实验性功能，允许 Xcode 并行运行 Swift 构建任务。默认情况下，此功能未启用，您需要从命令行自行打开它。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">默认写入 </span><br></pre></td></tr></table></figure>
+<p>com.apple.dt.Xcode BuildSystemScheduleInherentlyParallelCommandsExclusively -bool YES</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line"></span><br><span class="line">### 1.6. 调整 iOS 模拟器（当然可以选择使用真机）</span><br><span class="line"></span><br><span class="line">Apple iOS 测试模拟器让您可以跨不同的软件和硬件组合进行测试。通过使用 Physical Size 或 Pixel Accurate 窗口大小，您可以减少测试的大小和完成测试所需的时间。最终，这些配置更改使用的资源更少，有助于防止测试速度变慢，可以选择并拖动模拟器的任何角落以调整其大小并根据您的要求进行设置。另外，您可以按 CMD+1、CMD+2 或 CMD+3</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 1.7. 并行构建</span><br><span class="line"></span><br><span class="line">此选项允许 Xcode 通过同时构建不相互依赖的目标来加快总构建时间。对于具有许多可以轻松并行运行的较小依赖项的项目，这可以节省时间。</span><br><span class="line"></span><br><span class="line">在 Xcode 10 中打开项目时，构建并行化应该已经启用。要检查或更改此选项，请打开方案编辑器，在边栏中选择“Build”并确保在顶部选中“Parallelize Build”。</span><br><span class="line"></span><br><span class="line">![2 Shared.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a24de558688d42b286fb70d7cd8d2bf5~tplv-k3u1fbpfcp-watermark.image?)</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">### 1.8. 仅构建活动架构</span><br><span class="line"></span><br><span class="line">当您的调试配置被选中时，您的项目应该只构建活动架构。默认情况下，此设置应处于活动状态，但值得检查以防万一。</span><br><span class="line"></span><br><span class="line">导航到Build Active Architecture Only项目的构建设置中。确保 Debug 设置为Yes并且 release 设置为No。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">![Bulld Active Architecture Only.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0f37af8023474e8c861ef6559396f053~tplv-k3u1fbpfcp-watermark.image?)</span><br><span class="line"></span><br><span class="line">确保为您的调试配置将 Build Active Architecture Only 设置为 Yes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 2.适当的构建设置</span><br><span class="line"></span><br><span class="line">### 2.1. 优化 dSYM 生成</span><br><span class="line"></span><br><span class="line">**DWARF：** 是一种广泛使用的标准化调试数据格式。DWARF 最初是与可执行和可链接格式 (ELF) 一起设计的，尽管它独立于目标文件格式。</span><br><span class="line"></span><br><span class="line">**调试符号 (dSYM)：** 默认情况下，应用程序的调试版本将调试符号存储在已编译的二进制文件中，而应用程序的发布版本将调试符号存储在配套的 dSYM 文件中以减小二进制文件的大小。</span><br><span class="line"></span><br><span class="line">*DWARF* 和带有 *dSYM* 文件的 *DWARF* 有什么区别？</span><br><span class="line"></span><br><span class="line">不同之处在于，对于带有 dSYM 文件的 DWARF，您的存档 app.xcarchive（用于 AdHoc 分发）还包含在崩溃报告中对代码进行反向符号化所需的 dSYM 文件。因此，如果您需要它在归档您的应用程序以进行分发时对崩溃报告进行外部分析，您应该将 DWARF 与 dSYM 文件一起使用。在 OSX 的早期阶段，Apple 不想经历在其链接器中引入[DWARF](http://en.wikipedia.org/wiki/DWARF)支持的麻烦。他们为此目的创建了一个单独的链接器 (dsymutil)，它从目标文件中获取调试信息并将其放在一个普通的地方：一个 dSYM 包。</span><br><span class="line"></span><br><span class="line">虽然 dSYM 捆绑包对发布构建很有用，但在开发过程中不需要它们。调试器可以从构建后仍然存在的中间目标文件中获取调试信息。</span><br><span class="line"></span><br><span class="line">在 XCode 中，我们可以将构建的“调试信息格式”设置为“DWARF”而不是“DWARF with dSYM File”。</span><br><span class="line"></span><br><span class="line">确保您设置Debug Information Format为始终为您的发布版本和未在模拟器上运行的调试版本创建 dSYM 文件。在 iOS 模拟器上运行时不需要创建它们。</span><br><span class="line"></span><br><span class="line">![Debug informatlon Format.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a0e87fa618eb4c8199c04f747020761f~tplv-k3u1fbpfcp-watermark.image?)</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在 iOS 模拟器上运行时不应生成 dSYM 文件，但应为所有其他实例生成</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 2.2. 全模块优化 (WMO)</span><br><span class="line"></span><br><span class="line">在 Xcode 中，我们可以选择三个优化级别：*None*、*Fast* 和 *Fast*、*Whole Module Optimization*。</span><br><span class="line"></span><br><span class="line">使用 Whole Module Optimization 使编译速度非常快。但是选择快速或快速，整个模块优化将不允许开发人员调试应用程序。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">![Faet, Whale.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/269f1b2bab4d40b9b88a2b1091918f74~tplv-k3u1fbpfcp-watermark.image?)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 2.3 优化级别</span><br><span class="line"></span><br><span class="line">优化级别有两个不同的部分</span><br><span class="line"></span><br><span class="line">1.Apple LLVM 9.0 Code Generation -&gt; Optimization Level -&gt; Debug **GCC_OPTIMIZATION_LEVEL**  </span><br><span class="line">有6个优化级别。</span><br><span class="line"></span><br><span class="line">GCC_OPTIMIZATION_LEVEL =  </span><br><span class="line">fast（最快和积极的优化）  </span><br><span class="line">s（最快和最小）  </span><br><span class="line">3（最快）  </span><br><span class="line">2（更快）  </span><br><span class="line">1（快）  </span><br><span class="line">0（无）</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">![0xyvuOAWqdaJKE5_l.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/52e028956565440c904685d114381d00~tplv-k3u1fbpfcp-watermark.image?)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2. Swift Compiler Code Generation -&gt; Optimization Level -&gt; Debug **SWIFT_OPTIMIZATION_LEVEL**</span><br><span class="line"></span><br><span class="line">有3个优化级别SWIFT_OPTIMIZATION_LEVEL =-Onone-O (Fast Single File Optimization)-Owholemodule (Fast, Whole Module Optimization)</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">![Optimization Leval.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ef603635d5db4b9491e1b7b32cecafbf~tplv-k3u1fbpfcp-watermark.image?)</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">使用*Whole Module Optimization*使编译速度非常快。但是选择快速或快速，整个模块优化将不允许开发人员调试应用程序。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 3.代码优化</span><br><span class="line"></span><br><span class="line">### 3.1 优化代码</span><br><span class="line"> 我们可以优化代码，这将有助于我们缩短编译时间。我们添加了其他链接器标志-warn-long-function-bodies &amp; -warn-long-expression-type-checking来识别编译时间过长的函数和表达式，现在我们需要手动优化这些表达式或函数.</span><br><span class="line">-   对类本身中扩展 v 的方法中的方法进行基准测试。</span><br><span class="line">-   添加类型注释，以便编译器不需要推断类型。</span><br><span class="line">-   避免三元运算符， **?:** 。</span><br><span class="line">-   通过手动解包来避免使用 nil 合并运算符**if let**。</span><br><span class="line">-   使用字符串插值而不是连接。</span><br><span class="line"></span><br><span class="line">### 3.2 第三方依赖</span><br><span class="line"></span><br><span class="line">有一些非常流行的依赖管理技术/工具：Cocoa Pod、Carthage、Swift Package Manager、git Submodule。</span><br><span class="line"></span><br><span class="line">在 iOS 项目中处理 3rd 方依赖项的最常见方法是使用 CocoaPods。它使用简单，但如果您关心构建时间，则它不是最佳选择。</span><br><span class="line"></span><br><span class="line">您可以使用的一种替代方法是[Carthage](https://github.com/Carthage/Carthage)。它比 CocoaPods 更难使用，但它会缩短您的构建时间。</span><br><span class="line"></span><br><span class="line">### 3.3 优化 CocoaPods</span><br><span class="line"></span><br><span class="line">如果您使用 CocoaPods，您可以通过将以下内容添加到 Podfile 的末尾来优化所有依赖项。</span><br><span class="line"></span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+
+<p>post_install 执行 |installer| </p>
+<p>  installer.pods_project.targets.each 做|目标| </p>
+<p>    target.build_configurations.each 做 |config| </p>
+<p>      如果 config.name &#x3D;&#x3D; ‘Debug’ </p>
+<p>        config.build_settings[‘OTHER_SWIFT_FLAGS’] &#x3D; [‘$(inherited)’, ‘-Onone’] </p>
+<p>        config.build_settings[‘SWIFT_OPTIMIZATION_LEVEL’] &#x3D; ‘-Owholemodule’ </p>
+<p>      end </p>
+<p>    end </p>
+<p>  end </p>
+<p>end</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 3.4 对代码的小改动</span><br><span class="line"></span><br><span class="line">-   当您知道不需要覆盖声明时，请使用“final”。关键字final是对类、方法或属性的声明的限制，使得声明不能被覆盖。这意味着编译器可以发出直接函数调用而不是间接调用。</span><br><span class="line">-   当不需要在文件外部访问声明时，使用“private”和“fileprivate”。将private或fileprivate关键字应用于声明会将声明的可见性限制在声明它的文件中。这允许编译器能够确定所有其他可能覆盖的声明。</span><br><span class="line">-   在数组中使用值类型：在 Swift 中，类型可以分为两个不同的类别：值类型（结构、枚举、元组）和引用类型（类）。一个关键的区别是值类型不能包含在 NSArray 中。因此，当使用值类型时，优化器可以消除 Array 中的大部分开销，这些开销是处理数组支持 NSArray 的可能性所必需的。</span><br><span class="line">-   其他...</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 二. 编译生成中间产物CCache优化</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[**https://github.com/ccache/ccache**](https://github.com/ccache/ccache)</span><br><span class="line"></span><br><span class="line">[**https://ccache.dev/performance.html**](https://ccache.dev/performance.html)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Ccache 是一个编译器缓存。它通过缓存以前的编译并检测何时再次进行相同的编译来[加速重新编译。](https://ccache.dev/performance.html)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cache 的性能取决于很多因素，这使得很难预测给定用例的改进。如果预期命中率较低，则由于缓存未命中的开销（通常为 5%-20%，但启用依赖模式时仅为 1%-3%），使用 ccache 时可能会出现净性能损失). 此外，如果与构建工具（编译器、链接器等）使用的内存量相比构建机器的内存不足，则使用 ccache 可能会降低性能，因为 ccache 的缓存文件可能会刷新操作系统磁盘中的其他文件缓存。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">![CCache流程.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b5dfac365c1d4e90b1b94e9566e601c3~tplv-k3u1fbpfcp-watermark.image?)</span><br><span class="line"></span><br><span class="line">优点：</span><br><span class="line"></span><br><span class="line">1.  无侵入、无影响现有的业务的要求，无入侵、开发人员无感知。</span><br><span class="line">1.  在某些情况下能大幅度地提升编译速度。</span><br><span class="line">1.  不需要对项目作出大调整，只需部署相关环境和一些脚本支持。</span><br><span class="line">1.  不需要改变开发工具链。</span><br><span class="line">1.  同一个目录下，CCache 的缓存命中率相对稳定。</span><br><span class="line"></span><br><span class="line">存在些某问题：</span><br><span class="line"></span><br><span class="line">1.  在未有缓存的情况下，首次打包编译的时间比原来的翻近一倍，原来20+min，首次将近40+min，在资源紧张的情况下，甚至是更多。</span><br><span class="line">1.  修改一些引用较多的文件（如公共库、底层库改动），容易造成大范围的缓存失效，速度会变得比原来未使用ccache时更慢。</span><br><span class="line">1.  多个项目相同的组件不支持缓存共享，有多个分支打包的需求，修改目录名称后，缓存即失效。</span><br><span class="line">1.  机器的Ccache有最大的缓存上限，且Debug/Release区别缓存，多个项目、多个分支很容易超出上限，一台Ci机器同时支持多个项目会触发CCache清缓存。</span><br><span class="line">1.  对机器硬盘读写要求高，如不是全部固态硬盘，速度影响大。</span><br><span class="line">1.  CCache 不支持 Clang Modules，系统框架例如 AVFoundation、CoreLocation等， Xcode 不会再帮你自动引入，会导致编译失败。</span><br><span class="line">1.  CCache 不支持 PCH 文件</span><br><span class="line">1.  CCache 目前不支持 Swift</span><br><span class="line"></span><br><span class="line"># 三. 直接生成二进制编译</span><br><span class="line"></span><br><span class="line">先看下编译流程，我们每次编译工程大概如下，那么如果能直接省略前边从预处理到生成二进制文件的过程，不就解决了编译时间的问题么。</span><br><span class="line"></span><br><span class="line">![AST.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/51d7b2d4f216432d90ee99a13f596a3d~tplv-k3u1fbpfcp-watermark.image?)</span><br><span class="line"></span><br><span class="line">## 1.cocoapods-binary</span><br><span class="line"></span><br><span class="line">cocoapods-binary 通过开关，在 pod insatll 的过程中进行 library 的预编译，生成 framework，并自动集成到项目中</span><br><span class="line"></span><br><span class="line">整个预编译工作分成了三个阶段来完成：</span><br><span class="line"></span><br><span class="line">- binary pod 的安装</span><br><span class="line">- binary pod 的预编译</span><br><span class="line">- binary pod 的集成</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**Binary Pod 的安装**</span><br><span class="line"></span><br><span class="line">Binary Pod 的安装作是以 pre_install hook 作为入口，开始插件的运作。</span><br><span class="line"></span><br><span class="line">![pod install.webp](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6edd7df942a045278c08a021b230e0e6~tplv-k3u1fbpfcp-watermark.image?)</span><br><span class="line"></span><br><span class="line">**Binary Pod 的预编译**</span><br><span class="line"></span><br><span class="line">cocoapods-binary 在下载 binary pod 源码前会先检查是否已经有预编译好的二进制包，如果没有缓存才会开始binary pod 的下载和预编译。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">![oodinstall.webp](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ca440e32686345f7b40187e2978d91bf~tplv-k3u1fbpfcp-watermark.image?)</span><br><span class="line"></span><br><span class="line">**binary pod 的集成**</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">具体可以看 &lt;https://github.com/leavez/cocoapods-binary&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**存在很多限制**</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1.CocoaPods 在 1.7 以上版本修改了 framework 生成逻辑，不会把 bundle copy 至 framework，因此需要将 Pod 环境固定到 1.6.2；</span><br><span class="line"></span><br><span class="line">2.pod 要支持 binary，header ref 需要变更为 #import &lt;&gt; 或者 @import 以符合 moduler 标准；</span><br><span class="line"></span><br><span class="line">3.需要统一开发环境。如果项目支持 Swift，不同 compiler 编译产物有 Swift 版本兼容问题；</span><br><span class="line"></span><br><span class="line">4.最终的 binary 体积比使用源码的时候大一点，不建议最终上传 Store</span><br><span class="line"></span><br><span class="line">5.如果需要 debug 就需要切换回源码，或者通过 dSYM 映射来完成方法对定位。</span><br><span class="line"></span><br><span class="line">6.适用于人数不多的中小型项目。一旦项目依赖库较多，可能就不太适用了，限制太多，同时对开发的要求和环境的一致性要求比较高。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 2.  cocoapods-imy-bin（前提需要先实现组件化）</span><br><span class="line"></span><br><span class="line">**优点：**</span><br><span class="line">1. 无侵入、无影响现有的业务。</span><br><span class="line">3. 不影响未接入二进制化方案的业务团队，提供配置文件。 </span><br><span class="line">5. 只要项目能编译通过就制作，即使独立组件编译失败。</span><br><span class="line">7. 支持无二进制版本时，自动采用源码版本。</span><br><span class="line">9. 支持只需项目能编译通过就能制作二进制组件，无需再关心pod lint等。</span><br><span class="line">11. 支持pod bin local 命令一键自动化制作、上传、存储项目本地已经存在的二进制组件，可配合ci打包的编译产物使用。</span><br><span class="line">13. 支持指定依赖分支、支持:podspec =&gt;&#x27;&#x27;, :git 方式的引用</span><br><span class="line">15. 支持同时 .a、Framework 静态库产出</span><br><span class="line">17. 支持archive时，根据Podfile自动获取podsepc依赖的库，无需强制去spec仓库拉取。</span><br><span class="line">19. 支持多套隔离环境，如Debug/Release/Dev配置，方便为Debug/Release/Dev各种环境提供专用二进制组件。</span><br><span class="line">21. 支持输出.a二进制组件制作binary.podsepc无需模板。</span><br><span class="line">23. 支持稳定的二进制组件，在上传二进制组件的binary.podsepc跳过pod lint验证，加快速度。</span><br><span class="line">25. 支持pod bin auto 命令一键自动化制作、上传、存储单个二进制组件</span><br><span class="line">27. 支持pod bin auto --all-make 命令一键自动化制作、上传、存储该项目下所有组件的二进制组件</span><br><span class="line">29. 支持 是否使用二进制文件、是否制作二进制文件和二进制/源码调试功能的白名单设置</span><br><span class="line">31. 支持pod install/update 多线程模式，加快pod过程，**Pod速度提升80%+** 。</span><br><span class="line">33. 支持pod bin install/update 命令，实现无入侵修改Podfile内容，避免直接修改工程的Podfile文件而导致提交冲突、误提交。</span><br><span class="line">35. 支持pod bin code命令，实现二进制库不切换源码库、程序无需重新运行的调试能力</span><br><span class="line"></span><br><span class="line">**缺点：**</span><br><span class="line"></span><br><span class="line">**这个方案的前提是实现组件化**</span><br><span class="line"></span><br><span class="line">在实施组件私有化后，就真正实现了代码仓库隔离，各业务线同学都会在自己的业务组件内开发，需求开发完成后将 podspec 提交到私有源，壳工程执行 pod update 即可将新开发的业务组件更新下来，就可以直接打包提测了。其实组件拆分算得上是体力活，但这是二进制的基础，这个结构搭不好二进制将无从谈起。</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"> ### 单私有源方案</span><br><span class="line"> </span><br><span class="line"> ![pod 私有库.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/373beffcc7b3467b82fb61b8d5723349~tplv-k3u1fbpfcp-watermark.image?)</span><br><span class="line"></span><br><span class="line">二进制目前市场上有单私有源、双私有源两种可行方案，下面对这两种方案进行下简单的说明：</span><br><span class="line"></span><br><span class="line">单私有源指的是只有一个装 podspec 的私有仓库，也就是上面图中的 PrivateRepo 仓库。那么一个仓库怎么实现源码与二进制的切换呢？其实也很简单，通过在 podspec 配置环境变量即可，总结有如下几步：</span><br><span class="line"></span><br><span class="line">1.  在 Class 同级目录下创建 Lib 文件夹，将二进制 framework 拷贝其中，并推送至远程仓库 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>├── Assets</strong></p>
+<p><strong>│   └── Media.xcassets</strong></p>
+<p><strong>│       ├── Contents.json</strong></p>
+<p><strong>│       └── cb_fx.imageset</strong></p>
+<p><strong>│           ├── Contents.json</strong></p>
+<p><strong>├── Classes</strong></p>
+<p><strong>│   ├── HelloWorld.h</strong></p>
+<p><strong>│   └── HelloWorld.m</strong></p>
+<p><strong>└── Lib</strong></p>
+<p><strong>└── HelloWorld.framework</strong></p>
+<p><strong>├── Headers -&gt; Versions&#x2F;Current&#x2F;Headers</strong></p>
+<p><strong>├── HelloWorld -&gt; Versions&#x2F;Current&#x2F;HelloWorld</strong></p>
+<p><strong>├── Resources -&gt; Versions&#x2F;Current&#x2F;Resources</strong></p>
+<p><strong>└── Versions</strong></p>
+<p><strong>├── A</strong></p>
+<p><strong>│   ├── Headers</strong></p>
+<p><strong>│   │   ├── HelloWorld.h</strong></p>
+<p><strong>│   │   ├── ClassA.h</strong></p>
+<p><strong>│   │   ├── ClassB.h</strong></p>
+<p><strong>│   │   └── ClassC.h</strong></p>
+<p><strong>│   ├── HelloWorld</strong></p>
+<p><strong>│   └── Resources</strong></p>
+<p><strong>│       └── HelloWorld.bundle</strong></p>
+<p><strong>│           ├── Assets.car</strong></p>
+<p><strong>│           └── Info.plist</strong></p>
+<p><strong>└── Current -&gt; A</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1.  通过环境变量，修改 podspec 的 sourcefile 指向：</span><br></pre></td></tr></table></figure>
+
+<p><strong>if ENV[‘IS_SOURCE’] || ENV[“#{s.name}_SOURCE”]</strong></p>
+<p><strong>s.source_files &#x3D; “#{s.name}&#x2F;Classes&#x2F;</strong>&#x2F;<em>“</em>*</p>
+<p><strong>else</strong></p>
+<p><strong>s.ios.vendored_frameworks &#x3D; “#{s.name}&#x2F;Lib&#x2F;#{s.name}.framework”</strong></p>
+<p><strong>end</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2.  设置 preserve_paths</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>s.preserve_paths &#x3D; “#{s.name}&#x2F;Lib&#x2F;</strong>&#x2F;<em>.framework”,”#{s.name}&#x2F;Classes&#x2F;**&#x2F;</em>“**</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">podspec 中配置 preserve_paths，确保缓存中同时存在源码和二进制的资源及文件，因为 pod 的缓存机制，如果不设置的话在源码和二进制切换时会产生文件的丢失，导致切换时会产生不可预知的问题。</span><br><span class="line"></span><br><span class="line">3. 将 podspec 发布到 PrivateRepo 即可。</span><br><span class="line"></span><br><span class="line">完成上面的配置，通过在终端输入：IS_SOURCE pod install 和 pod install 来安装源码和二进制 。如果想要某个库是源码，其他的库为二进制形式，以上图 HelloWorld 为例子，通过输入 HelloWorld_SOURCE pod install 即可让 HelloWorldrepo 为源码形式，其他的组件库为二进制形式。</span><br><span class="line"></span><br><span class="line">虽然单私有源单版本的方案可以实现源码与二进制的转换，但是我们觉得这个方案存在以下不妥：</span><br><span class="line"></span><br><span class="line">1.  如果想要对多个组件进行二进制源码的切换将会非常繁琐，pod 命令因为要在终端输入 SOURCE 的缘故也会变得非常长。</span><br><span class="line">1.  破坏了 pod 的缓存机制，pod 的缓存流程可以简单理解如下：</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">![pod instal.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5324d71671aa4fdfa9ecb77715efc63b~tplv-k3u1fbpfcp-watermark.image?)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">通过上面读取缓存的流程可以看出，如果组件本地只有源码的形式存在，会无法安装二进制，因为本地已经存在了就不会再去 git 上拉取二进制了。这个问题也可以解决，按照上图的思路，将一级和二级缓存删除掉，这样 pod 会直接去下载 git 上的组件进行安装。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">考虑到团队内不可能每个人都对这些流程很熟悉的缘故，这会对大家日常工作影响较大，毕竟它对 Cocoapods 的缓存机制有所入侵，另外随着二进制版本增多，git 仓库也会越来越庞大，最终就有了双私有源方案。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 双私有源方案</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">双私有源的方案是本篇的重点，cocoapods-bin 正是采用的这种方案，它指的是有两个装 podspec 的仓库，一个装源码的 podspec，例如前面说到的 PrivateRepo 仓库，另一个装二进制版本的 podspec，暂时将它起名叫 PrivateRepo_Bin，另外还需要一个静态服务器，用来存储二进制的 zip 包，供别人安装。</span><br><span class="line"></span><br><span class="line">双私有源的方案相对单私有源来说稍复杂些，额外需要将二进制包上传到 zip 服务器中，再生成一个二进制版本的 podspec，将其发布到二进制私有源 。让团队的所有同学都来维护二进制版本的 podspec 和二进制 zip 包无疑会严重拖累大家的工作效率，cocoapods-bin 这类插件正是为了解决这些问题，后面会通过 cocoapods-core 源码和 cocoapods-bin 源码来分析二进制插件的背后原理。</span><br><span class="line"></span><br><span class="line">源码 podspec 和二进制 podspec 的大致区别如下：</span><br></pre></td></tr></table></figure>
+
+<p>{</p>
+<p>  …省略</p>
+<p>  “source”: {</p>
+<p>    “git”: “<a target="_blank" rel="noopener" href="https://github.com/xxx/xxx.git">https://github.com/xxx/xxx.git</a>“,</p>
+<p>    “tag”: “0.1.0”,</p>
+<p>  },</p>
+<p>  “resource_bundles”: {</p>
+<p>    “xxx”: [</p>
+<p>      “xxx&#x2F;Assets&#x2F;**&#x2F;*.xcassets”</p>
+<p>    ]</p>
+<p>  },</p>
+<p>  “source_files”: “xxx&#x2F;Classes&#x2F;**&#x2F;*”,</p>
+<p>}</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"> ```</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  ...省略</span><br><span class="line"></span><br><span class="line">  &quot;source&quot;: &#123;</span><br><span class="line"></span><br><span class="line">    &quot;http&quot;: &quot;http://localhost:8080/frameworks/xxx/0.1.0/zip&quot;,</span><br><span class="line"></span><br><span class="line">    &quot;type&quot;: &quot;zip&quot;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  &quot;resources&quot;: [</span><br><span class="line"></span><br><span class="line">    &quot;xxx.framework/Versions/A/Resources/*.bundle&quot;</span><br><span class="line"></span><br><span class="line">  ],</span><br><span class="line"></span><br><span class="line">  &quot;ios&quot;: &#123;</span><br><span class="line"></span><br><span class="line">    &quot;vendored_frameworks&quot;: &quot;xxx.framework&quot;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+
+<p>它们主要区别在 source_files 和 vendored_frameworks，将源码的 podspec 修改一下，通过 pod repo push PrivateRepo_Bin HelloMoto.podspec 命令将其发布到 PrivateRepo_Bin 仓库。双私有源的架构图如下：</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d022f76261f34084ad636750576aad5a~tplv-k3u1fbpfcp-watermark.image" alt="pod  二进制.png"></p>
+<h3 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h3><p>iOS 有两种类型的静态库，一种是 .a 后缀，另一种是 .framework 后缀结尾，其实它们本质没有什么区别，都是被多个 .o 打包而成，只不过 .a 是一个纯二进制文件，需要配合 .h 和资源文件一起使用，.framework 内包含头文件和资源文件可以直接使用。但是引用 .framework 需要使用 &lt;&gt; 方式，.a 库可直接使用 “” ，具体使用那种格式可以酌情而定。</p>
+<h3 id="二进制打包"><a href="#二进制打包" class="headerlink" title="二进制打包"></a>二进制打包</h3><p><a href="https://link.juejin.cn/?target=https://github.com/square/cocoapods-generate">cocoapods-generate</a></p>
+<p>cocoapods-generate 是 cocoapods-packager 作者的另一个插件，它提供了构建工程的能力，和 cocoapods-packager 相比缺失了构建 framework 功能。但它有个好处，不依赖 git，可以直接根据提供的 podspec 文件在本地生成对应的工程。生成工程后，可以自定义打包脚本，使用 xcodebuild 相关命令构建对应二进制。开发 Cocoapods Plugin 的时候，配置上 Gemfile 依赖即可使用 cocoapods-generate：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">group :debug do</span><br><span class="line"></span><br><span class="line">    gem &#x27;ruby-debug-ide&#x27;</span><br><span class="line"></span><br><span class="line">    gem &#x27;debase&#x27;,&#x27;0.2.5.beta1&#x27;</span><br><span class="line"></span><br><span class="line">    gem &#x27;rake&#x27;,&#x27;13.0.0&#x27;</span><br><span class="line"></span><br><span class="line">    gem &quot;cocoapods&quot;, &#x27;1.9.3&#x27;</span><br><span class="line"></span><br><span class="line">    gem &quot;cocoapods-generate&quot;,&#x27;2.0.0&#x27;</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>执行 bundle install 后，就可以直接在插件脚本内使用了：</p>
+<h3 id="二进制上传"><a href="#二进制上传" class="headerlink" title="二进制上传"></a>二进制上传</h3><p>二进制上传主要是配置环境：</p>
+<ol>
+<li>二进制文件上传前需要先搭建 mongodb 数据库，用来存储二进制相关信息，例如包名、版本等。可以直接通过 Homebrew 执行 brew install <a href="mailto:&#x6d;&#111;&#x6e;&#x67;&#x6f;&#x64;&#x62;&#x2d;&#99;&#111;&#x6d;&#x6d;&#117;&#110;&#105;&#x74;&#121;&#x40;&#x34;&#x2e;&#50;">&#x6d;&#111;&#x6e;&#x67;&#x6f;&#x64;&#x62;&#x2d;&#99;&#111;&#x6d;&#x6d;&#117;&#110;&#105;&#x74;&#121;&#x40;&#x34;&#x2e;&#50;</a> 安装，推荐一个 mongodb 的可视化工具：<a href="https://link.juejin.cn/?target=https://robomongo.org/download?inappupdate">Robo 3T</a>。</li>
+<li>下载 <a href="https://link.juejin.cn/?target=https://github.com/tripleCC/binary-server">binary-server</a> 代码，在 mongodb 跑起来之后，cd 到 binary-server 下，执行 npm install 和 npm start。</li>
+<li>终端执行上传命令（详细参考 <a href="https://link.juejin.cn/?target=https://github.com/tripleCC/binary-server/blob/master/README.md">binary-server&#x2F;README.md</a>）：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl &#x27;上传url&#x27; -F &quot;name=#&#123;@spec.name&#125;&quot; -F &quot;version=#&#123;@spec.version&#125;&quot; -F &quot;annotate=#&#123;@spec.name&#125;_#&#123;@spec.version&#125;_log&quot; -F &quot;file=@#&#123;zip_file&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="创建二进制-podspec"><a href="#创建二进制-podspec" class="headerlink" title="创建二进制 podspec"></a>创建二进制 podspec</h3><p>了解二进制 podspec 生成之前，需要先了解 Cocoapods 是如何读取 podspec 文件的。在执行 pod install 后，Cocoapods 在解析依赖的过程中，根据 podfile.lock 指定的版本，构建 Specification（定义在 cocoapod-core 中用来描述 podspec 的对象） 对象。</p>
+<p>cocoapods-core&#x2F;specification.rb</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">def self.from_file(path, subspec_name = nil)</span><br><span class="line"></span><br><span class="line">  #目标 .podspec 的本地路径</span><br><span class="line"></span><br><span class="line">  path = Pathname.new(path)</span><br><span class="line"></span><br><span class="line">  #校验 podspec 是否存在</span><br><span class="line"></span><br><span class="line">  unless path.exist?</span><br><span class="line"></span><br><span class="line">    raise Informative, &quot;No podspec exists at path `#&#123;path&#125;`.&quot;</span><br><span class="line"></span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  #文件转为 utf-8 格式字符串</span><br><span class="line"></span><br><span class="line">  string = File.open(path, &#x27;r:utf-8&#x27;, &amp;:read)</span><br><span class="line"></span><br><span class="line">  # Work around for Rubinius incomplete encoding in 1.9 mode</span><br><span class="line"></span><br><span class="line">  if string.respond_to?(:encoding) &amp;&amp; string.encoding.name != &#x27;UTF-8&#x27;</span><br><span class="line"></span><br><span class="line">    string.encode!(&#x27;UTF-8&#x27;)</span><br><span class="line"></span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  #执行或解析string</span><br><span class="line"></span><br><span class="line">  from_string(string, path, subspec_name)</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>cocoapods-core&#x2F;specification.rb</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">def self.from_string(spec_contents, path, subspec_name = nil)</span><br><span class="line"></span><br><span class="line">  path = Pathname.new(path).expand_path</span><br><span class="line"></span><br><span class="line">  spec = nil</span><br><span class="line"></span><br><span class="line">  case path.extname</span><br><span class="line"></span><br><span class="line">  #解析 .podspec</span><br><span class="line"></span><br><span class="line">  when &#x27;.podspec&#x27;</span><br><span class="line"></span><br><span class="line">    Dir.chdir(path.parent.directory? ? path.parent : Dir.pwd) do</span><br><span class="line"></span><br><span class="line">      #通过 eval 执行 Pod::Specification::DSL 内定义的方法</span><br><span class="line"></span><br><span class="line">      spec = ::Pod._eval_podspec(spec_contents, path)</span><br><span class="line"></span><br><span class="line">      unless spec.is_a?(Specification)</span><br><span class="line"></span><br><span class="line">        raise Informative, &quot;Invalid podspec file at path `#&#123;path&#125;`.&quot;</span><br><span class="line"></span><br><span class="line">      end</span><br><span class="line"></span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">   #解析 .json</span><br><span class="line"></span><br><span class="line">  when &#x27;.json&#x27;</span><br><span class="line"></span><br><span class="line">    #string 转为 hash 存储到 Specification 中</span><br><span class="line"></span><br><span class="line">    spec = Specification.from_json(spec_contents)</span><br><span class="line"></span><br><span class="line">  else</span><br><span class="line"></span><br><span class="line">    raise Informative, &quot;Unsupported specification format `#&#123;path.extname&#125;` for spec at `#&#123;path&#125;`.&quot;</span><br><span class="line"></span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  spec.defined_in_file = path</span><br><span class="line"></span><br><span class="line">  spec.subspec_by_name(subspec_name, true)</span><br><span class="line"></span><br><span class="line">end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>由此可以看出，podspec 文件支持两种扩展名，podspec 和 json，分别以不同的方式处理。</p>
+<h3 id="关于二进制源码切换（美团方案）"><a href="#关于二进制源码切换（美团方案）" class="headerlink" title="关于二进制源码切换（美团方案）"></a>关于二进制源码切换（美团方案）</h3><p> <a href="https://link.juejin.cn/?target=https://github.com/MeetYouDevs/cocoapods-imy-bin">cocoapods-imy-bin</a>支持源码切换和调试，具体实现原理应该和美团<strong>zsource</strong>类似</p>
+<p>Xcode 在编译 Debug 版本的二进制过程中，在二进制中某个字段存储了该二进制所对应的源码的文件地址。当我们在 Xcode 中打断点进行调试的时候，Xcode 会根据二进制中这个字段中存储的源码文件地址，打开对应的源码文件，并在 UI 上展示该源码文件</p>
+<p>我们都知道苹果的 Mach-O 二进制文件使用的是 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/DWARF">DWARF</a> 这种格式来存放调试相关的数据的。但因为我们很难从这个问题中提炼几个精确的关键词在搜索引擎中检索，所以很难通过简单的几次检索就获取到我们想要的答案：二进制这个字段的名称，在初期甚至无法确定这个字段应该是从 Mach-O 的资料中检索还是从 DWARF 的资料中检索。</p>
+<p>通过实验，确定了二进制中源码文件的路径确实是用普通的字符来存储的；紧接着，我们用 MachOViewer 来查看二进制文件，以获取到更友好的二进制信息。利用 MachOViewer，我们可以发现这些信息都存在了二进制的 “__debug_str” Section 中。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/202ac433d0d04db79a84ad1bc86e7611~tplv-k3u1fbpfcp-watermark.image" alt="foo.m.png"></p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/126540df2b7c46019c8edf1cca596925~tplv-k3u1fbpfcp-watermark.image" alt="d916cfe6bcbcd140837d44932a1a9d0c566355.jpg"></p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9e70329f4c184683ae1a77ff035d5479~tplv-k3u1fbpfcp-watermark.image" alt="AT-nane(userscang3teorkspaceMeftuanZSourcezscVfewController.n.jpg"></p>
+<p>AT_name</p>
+<p>AT_comp_dir</p>
+<p>通过实验，以及找到的这两个字段的描述，我们基本可以确定，即便工程是使用二进制构建，只要二进制 AT_name 字段中的路径存在对应的源码文件，App 一样可以使用源码进行断点调试。这种调试方式除了修改源码再次构建不能生效以外，其他的调试场景都和直接使用源码构建无异。考虑到我们日常的调试场景绝大多数都只需要查看其他组件的源码，并不需要修改，把这个功能工程化还是非常有意义的。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h1><p>以上功能  <a href="https://link.juejin.cn/?target=https://github.com/MeetYouDevs/cocoapods-imy-bin">cocoapods-imy-bin</a> 基本上都已实现，自己也在项目中运用过，但是遇到了部分库 依赖的问题，导致业务库有些无法生成成功，最后只是尝试在三方库实现了如上流程，也算是一个探索过程。也希望能给大家带来一定的思路和启发。，有兴趣可以去研究下 <a href="https://link.juejin.cn/?target=https://github.com/MeetYouDevs/cocoapods-imy-bin">cocoapods-imy-bin</a> 源码实现。</p>
+<p>参考:</p>
+<p><a target="_blank" rel="noopener" href="https://ricardo-castellanos-herreros.medium.com/speeding-up-xcode-builds-97173cb1adba">https://ricardo-castellanos-herreros.medium.com/speeding-up-xcode-builds-97173cb1adba</a></p>
+<p><a target="_blank" rel="noopener" href="https://tech.meituan.com/2019/08/08/the-things-behind-the-ios-project-zsource-command.html">https://tech.meituan.com/2019/08/08/the-things-behind-the-ios-project-zsource-command.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6903407900006449160">https://juejin.cn/post/6903407900006449160</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
