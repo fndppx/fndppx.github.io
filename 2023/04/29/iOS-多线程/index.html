@@ -19,27 +19,34 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="本文主要梳理iOS 内存管理 核心知识  NSThread 多线程和锁 GCD NSOperation  1.  NSThread 2.  多线程和锁 OSSpinLock dispatch_semaphore pthread_mutex NSLock NSCondition pthread_mutex(recursive) NSRecursiveLock NSConditionLock @syn">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2023/04/22/hello-world/index.html">
+<meta property="og:title" content="iOS 多线程">
+<meta property="og:url" content="http://example.com/2023/04/29/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Next">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="本文主要梳理iOS 内存管理 核心知识  NSThread 多线程和锁 GCD NSOperation  1.  NSThread 2.  多线程和锁 OSSpinLock dispatch_semaphore pthread_mutex NSLock NSCondition pthread_mutex(recursive) NSRecursiveLock NSConditionLock @syn">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-04-22T02:23:50.161Z">
-<meta property="article:modified_time" content="2023-04-22T02:23:50.161Z">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6132eaa2c474437cb9f629b23b29b30f~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/86e3d6fa59e343b1aa4a6b438378d1b5~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/74dda8241b30428bb560633f1aca5db2~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/213a5eb5c07c4662b7f2a7b1cbff50df~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5ec7de717e4e4ac28ff24ce966d970f7~tplv-k3u1fbpfcp-watermark.image">
+<meta property="article:published_time" content="2023-04-29T03:01:48.000Z">
+<meta property="article:modified_time" content="2023-04-29T03:01:57.427Z">
 <meta property="article:author" content="kyan">
+<meta property="article:tag" content="iOS 知识汇总">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6132eaa2c474437cb9f629b23b29b30f~tplv-k3u1fbpfcp-watermark.image">
 
 
-<link rel="canonical" href="http://example.com/2023/04/22/hello-world/">
+<link rel="canonical" href="http://example.com/2023/04/29/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/04/22/hello-world/","path":"2023/04/22/hello-world/","title":"Hello World"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/04/29/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B/","path":"2023/04/29/iOS-多线程/","title":"iOS 多线程"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hello World | Next</title>
+<title>iOS 多线程 | Next</title>
   
 
 
@@ -104,7 +111,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-NSThread"><span class="nav-number">1.</span> <span class="nav-text">1.  NSThread</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E9%94%81"><span class="nav-number">2.</span> <span class="nav-text">2.  多线程和锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-GCD"><span class="nav-number">3.</span> <span class="nav-text">3.  GCD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-NSOperation"><span class="nav-number">4.</span> <span class="nav-text">4.  NSOperation</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -153,7 +160,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/22/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/29/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -166,12 +173,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Hello World | Next">
+      <meta itemprop="name" content="iOS 多线程 | Next">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          iOS 多线程
         </h1>
 
         <div class="post-meta-container">
@@ -181,8 +188,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2023-04-22 10:23:50" itemprop="dateCreated datePublished" datetime="2023-04-22T10:23:50+08:00">2023-04-22</time>
+      <time title="Created: 2023-04-29 11:01:48 / Modified: 11:01:57" itemprop="dateCreated datePublished" datetime="2023-04-29T11:01:48+08:00">2023-04-29</time>
     </span>
 
   
@@ -195,19 +203,29 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6132eaa2c474437cb9f629b23b29b30f~tplv-k3u1fbpfcp-watermark.image" alt="552ccf48ef6a14c8692f56aa84e42c4182b412e2.jpg"><br>本文主要梳理iOS 内存管理 核心知识</p>
+<ol>
+<li>NSThread</li>
+<li>多线程和锁</li>
+<li>GCD</li>
+<li>NSOperation</li>
+</ol>
+<h2 id="1-NSThread"><a href="#1-NSThread" class="headerlink" title="1.  NSThread"></a>1.  NSThread</h2><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/86e3d6fa59e343b1aa4a6b438378d1b5~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="2-多线程和锁"><a href="#2-多线程和锁" class="headerlink" title="2.  多线程和锁"></a>2.  多线程和锁</h2><ul>
+<li>OSSpinLock</li>
+<li>dispatch_semaphore</li>
+<li>pthread_mutex</li>
+<li>NSLock</li>
+<li>NSCondition</li>
+<li>pthread_mutex(recursive)</li>
+<li>NSRecursiveLock</li>
+<li>NSConditionLock</li>
+<li>@synchronized</li>
+<li>atomic</li>
+</ul>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/74dda8241b30428bb560633f1aca5db2~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="3-GCD"><a href="#3-GCD" class="headerlink" title="3.  GCD"></a>3.  GCD</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/213a5eb5c07c4662b7f2a7b1cbff50df~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="4-NSOperation"><a href="#4-NSOperation" class="headerlink" title="4.  NSOperation"></a>4.  NSOperation</h2><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5ec7de717e4e4ac28ff24ce966d970f7~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
 
     </div>
 
@@ -216,18 +234,21 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS-%E7%9F%A5%E8%AF%86%E6%B1%87%E6%80%BB/" rel="tag"># iOS 知识汇总</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/04/19/%E4%B8%80%E6%AC%A1AppDelegate%E8%A7%A3%E8%80%A6%E5%AD%A6%E4%B9%A0/" rel="prev" title="一次AppDelegate解耦学习">
-                  <i class="fa fa-chevron-left"></i> 一次AppDelegate解耦学习
+                <a href="/2023/04/29/iOS-Block/" rel="prev" title="iOS Block">
+                  <i class="fa fa-chevron-left"></i> iOS Block
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/04/22/%E7%BC%96%E8%AF%91%E5%92%8C%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/" rel="next" title="编译和链接浅析">
-                  编译和链接浅析 <i class="fa fa-chevron-right"></i>
+                <a href="/2023/04/29/%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/" rel="next" title="网络相关">
+                  网络相关 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
