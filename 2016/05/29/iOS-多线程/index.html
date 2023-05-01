@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本文主要梳理iOS 内存管理 核心知识  NSThread 多线程和锁 GCD NSOperation  1.  NSThread 2.  多线程和锁 OSSpinLock dispatch_semaphore pthread_mutex NSLock NSCondition pthread_mutex(recursive) NSRecursiveLock NSConditionLock @syn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 多线程">
+<meta property="og:url" content="http://example.com/2016/05/29/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Next">
+<meta property="og:description" content="本文主要梳理iOS 内存管理 核心知识  NSThread 多线程和锁 GCD NSOperation  1.  NSThread 2.  多线程和锁 OSSpinLock dispatch_semaphore pthread_mutex NSLock NSCondition pthread_mutex(recursive) NSRecursiveLock NSConditionLock @syn">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6132eaa2c474437cb9f629b23b29b30f~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/86e3d6fa59e343b1aa4a6b438378d1b5~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/74dda8241b30428bb560633f1aca5db2~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/213a5eb5c07c4662b7f2a7b1cbff50df~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5ec7de717e4e4ac28ff24ce966d970f7~tplv-k3u1fbpfcp-watermark.image">
+<meta property="article:published_time" content="2016-05-29T03:01:48.000Z">
+<meta property="article:modified_time" content="2023-05-01T02:55:45.495Z">
+<meta property="article:author" content="kyan">
+<meta property="article:tag" content="iOS 知识汇总">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6132eaa2c474437cb9f629b23b29b30f~tplv-k3u1fbpfcp-watermark.image">
+
+
+<link rel="canonical" href="http://example.com/2016/05/29/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2016/05/29/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B/","path":"2016/05/29/iOS-多线程/","title":"iOS 多线程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>iOS 多线程 | Next</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Next</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-NSThread"><span class="nav-number">1.</span> <span class="nav-text">1.  NSThread</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E9%94%81"><span class="nav-number">2.</span> <span class="nav-text">2.  多线程和锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-GCD"><span class="nav-number">3.</span> <span class="nav-text">3.  GCD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-NSOperation"><span class="nav-number">4.</span> <span class="nav-text">4.  NSOperation</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">kyan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/05/29/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="kyan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Next">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="iOS 多线程 | Next">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iOS 多线程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-29 11:01:48" itemprop="dateCreated datePublished" datetime="2016-05-29T11:01:48+08:00">2016-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-05-01 10:55:45" itemprop="dateModified" datetime="2023-05-01T10:55:45+08:00">2023-05-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6132eaa2c474437cb9f629b23b29b30f~tplv-k3u1fbpfcp-watermark.image" alt="552ccf48ef6a14c8692f56aa84e42c4182b412e2.jpg"><br>本文主要梳理iOS 内存管理 核心知识</p>
+<ol>
+<li>NSThread</li>
+<li>多线程和锁</li>
+<li>GCD</li>
+<li>NSOperation</li>
+</ol>
+<h2 id="1-NSThread"><a href="#1-NSThread" class="headerlink" title="1.  NSThread"></a>1.  NSThread</h2><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/86e3d6fa59e343b1aa4a6b438378d1b5~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="2-多线程和锁"><a href="#2-多线程和锁" class="headerlink" title="2.  多线程和锁"></a>2.  多线程和锁</h2><ul>
+<li>OSSpinLock</li>
+<li>dispatch_semaphore</li>
+<li>pthread_mutex</li>
+<li>NSLock</li>
+<li>NSCondition</li>
+<li>pthread_mutex(recursive)</li>
+<li>NSRecursiveLock</li>
+<li>NSConditionLock</li>
+<li>@synchronized</li>
+<li>atomic</li>
+</ul>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/74dda8241b30428bb560633f1aca5db2~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="3-GCD"><a href="#3-GCD" class="headerlink" title="3.  GCD"></a>3.  GCD</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/213a5eb5c07c4662b7f2a7b1cbff50df~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="4-NSOperation"><a href="#4-NSOperation" class="headerlink" title="4.  NSOperation"></a>4.  NSOperation</h2><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5ec7de717e4e4ac28ff24ce966d970f7~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS-%E7%9F%A5%E8%AF%86%E6%B1%87%E6%80%BB/" rel="tag"># iOS 知识汇总</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/10/29/Objective-C-%E7%9B%B8%E5%85%B3/" rel="prev" title="Objective-C 相关">
+                  <i class="fa fa-chevron-left"></i> Objective-C 相关
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/08/29/iOS-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" rel="next" title="iOS 内存管理">
+                  iOS 内存管理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kyan</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
