@@ -113,7 +113,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -122,7 +122,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -139,6 +139,413 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/16/JavaScript%E5%B0%8F%E8%BF%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="kyan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Next">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Next">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/05/16/JavaScript%E5%B0%8F%E8%BF%B0/" class="post-title-link" itemprop="url">JavaScript小述</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-05-16 23:15:28" itemprop="dateCreated datePublished" datetime="2023-05-16T23:15:28+08:00">2023-05-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/530863c531c84cd1a92292cc1a935a09~tplv-k3u1fbpfcp-watermark.image" alt="v2-12c146306d8e78ebced2ad925bda57e5_1440w.jpg"></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近在学习前端相关知识，就做了下知识梳理方便后续回顾，同时也分享给大家，那么为什么要学习前端呢？主要有以下几点：</p>
+<ol>
+<li><p>Web 开发：随着移动互联网的发展，Web 应用已经成为了移动应用开发的重要组成部分。通过学习 JavaScript，iOS 开发人员可以更好地理解和应用 Web 技术，如 HTML、CSS 和 Ajax 等，从而更好地开发移动应用。</p>
+</li>
+<li><p>前端开发：JavaScript 是前端开发中不可或缺的一部分，掌握 JavaScript 可以帮助 iOS 开发人员更好地进行前端开发，从而实现更好的用户交互和体验。</p>
+</li>
+<li><p>混合开发：混合开发是一种将 Web 技术和原生技术结合起来开发应用程序的方法。通过学习 JavaScript，iOS 开发人员可以更好地理解和应用混合开发技术，从而实现更快速的应用开发和更好的用户体验。</p>
+</li>
+<li><p>与服务端交互：JavaScript 在 Web 应用中广泛应用于与服务端交互，如使用 Ajax 进行数据交互等。通过学习 JavaScript，iOS 开发人员可以更好地理解和应用服务端和客户端的交互，从而实现更高效的数据交互和应用开发。</p>
+</li>
+</ol>
+<p>总的来说，学习 JavaScript 可以帮助 iOS 开发人员更好地掌握 Web 技术和前端开发，同时也可以更好地应用混合开发技术，从而提高应用程序的用户体验和开发效率，<strong>当然多学一门技术多碗饭也是不错的</strong>。</p>
+<h2 id="JS知识梳理"><a href="#JS知识梳理" class="headerlink" title="JS知识梳理"></a>JS知识梳理</h2><h2 id="一-JS执行上下文"><a href="#一-JS执行上下文" class="headerlink" title="一.JS执行上下文"></a>一.JS执行上下文</h2><p>JavaScript执行上下文（execution context）是JavaScript代码在运行时的环境，它包含了代码执行所需的所有信息。当JavaScript代码在运行时，会创建一个执行上下文，并且在代码执行完毕后，这个执行上下文会被销毁。每次JavaScript代码执行，都会创建一个新的执行上下文。</p>
+<p>JavaScript的执行上下文主要有三种类型：</p>
+<ol>
+<li><p>全局执行上下文（Global Execution Context）：它是整个JavaScript代码的默认执行上下文，所有在函数外部定义的变量和函数都属于全局执行上下文。当JavaScript代码开始运行时，就会创建全局执行上下文。</p>
+</li>
+<li><p>函数执行上下文（Function Execution Context）：每当一个函数被调用时，就会创建一个函数执行上下文。函数执行上下文与函数一一对应，它保存了函数内部的变量、函数参数、函数声明等信息。</p>
+</li>
+<li><p>Eval执行上下文（Eval Execution Context）：当JavaScript代码中使用eval()函数时，就会创建一个Eval执行上下文。Eval执行上下文可以动态生成JavaScript代码，并且在运行时创建。Eval执行上下文可以访问外部执行上下文中的变量和函数。</p>
+</li>
+</ol>
+<p>JavaScript执行上下文是一个非常重要的概念，理解执行上下文可以帮助我们更好地理解JavaScript代码的执行过程。在JavaScript中，变量的作用域、函数的调用、this关键字等都与执行上下文相关。</p>
+<h2 id="二-JS的作用域链"><a href="#二-JS的作用域链" class="headerlink" title="二.JS的作用域链"></a>二.JS的作用域链</h2><p>JavaScript 作用域链（Scope Chain）是指在 JavaScript 中变量和函数的访问规则。当在 JavaScript 中引用一个变量时，JavaScript 引擎会首先在当前作用域内查找该变量，如果找不到，则会向上层作用域中查找，直到找到该变量或查找到全局作用域为止。这些作用域的链式关系就是作用域链。</p>
+<p>JavaScript 中的作用域链是由作用域嵌套关系和函数定义时的词法环境决定的。每当 JavaScript 引擎进入一个新的作用域时，就会创建一个新的词法环境对象，该对象会保存该作用域中定义的变量和函数，同时它还包含了一个指向外部词法环境的引用，这个引用就构成了作用域链。</p>
+<p>作用域链的顶部是全局作用域，底部是当前执行上下文所在的作用域，作用域链的查找顺序是由底向上依次查找，直到找到目标变量或函数为止。如果在全局作用域中也找不到该变量或函数，则会抛出一个引用错误（ReferenceError）。</p>
+<p>例如，下面的代码演示了作用域链的查找过程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">let a = 1;</span><br><span class="line"></span><br><span class="line">function foo() &#123;</span><br><span class="line"></span><br><span class="line">  let b = 2;</span><br><span class="line"></span><br><span class="line">  function bar() &#123;</span><br><span class="line"></span><br><span class="line">    let c = 3;</span><br><span class="line"></span><br><span class="line">    console.log(a + b + c);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  bar();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(); // 输出 6</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>在上面的代码中，变量 <code>a</code>、<code>b</code> 和 <code>c</code> 分别定义在不同的作用域中，变量 <code>c</code> 可以在函数 <code>bar()</code> 中直接访问，变量 <code>b</code> 和 <code>a</code> 都不在当前作用域内，因此 JavaScript 引擎会依次向上查找作用域链，找到了变量 <code>b</code> 和 <code>a</code>，并将它们的值相加输出。</p>
+<p>JavaScript 中有两种作用域，分别是全局作用域和函数作用域。在 ES6 中新增了块级作用域（使用 let 和 const 声明的变量），它们的作用域是从变量声明位置到块级作用域结束位置。</p>
+<h2 id="三-JavaScript-中的闭包-和应用场景"><a href="#三-JavaScript-中的闭包-和应用场景" class="headerlink" title="三.JavaScript 中的闭包 和应用场景"></a>三.JavaScript 中的闭包 和应用场景</h2><p>JavaScript 中的闭包是指在函数中创建的一个局部作用域，该作用域中的变量在函数执行完成后仍然可以被访问和使用。简单来说，闭包就是一个函数和它所在的环境的组合。</p>
+<p>具体来说，当一个函数内部定义了另一个函数，并且这个内部函数引用了外部函数的变量时，就形成了闭包。由于 JavaScript 的函数作用域和词法作用域规则，外部函数的变量在内部函数中仍然可以访问，而且在内部函数执行完成后，这些变量不会被自动清理，而是继续保存在内存中，供后续调用使用，从而形成了闭包。</p>
+<p>JavaScript 中闭包的应用场景非常广泛，常见的应用场景包括：</p>
+<ol>
+<li><p>封装变量和函数：使用闭包可以封装变量和函数，避免全局变量的污染，同时也可以保护变量和函数不被外部直接访问和修改。</p>
+</li>
+<li><p>延迟执行和异步回调：使用闭包可以延迟执行函数，同时也可以在异步回调中访问外部变量和函数。</p>
+</li>
+<li><p>模块化编程：使用闭包可以实现模块化编程，将变量和函数封装在闭包中，避免与其他模块的变量和函数产生冲突，同时也可以更好地保护模块的私有性。</p>
+</li>
+<li><p>事件处理程序：使用闭包可以实现事件处理程序，使得在事件发生时可以访问外部变量和函数。</p>
+</li>
+</ol>
+<p>需要注意的是，闭包虽然能够解决很多问题，但同时也存在着潜在的内存泄漏问题，如果闭包中保存了过多的变量和函数引用，可能会导致内存占用过多，从而影响性能。因此在使用闭包时，需要注意内存管理和性能优化。</p>
+<h2 id="四-JS-的this-关键字"><a href="#四-JS-的this-关键字" class="headerlink" title="四.JS 的this 关键字"></a>四.JS 的this 关键字</h2><p>JavaScript 中的 this 关键字用于指代当前函数执行上下文中的对象。在不同的函数执行上下文中，this 可能指向不同的对象，它的具体取值取决于函数的调用方式和执行环境。下面介绍几种常见的 this 指向方式：</p>
+<ol>
+<li><p>全局对象：在全局执行上下文中，this 指向全局对象，在浏览器中通常是 window 对象。</p>
+</li>
+<li><p>函数调用：在普通函数中，this 指向调用该函数的对象。如果函数是直接作为函数调用，this 就指向全局对象或 undefined（严格模式下），如果函数作为对象的方法调用，this 就指向该对象本身。</p>
+</li>
+<li><p>构造函数：在使用 new 操作符创建对象时，this 指向新创建的对象。</p>
+</li>
+<li><p>apply 和 call：在使用函数的 apply 或 call 方法调用函数时，可以手动指定函数执行时的 this 对象。</p>
+</li>
+<li><p>箭头函数：在箭头函数中，this 指向函数定义时的外层作用域的 this 值，而不是调用该函数时的对象。</p>
+</li>
+</ol>
+<p>需要注意的是，this 的取值是动态的，并且可以通过一些技巧来改变其指向。例如使用 call 和 apply 方法手动指定 this 值，或者使用 bind 方法创建一个新的函数并指定其 this 值。此外，在 ES6 中新增的箭头函数也可以解决一些 this 指向问题。但在编写代码时，应该尽量避免过多地改变 this 的指向，以保持代码的可读性和维护性。</p>
+<h2 id="五-如何改变this指向"><a href="#五-如何改变this指向" class="headerlink" title="五.如何改变this指向"></a>五.如何改变this指向</h2><p>在 JavaScript 中，有多种方式可以改变函数执行时的 this 指向。以下是一些常见的方式：</p>
+<ol>
+<li><p>使用 call 和 apply 方法：这两个方法都可以手动指定函数执行时的 this 对象。它们的区别在于传递参数的方式不同，call 方法是将参数按照顺序传递，而 apply 方法是将参数打包成数组传递。</p>
+</li>
+<li><p>使用 bind 方法：bind 方法可以创建一个新函数，将原函数的 this 绑定到指定对象，并返回新函数。新函数的 this 值将始终指向绑定的对象，不会被其他方式改变。</p>
+</li>
+<li><p>使用箭头函数：在箭头函数中，this 始终指向函数定义时的外层作用域的 this 值，而不是调用该函数时的对象。因此，可以使用箭头函数来避免 this 指向问题。</p>
+</li>
+</ol>
+<p>下面是一个使用 call 和 bind 方法改变 this 指向的示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 定义一个对象</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line"></span><br><span class="line">  name: &quot;John&quot;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 定义一个函数，打印当前对象的 name 属性</span><br><span class="line"></span><br><span class="line">function printName() &#123;</span><br><span class="line"></span><br><span class="line">  console.log(this.name);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 使用 call 方法改变函数执行时的 this 指向</span><br><span class="line"></span><br><span class="line">printName.call(obj); // 输出 &quot;John&quot;</span><br><span class="line"></span><br><span class="line">// 使用 bind 方法创建一个新函数，并指定 this 指向为 obj</span><br><span class="line"></span><br><span class="line">var boundFunc = printName.bind(obj);</span><br><span class="line"></span><br><span class="line">// 调用新函数，输出 &quot;John&quot;</span><br><span class="line"></span><br><span class="line">boundFunc();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，改变 this 指向可能会影响函数的执行结果和副作用，因此在使用这些方法时需要谨慎考虑，并且遵循 JavaScript 的最佳实践。</p>
+<h2 id="六-call-和-apply-区别"><a href="#六-call-和-apply-区别" class="headerlink" title="六.call 和 apply 区别"></a>六.call 和 apply 区别</h2><p><code>call</code> 和 <code>apply</code> 都是 JavaScript 中的函数方法，它们都可以用来改变函数执行时的 this 指向，并且都可以接受任意数量的参数。</p>
+<p>它们的区别在于传递参数的方式不同：</p>
+<ul>
+<li><p><code>call</code> 方法：第一个参数是要绑定给 this 的对象，后面的参数是要传递给函数的参数列表，可以是任意数量的参数，按照顺序一个一个传递。</p>
+</li>
+<li><p><code>apply</code> 方法：第一个参数是要绑定给 this 的对象，第二个参数是要传递给函数的参数列表，必须是一个数组或类数组对象。</p>
+</li>
+</ul>
+<p>因此，如果我们有一个数组或类数组对象，可以使用 <code>apply</code> 方法来将它们作为参数传递给函数。</p>
+<p>下面是一个使用 <code>call</code> 和 <code>apply</code> 方法的示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function greet(name, age) &#123;</span><br><span class="line"></span><br><span class="line">  console.log(`Hello, $&#123;name&#125;! You are $&#123;age&#125; years old.`);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">var person = &#123;</span><br><span class="line"></span><br><span class="line">  name: &quot;John&quot;,</span><br><span class="line"></span><br><span class="line">  age: 30</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 使用 call 方法调用 greet 函数，并指定 this 指向为 person</span><br><span class="line"></span><br><span class="line">greet.call(person, person.name, person.age); // 输出 &quot;Hello, John! You are 30 years old.&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 使用 apply 方法调用 greet 函数，并指定 this 指向为 person</span><br><span class="line"></span><br><span class="line">greet.apply(person, [person.name, person.age]); // 输出 &quot;Hello, John! You are 30 years old.&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，<code>call</code> 和 <code>apply</code> 方法都会立即调用函数，并改变函数执行时的 this 指向。如果只是想创建一个新的函数并绑定 this，可以使用 <code>bind</code> 方法。</p>
+<h2 id="七-如何实现一个bind"><a href="#七-如何实现一个bind" class="headerlink" title="七.如何实现一个bind"></a>七.如何实现一个bind</h2><p>实现一个 <code>bind</code> 方法可以参考下面的步骤：</p>
+<ol>
+<li><p>判断调用 <code>bind</code> 方法的对象是否为函数，如果不是函数，抛出错误。</p>
+</li>
+<li><p>获取调用 <code>bind</code> 方法的对象和调用 <code>bind</code> 方法时传递的参数，并保存到变量中。</p>
+</li>
+<li><p>返回一个新函数，该函数的 this 指向为调用 <code>bind</code> 方法时传递的对象，参数列表为调用 <code>bind</code> 方法时传递的参数和调用新函数时传递的参数。</p>
+</li>
+<li><p>在新函数中调用原函数，并传递合并后的参数列表。</p>
+</li>
+</ol>
+<p>下面是一个简单的 <code>bind</code> 方法实现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Function.prototype.bind2 = function(obj, ...args1) &#123;</span><br><span class="line"></span><br><span class="line">  // 判断调用 bind 方法的对象是否为函数</span><br><span class="line"></span><br><span class="line">  if (typeof this !== &quot;function&quot;) &#123;</span><br><span class="line"></span><br><span class="line">    throw new TypeError(&quot;Function.prototype.bind - called on non-function&quot;);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 保存调用 bind 方法时传递的参数</span><br><span class="line"></span><br><span class="line">  const self = this;</span><br><span class="line"></span><br><span class="line">  const args2 = arguments;</span><br><span class="line"></span><br><span class="line">  // 返回一个新函数</span><br><span class="line"></span><br><span class="line">  return function(...args3) &#123;</span><br><span class="line"></span><br><span class="line">    // 合并调用 bind 方法时传递的参数和调用新函数时传递的参数</span><br><span class="line"></span><br><span class="line">    const args = [...args1, ...args3];</span><br><span class="line"></span><br><span class="line">    // 在新函数中调用原函数，并传递合并后的参数列表</span><br><span class="line"></span><br><span class="line">    return self.apply(obj, args);</span><br><span class="line"></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>使用示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function greet(name, age) &#123;</span><br><span class="line"></span><br><span class="line">  console.log(`Hello, $&#123;name&#125;! You are $&#123;age&#125; years old.`);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var person = &#123;</span><br><span class="line"></span><br><span class="line">  name: &quot;John&quot;,</span><br><span class="line"></span><br><span class="line">  age: 30</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 使用自定义的 bind2 方法创建一个新函数</span><br><span class="line"></span><br><span class="line">var boundFunc = greet.bind2(person, person.name);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 调用新函数</span><br><span class="line"></span><br><span class="line">boundFunc(person.age); // 输出 &quot;Hello, John! You are 30 years old.&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，以上仅是一个简单的 <code>bind</code> 方法实现，与原生的 <code>bind</code> 方法可能存在差异，并且在实际开发中不建议覆盖原生方法。</p>
+<h2 id="八-JS的原型链"><a href="#八-JS的原型链" class="headerlink" title="八.JS的原型链"></a>八.JS的原型链</h2><p>JavaScript 中的原型链是用来描述对象之间继承关系的机制，它是由对象的原型构成的链式结构。每个对象都有一个原型（<code>prototype</code>）属性，指向它所继承的对象，如果该对象也有原型，则继续往上层原型查找，直到找到顶层原型为止。</p>
+<p>在原型链中，一个对象可以访问它所继承的原型对象的属性和方法，这样就可以实现属性和方法的共享和重用。</p>
+<p>例如，如果我们创建一个对象 <code>obj</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line"></span><br><span class="line">  name: &quot;John&quot;,</span><br><span class="line"></span><br><span class="line">  age: 30</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>那么它的原型就是 <code>Object.prototype</code>，可以通过 <code>Object.getPrototypeOf(obj)</code> 方法来获取。</p>
+<p>在原型链中，如果一个对象的原型是另一个对象，那么它就可以访问另一个对象的属性和方法。例如，如果我们创建一个函数 <code>Foo</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function Foo() &#123;&#125;</span><br><span class="line"></span><br><span class="line">Foo.prototype.sayHello = function() &#123;</span><br><span class="line"></span><br><span class="line">  console.log(&quot;Hello&quot;);</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>那么它的原型就是 <code>Object.prototype</code>，可以通过 <code>Object.getPrototypeOf(Foo.prototype)</code> 方法来获取。</p>
+<p>如果我们创建一个对象 <code>obj</code>，并将 <code>Foo</code> 函数的实例作为它的原型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var obj = Object.create(new Foo());</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>那么它的原型就是 <code>Foo.prototype</code>，而 <code>Foo.prototype</code> 的原型又是 <code>Object.prototype</code>，可以通过 <code>Object.getPrototypeOf(Object.getPrototypeOf(obj))</code> 方法来获取。</p>
+<p>因此，如果我们调用 <code>obj.sayHello()</code> 方法，它会先在 <code>obj</code> 对象中查找 <code>sayHello</code> 方法，如果找不到，就会去 <code>Foo.prototype</code> 对象中查找，如果还找不到，就会继续往上查找，直到找到顶层原型为止。</p>
+<p>这就是 JavaScript 中原型链的基本工作原理，它是 JavaScript 实现继承的核心机制之一。</p>
+<h2 id="九-如何利用原型链实现继承"><a href="#九-如何利用原型链实现继承" class="headerlink" title="九.如何利用原型链实现继承"></a>九.如何利用原型链实现继承</h2><p>在 JavaScript 中，继承可以通过原型链来实现。每个对象都有一个原型链，原型链指向了它的父对象。子对象可以通过原型链继承其父对象的属性和方法。</p>
+<p>要实现继承，可以定义一个构造函数，并在其原型上定义方法和属性，然后通过子构造函数的原型指向父构造函数的实例，从而实现继承。下面是一个示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 定义父构造函数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Animal</span>(<span class="params">name</span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在父构造函数的原型上定义方法</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Animal</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;My name is &quot;</span> + <span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义子构造函数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Dog</span>(<span class="params">name</span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="title class_">Animal</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>, name);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将子构造函数的原型指向父构造函数的实例</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Animal</span>.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在子构造函数的原型上定义方法</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">bark</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Woof!&quot;</span>);</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个 Dog 对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myDog = <span class="keyword">new</span> <span class="title class_">Dog</span>(<span class="string">&quot;Rover&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用从父对象继承的方法</span></span><br><span class="line"></span><br><span class="line">myDog.<span class="title function_">sayName</span>(); <span class="comment">// 输出 &quot;My name is Rover&quot;</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 调用子对象的方法</span></span><br><span class="line"></span><br><span class="line">myDog.<span class="title function_">bark</span>(); <span class="comment">// 输出 &quot;Woof!&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>在上面的示例中，我们首先定义了一个父构造函数 <code>Animal</code>，并在其原型上定义了一个方法 <code>sayName</code>。然后我们定义了一个子构造函数 <code>Dog</code>，并通过 <code>Object.create</code> 方法将其原型指向了 <code>Animal</code> 构造函数的实例，从而实现了继承。最后，我们在子构造函数的原型上定义了一个新的方法 <code>bark</code>。</p>
+<p>通过原型链实现继承的好处是可以节省内存，因为所有子对象共享同一个父对象的方法和属性。但需要注意的是，当父对象的属性值发生变化时，所有子对象都会受到影响，因为它们共享同一个原型对象。</p>
+<h2 id="十-promise是什么"><a href="#十-promise是什么" class="headerlink" title="十.promise是什么"></a>十.promise是什么</h2><p>在 JavaScript 中，Promise 是一种用于处理异步操作的对象，它代表了一个可能尚未完成并且最终将产生结果的操作。</p>
+<p>Promise 对象有三种状态：等待中（pending）、已完成（fulfilled）和已拒绝（rejected）。当一个 Promise 被创建时，它处于等待中状态。当操作完成时，Promise 会变为已完成状态或已拒绝状态。</p>
+<p>Promise 对象有两个重要的方法：<code>then</code> 和 <code>catch</code>。当 Promise 被解决时（即从等待中状态转变为已完成状态或已拒绝状态时），<code>then</code> 方法会被调用，它接收一个回调函数，该回调函数接收 Promise 对象产生的结果或错误作为参数。如果 Promise 对象被解决为已拒绝状态，则 <code>catch</code> 方法会被调用，它也接收一个回调函数，该回调函数接收 Promise 对象产生的错误作为参数。</p>
+<p>Promise 的主要优点在于它们可以减少回调函数的嵌套，使代码更易于理解和维护。它们也可以帮助处理异步代码中的错误，因为错误可以通过 <code>catch</code> 方法来处理。</p>
+<p>下面是一个使用 Promise 的示例，它模拟了一个异步操作，该操作返回一个随机数并将其打印到控制台上：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">generateRandomNumber</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">resolve, reject</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> randomNumber = <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (randomNumber &lt; <span class="number">5</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="title function_">reject</span>(<span class="string">&quot;Failed to generate random number.&quot;</span>);</span><br><span class="line"></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="title function_">resolve</span>(randomNumber);</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">generateRandomNumber</span>()</span><br><span class="line"></span><br><span class="line">  .<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">result</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Random number generated successfully:&quot;</span>, result);</span><br><span class="line"></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  .<span class="title function_">catch</span>(<span class="keyword">function</span>(<span class="params">error</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Error generating random number:&quot;</span>, error);</span><br><span class="line"></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例中，我们创建了一个 Promise 对象，该对象包含一个异步操作。在异步操作完成时，Promise 对象将返回一个随机数或错误。我们使用 <code>then</code> 方法来处理操作成功的情况，并使用 <code>catch</code> 方法来处理操作失败的情况。如果操作成功，我们将随机数打印到控制台上；如果操作失败，我们将错误打印到控制台上。</p>
+<h2 id="十一-如何实现一个promise"><a href="#十一-如何实现一个promise" class="headerlink" title="十一.如何实现一个promise"></a>十一.如何实现一个promise</h2><p>要实现一个简单的 Promise，需要定义一个构造函数，并在其原型上定义 <code>then</code> 和 <code>catch</code> 方法。下面是一个示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">MyPromise</span>(<span class="params">fn</span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> state = <span class="string">&quot;pending&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> value;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> handlers = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">resolve</span>(<span class="params">result</span>) &#123;</span><br><span class="line"></span><br><span class="line">    state = <span class="string">&quot;fulfilled&quot;</span>;</span><br><span class="line"></span><br><span class="line">    value = result;</span><br><span class="line"></span><br><span class="line">    handlers.<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">handler</span>) &#123;</span><br><span class="line"></span><br><span class="line">      handler.<span class="title function_">onFulfilled</span>(result);</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">reject</span>(<span class="params">error</span>) &#123;</span><br><span class="line"></span><br><span class="line">    state = <span class="string">&quot;rejected&quot;</span>;</span><br><span class="line"></span><br><span class="line">    value = error;</span><br><span class="line"></span><br><span class="line">    handlers.<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">handler</span>) &#123;</span><br><span class="line"></span><br><span class="line">      handler.<span class="title function_">onRejected</span>(error);</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">then</span> = <span class="keyword">function</span>(<span class="params">onFulfilled, onRejected</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MyPromise</span>(<span class="keyword">function</span>(<span class="params">resolve, reject</span>) &#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (state === <span class="string">&quot;fulfilled&quot;</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> result = <span class="title function_">onFulfilled</span>(value);</span><br><span class="line"></span><br><span class="line">            <span class="title function_">resolve</span>(result);</span><br><span class="line"></span><br><span class="line">          &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="title function_">reject</span>(error);</span><br><span class="line"></span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">        &#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (state === <span class="string">&quot;rejected&quot;</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> result = <span class="title function_">onRejected</span>(value);</span><br><span class="line"></span><br><span class="line">            <span class="title function_">resolve</span>(result);</span><br><span class="line"></span><br><span class="line">          &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="title function_">reject</span>(error);</span><br><span class="line"></span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">        &#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">        handlers.<span class="title function_">push</span>(&#123;</span><br><span class="line"></span><br><span class="line">          <span class="attr">onFulfilled</span>: onFulfilled,</span><br><span class="line"></span><br><span class="line">          <span class="attr">onRejected</span>: onRejected</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">catch</span> = <span class="keyword">function</span>(<span class="params">onRejected</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">then</span>(<span class="literal">null</span>, onRejected);</span><br><span class="line"></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">fn</span>(resolve, reject);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，我们定义了一个 <code>MyPromise</code> 构造函数，它接收一个函数 <code>fn</code> 作为参数。在构造函数内部，我们定义了三个变量：<code>state</code> 表示 Promise 的状态，初始值为 “pending”；<code>value</code> 表示 Promise 对象产生的结果或错误；<code>handlers</code> 是一个数组，用于存储所有的回调函数。</p>
+<p>我们还定义了两个函数 <code>resolve</code> 和 <code>reject</code>，分别用于将 Promise 对象的状态设置为已完成或已拒绝，并将结果或错误存储在 <code>value</code> 变量中。当 Promise 对象状态发生改变时，我们遍历 <code>handlers</code> 数组，并调用所有的回调函数。</p>
+<p>最后，我们定义了 <code>then</code> 和 <code>catch</code> 方法。<code>then</code> 方法接收两个参数：一个回调函数 <code>onFulfilled</code>，用于处理 Promise 对象成功的情况；一个回调函数 <code>onRejected</code>，用于处理 Promise 对象失败的情况。<code>then</code> 方法返回一个新的 Promise 对象，该对象可以继续调用 <code>then</code> 方法。<code>catch</code> 方法只接收一个参数：一个回调函数 <code>onRejected</code>，用于处理 Promise 对象失败的情况。<code>catch</code> 方法返回一个新的 Promise 对象，该对象可以继续调用 <code>then</code> 方法。</p>
+<p>在 <code>then</code> 方法中，我们首先检查 Promise 对象的状态。如果 Promise 对象已经完成，则立即调用回调函数并返回一个新的 Promise 对象。如果 Promise 对象尚未完成，则将回调函数添加到 <code>handlers</code> 数组中，并返回一个新的 Promise 对象。</p>
+<p>在调用回调函数时，我们使用 <code>setTimeout</code> 函数将其放入事件队列中，以确保它们在当前函数调用完成后执行。在调用回调函数时</p>
+<h2 id="十二-async-await"><a href="#十二-async-await" class="headerlink" title="十二. async await"></a>十二. async await</h2><p><code>async</code> 和 <code>await</code> 是 ES2017 引入的新特性，用于更方便地处理异步操作。</p>
+<p><code>async</code> 用于修饰函数，将普通函数转化为异步函数。使用 <code>async</code> 关键字声明的函数会自动返回一个 Promise 对象，因此在函数内部可以使用 <code>return</code> 关键字返回一个值，也可以通过抛出异常来拒绝 Promise 对象。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">myAsyncFunction</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="title function_">someAsyncOperation</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，<code>myAsyncFunction</code> 函数使用 <code>async</code> 关键字修饰，因此它自动返回一个 Promise 对象。在函数内部，我们使用 <code>await</code> 关键字等待某个异步操作完成，并将其结果存储在 <code>result</code> 变量中。如果异步操作失败，则抛出一个异常，Promise 对象会被拒绝。</p>
+<p><code>await</code> 关键字用于等待一个 Promise 对象的状态变为已完成。在使用 <code>await</code> 关键字时，函数的执行会暂停，直到 Promise 对象的状态变为已完成或已拒绝。如果 Promise 对象的状态变为已完成，则 <code>await</code> 表达式的结果为 Promise 对象的值。如果 Promise 对象的状态变为已拒绝，则 <code>await</code> 表达式会抛出一个异常。</p>
+<p><code>await</code> 关键字只能在 <code>async</code> 函数内部使用。如果在普通函数中使用 <code>await</code> 关键字，会导致语法错误。此外，<code>await</code> 关键字只能用于 Promise 对象，不能用于其他类型的值。如果要等待一个普通函数的执行结果，可以使用 <code>Promise.resolve</code> 函数将其转化为一个 Promise 对象，再使用 <code>await</code> 关键字等待其完成。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">myAsyncFunction</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="title function_">someSyncOperation</span>());</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，<code>someSyncOperation</code> 函数是一个普通的同步函数，我们使用 <code>Promise.resolve</code> 函数将其转化为一个 Promise 对象，再使用 <code>await</code> 关键字等待其执行完成。</p>
+<h2 id="十三-JavaScript的深浅拷贝"><a href="#十三-JavaScript的深浅拷贝" class="headerlink" title="十三.JavaScript的深浅拷贝"></a>十三.JavaScript的深浅拷贝</h2><p>JavaScript 中的对象和数组是引用类型，在进行赋值、传参等操作时只会复制其引用而不是复制其实际内容。因此，如果多个变量引用同一个对象，对其中一个变量所做的修改会影响到其他变量所引用的对象。为了解决这个问题，可以使用深拷贝和浅拷贝。</p>
+<p>浅拷贝是指复制引用类型变量的引用，而不复制其实际内容。JavaScript 中的对象和数组提供了一些浅拷贝的方法：</p>
+<ol>
+<li>Object.assign()：用于将一个或多个源对象的属性复制到目标对象中，并返回目标对象。如果多个源对象具有相同的属性，则后面的属性会覆盖前面的属性。</li>
+</ol>
+<p>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   <span class="keyword">const</span> obj1 = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span> &#125;;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> obj2 = &#123; <span class="attr">b</span>: <span class="number">3</span>, <span class="attr">c</span>: <span class="number">4</span> &#125;;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> newObj = <span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123;&#125;, obj1, obj2); <span class="comment">// &#123; a: 1, b: 3, c: 4 &#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>Array.prototype.concat()：用于将一个或多个数组连接起来，并返回一个新的数组。</li>
+</ol>
+<p>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   <span class="keyword">const</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> arr2 = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> newArr = arr1.<span class="title function_">concat</span>(arr2); <span class="comment">// [1, 2, 3, 4]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<ol start="3">
+<li>Array.prototype.slice()：用于从数组中提取一部分元素，返回一个新的数组。如果不传参数，则返回一个与原数组相同的新数组。</li>
+</ol>
+<p>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   <span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> newArr = arr.<span class="title function_">slice</span>(); <span class="comment">// [1, 2, 3]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>以上方法都是浅拷贝，只能复制一层对象或数组的内容，如果对象或数组中包含嵌套的对象或数组，则无法复制其内部的内容。</p>
+<p>深拷贝是指将引用类型变量的实际内容复制一份，而不是复制其引用。JavaScript 中的对象和数组没有提供深拷贝的方法，但可以使用第三方库或自己实现深拷贝函数。常见的深拷贝方法有：</p>
+<ol>
+<li>JSON.parse(JSON.stringify())：将对象转化为 JSON 字符串，再将 JSON 字符串转化为新的对象。这种方法可以深拷贝普通的对象和数组，但无法拷贝包含函数、RegExp 等类型的对象。</li>
+</ol>
+<p>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   <span class="keyword">const</span> obj = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: &#123; <span class="attr">c</span>: <span class="number">2</span> &#125; &#125;;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> newObj = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(obj)); <span class="comment">// &#123; a: 1, b: &#123; c: 2 &#125; &#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>递归复制：递归地遍历对象或数组的每一个属性，将其值复制到新的对象或数组中。这种方法可以深拷贝任何类型的对象，但可能会存在循环引用的问题，需要特殊处理。</li>
+</ol>
+<p>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   <span class="keyword">function</span> deep</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 十四.深浅copy需要注意什么</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在进行深拷贝和浅拷贝时需要注意以下几点：</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 引用类型数据的属性和方法会被复制引用而不是复制实际值，对其中一个对象的修改会影响到其他对象。</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 对于包含循环引用的对象，使用深拷贝可能会导致死循环，需要特殊处理。</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> 使用 <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>()) 进行深拷贝时，该方法无法拷贝包含函数、<span class="title class_">RegExp</span> 等类型的对象，且可能会丢失原有的数据类型。</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span> 对于浅拷贝，如果拷贝的对象或数组中包含引用类型的数据，则只能拷贝一层的数据，无法拷贝其内部的数据。</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span> 对于自定义对象，需要特别注意是否拷贝了其原型链上的属性和方法。</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span> 对于数组，深拷贝和浅拷贝的方法不同，需要选择适合的方法进行拷贝。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">因此，在进行深拷贝和浅拷贝时，需要根据实际情况选择合适的方法，并且对拷贝结果进行验证，以确保拷贝的结果符合预期。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 十五.如何解决循环引用问题</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">循环引用是指对象 A 中包含对象 B 的引用，同时对象 B 中也包含对象 A 的引用。这种情况下，如果使用普通的深拷贝方法进行拷贝，可能会导致无限递归的问题。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">为了解决循环引用的问题，可以采用以下两种方法：</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 手动处理循环引用。在拷贝对象时，如果遇到循环引用，则可以手动处理，例如记录已经拷贝的对象的引用，或者只拷贝对象的部分属性而非整个对象等。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 使用第三方库。有些第三方库提供了深拷贝方法，并且可以处理循环引用的问题，例如 <span class="title class_">Lodash</span> 的深拷贝方法 _.<span class="title function_">cloneDeep</span>()。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">以下是一个手动处理循环引用的示例代码：</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">``</span><span class="string">`javascript</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">function deepCopy(obj, visited = new WeakMap()) &#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  // 如果是基本类型，则直接返回</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  if (typeof obj !== &#x27;object&#x27; || obj === null) &#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    return obj;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  // 如果对象已经被拷贝过，则返回拷贝后的对象</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  if (visited.has(obj)) &#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    return visited.get(obj);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  // 处理数组类型</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  if (Array.isArray(obj)) &#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    const result = [];</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    visited.set(obj, result);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    for (let i = 0; i &lt; obj.length; i++) &#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">      result[i] = deepCopy(obj[i], visited);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    return result;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  // 处理对象类型</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  const result = &#123;&#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  visited.set(obj, result);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  const keys = Object.keys(obj);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  for (let i = 0; i &lt; keys.length; i++) &#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    const key = keys[i];</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    result[key] = deepCopy(obj[key], visited);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  return result;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure></p>
+<p>在上述代码中，使用了 <code>visited</code> 变量记录已经被拷贝过的对象，避免重复拷贝和死循环的问题。同时，对于数组和对象分别进行了处理，确保拷贝的结果符合预期。</p>
+<h2 id="十六-如何实现一个事件的发布订阅"><a href="#十六-如何实现一个事件的发布订阅" class="headerlink" title="十六.如何实现一个事件的发布订阅"></a>十六.如何实现一个事件的发布订阅</h2><p>实现一个事件的发布订阅可以分为以下几个步骤：</p>
+<ol>
+<li><p>创建一个事件管理器对象，用于存储事件和对应的回调函数。可以使用对象字面量或者类的方式来创建事件管理器对象。</p>
+</li>
+<li><p>创建订阅事件的方法，该方法用于向事件管理器中添加事件和对应的回调函数。在该方法中，需要对事件是否已经存在进行判断，如果事件不存在，则创建该事件并将回调函数添加到事件列表中；如果事件已经存在，则直接将回调函数添加到事件列表中。</p>
+</li>
+<li><p>创建发布事件的方法，该方法用于触发事件并执行对应的回调函数。在该方法中，需要获取事件列表，并逐个执行回调函数。</p>
+</li>
+</ol>
+<p>以下是一个简单的实现示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EventEmitter</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">events</span> = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">on</span>(<span class="params">event, callback</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">events</span>[event]) &#123;</span><br><span class="line"></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">events</span>[event] = [];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">events</span>[event].<span class="title function_">push</span>(callback);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="title function_">emit</span>(<span class="params">event, ...args</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">events</span>[event]) &#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">events</span>[event].<span class="title function_">forEach</span>(<span class="function"><span class="params">callback</span> =&gt;</span> callback.<span class="title function_">apply</span>(<span class="variable language_">this</span>, args));</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用示例</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> eventEmitter = <span class="keyword">new</span> <span class="title class_">EventEmitter</span>();</span><br><span class="line"></span><br><span class="line">eventEmitter.<span class="title function_">on</span>(<span class="string">&#x27;sayHello&#x27;</span>, <span class="function"><span class="params">name</span> =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Hello, <span class="subst">$&#123;name&#125;</span>!`</span>);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;sayHello&#x27;</span>, <span class="string">&#x27;Tom&#x27;</span>); <span class="comment">// 输出：Hello, Tom!</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在上述代码中，<code>EventEmitter</code> 类中的 <code>on</code> 方法用于添加事件和回调函数，<code>emit</code> 方法用于触发事件并执行对应的回调函数。可以通过创建 <code>EventEmitter</code> 实例并调用 <code>on</code> 方法来订阅事件，调用 <code>emit</code> 方法来触发事件并执行回调函数。</p>
+<h2 id="十七-JS事件循环"><a href="#十七-JS事件循环" class="headerlink" title="十七.JS事件循环"></a>十七.JS事件循环</h2><p>事件循环（Event Loop）是 JavaScript 运行时中非常重要的一个概念，它控制了 JavaScript 代码的执行顺序，保证了异步任务的正确执行。简单来说，事件循环就是一个不断循环的过程，它会检查任务队列中是否有待执行的任务，如果有，则会执行任务，并等待新的任务加入队列。</p>
+<p>事件循环的实现方式不同于浏览器和 Node.js，但基本思路都是相同的。以下是一个简单的事件循环模型：</p>
+<ol>
+<li><p>任务分为同步任务和异步任务，同步任务会在调用栈中按顺序执行，而异步任务会被放入任务队列中等待执行。</p>
+</li>
+<li><p>当执行栈中的同步任务执行完毕后，事件循环会检查任务队列中是否有任务待执行。</p>
+</li>
+<li><p>如果任务队列中有任务，则事件循环会将第一个任务取出并放入执行栈中执行，直到任务队列为空。</p>
+</li>
+<li><p>如果任务队列为空，则事件循环会继续等待新的任务加入队列。</p>
+</li>
+</ol>
+<p>在实际运行中，事件循环会根据任务类型和任务的执行状态进行不同的处理。对于异步任务，当其执行完成后会将回调函数放入任务队列中，等待事件循环将其取出并执行。对于某些异步任务，如 Promise 和 setTimeout，其回调函数会被放入微任务队列和宏任务队列中，优先级不同。</p>
+<p>事件循环模型的实现方式可能会有所不同，但其基本思路和机制都是相似的。掌握事件循环的原理和机制可以帮助开发者更好地理解 JavaScript 的异步编程模型，并编写出更高效、更优雅的代码。</p>
+<h2 id="十八-宏任务和微任务有什么区别"><a href="#十八-宏任务和微任务有什么区别" class="headerlink" title="十八.宏任务和微任务有什么区别"></a>十八.宏任务和微任务有什么区别</h2><p>在 JavaScript 中，任务可以分为宏任务（macro-task）和微任务（micro-task），它们在事件循环中有不同的优先级和执行顺序。简单来说，宏任务是由浏览器或 Node.js 发起的任务，而微任务是由 JavaScript 代码本身发起的任务。</p>
+<p>以下是宏任务和微任务的一些区别：</p>
+<ol>
+<li><p>执行时机：在一个事件循环中，宏任务会在微任务之前执行。当宏任务执行完成后，会执行所有的微任务，直到微任务队列为空。因此，微任务比宏任务更加优先执行。</p>
+</li>
+<li><p>添加方式：宏任务是由浏览器或 Node.js API 发起的，例如 setTimeout、setInterval、requestAnimationFrame、I&#x2F;O 操作等，它们会被放入宏任务队列中等待执行。而微任务是由 JavaScript 代码本身发起的，例如 Promise、MutationObserver 等，它们会被放入微任务队列中等待执行。</p>
+</li>
+<li><p>调用栈：当宏任务被执行时，会创建一个新的全局上下文并放入调用栈中。而当微任务被执行时，是在当前调用栈执行结束后立即执行的，不会创建新的全局上下文。</p>
+</li>
+<li><p>数量限制：在一个事件循环中，宏任务的数量是有限制的，而微任务的数量没有限制。如果宏任务队列中有大量的任务需要执行，可能会导致微任务长时间得不到执行。</p>
+</li>
+</ol>
+<p>了解宏任务和微任务的区别和优先级，可以帮助开发者更好地理解事件循环的工作原理，编写出更加高效和可维护的 JavaScript 代码。</p>
+<h2 id="十九-关于函数式编程"><a href="#十九-关于函数式编程" class="headerlink" title="十九.关于函数式编程"></a>十九.关于函数式编程</h2><p>函数式编程（Functional Programming，简称 FP）是一种编程范式，它将计算过程看作是函数之间的组合，并避免了状态和可变数据。函数式编程强调的是将函数作为基本的构建块，而不是将对象或语句作为基本的构建块。</p>
+<p>函数式编程的核心概念包括：</p>
+<ol>
+<li><p>纯函数：纯函数是指函数的输出只由输入决定，不受外部环境的影响，也不会对外部环境造成影响。纯函数没有副作用，可以进行缓存和优化。</p>
+</li>
+<li><p>不可变性：不可变性指的是数据一旦被创建就不能被改变，每一次修改数据都会创建新的数据。不可变性避免了对数据的直接修改和共享数据带来的风险。</p>
+</li>
+<li><p>函数组合：函数组合是将多个函数组合成一个新的函数，实现代码复用和模块化。函数组合可以通过函数柯里化、高阶函数和函数管道等方式实现。</p>
+</li>
+<li><p>高阶函数：高阶函数是指接受函数作为参数或返回函数作为结果的函数，可以实现抽象和通用的代码。</p>
+</li>
+</ol>
+<p>函数式编程可以带来许多好处，例如：</p>
+<ol>
+<li><p>可维护性：函数式编程强调模块化和抽象，可以更容易地理解和维护代码。</p>
+</li>
+<li><p>可测试性：纯函数和不可变性使得测试更加容易和可靠，可以减少测试的复杂度和耗时。</p>
+</li>
+<li><p>可扩展性：函数式编程可以更好地处理复杂性，通过函数的组合和抽象可以处理更多的需求和场景。</p>
+</li>
+<li><p>并发性：函数式编程天生适合并发编程，因为它没有共享状态和副作用，可以避免并发风险和竞态条件。</p>
+</li>
+</ol>
+<p>函数式编程已经被广泛应用于各种编程语言和应用场景中，例如 JavaScript、Python、Haskell、Scala 等。</p>
+<h2 id="二十-Service-worker"><a href="#二十-Service-worker" class="headerlink" title="二十.Service worker"></a>二十.Service worker</h2><p>Service Worker 是浏览器提供的一种 JavaScript 工具，可以在浏览器背后运行，拦截网络请求，控制 Web 页面或应用程序的缓存以及离线使用。</p>
+<p>Service Worker 是一种网络代理，可以拦截 Web 页面或应用程序的网络请求，将请求重定向到本地缓存或网络，并返回结果。因为 Service Worker 运行在浏览器背后，所以它可以在没有网络连接的情况下提供 Web 应用程序的核心功能。</p>
+<p>Service Worker 有以下特点：</p>
+<ol>
+<li><p>离线缓存：Service Worker 可以缓存 Web 页面或应用程序的资源，使得用户可以在离线情况下使用 Web 应用程序。</p>
+</li>
+<li><p>事件驱动：Service Worker 是基于事件驱动的，它可以监听浏览器的网络请求事件，并根据需要进行处理。</p>
+</li>
+<li><p>跨域支持：Service Worker 支持跨域请求，可以拦截和处理来自不同域名的网络请求。</p>
+</li>
+<li><p>安全性：Service Worker 可以通过 HTTPS 协议来确保通信的安全性。</p>
+</li>
+</ol>
+<p>使用 Service Worker 可以提高 Web 应用程序的性能和用户体验，具体应用场景包括：</p>
+<ol>
+<li><p>离线缓存：使用 Service Worker 可以在用户离线时提供 Web 应用程序的核心功能，避免用户在没有网络连接的情况下无法使用应用程序。</p>
+</li>
+<li><p>首屏渲染优化：使用 Service Worker 可以缓存 Web 页面或应用程序的资源，减少页面加载时间，提高用户体验。</p>
+</li>
+<li><p>推送通知：使用 Service Worker 可以接收来自服务器的推送通知，实现即时通讯和推送服务。</p>
+</li>
+</ol>
+<p>Service Worker 是一个相对新的技术，需要浏览器的支持才能使用。在使用 Service Worker 时需要注意安全性和性能等方面的问题，避免对用户的使用造成负面影响。</p>
+<h2 id="二十一-web-worker"><a href="#二十一-web-worker" class="headerlink" title="二十一.web worker"></a>二十一.web worker</h2><p>Web Worker 是一种在浏览器中运行 JavaScript 代码的机制，它允许在后台线程中运行脚本，从而避免阻塞主线程。Web Worker 可以在主线程之外创建新的线程，使得 Web 应用程序可以同时进行多个任务，提高性能和用户体验。</p>
+<p>Web Worker 的主要特点包括：</p>
+<ol>
+<li><p>多线程：Web Worker 可以在后台线程中运行 JavaScript 代码，避免阻塞主线程，提高 Web 应用程序的性能。</p>
+</li>
+<li><p>可以通过消息传递来通信：Web Worker 和主线程之间可以通过消息传递来进行通信，从而实现多个线程之间的协作。</p>
+</li>
+<li><p>安全性：Web Worker 在沙箱中运行，只能访问自己的代码和数据，不能直接访问主线程中的代码和数据。</p>
+</li>
+</ol>
+<p>使用 Web Worker 可以解决一些耗时的操作，比如对大数据进行排序、解析或者加密等。在这些操作中，Web Worker 可以在后台线程中进行计算，不会阻塞主线程，从而提高 Web 应用程序的性能和用户体验。</p>
+<p>需要注意的是，Web Worker 中不能直接访问 DOM 元素，需要通过消息传递的方式来与主线程进行通信。此外，Web Worker 也需要考虑安全性的问题，避免恶意脚本的攻击。</p>
+<h2 id="二十二-JS常用方法"><a href="#二十二-JS常用方法" class="headerlink" title="二十二.JS常用方法"></a>二十二.JS常用方法</h2><p>JavaScript 作为一门高级编程语言，提供了大量的内置方法和函数，可以用来处理和操作各种数据类型和数据结构。随着 ES6（ECMAScript 2015）的发布，JavaScript 又增加了许多新的语言特性和内置方法，下面介绍一些 ES6 中常用的内置方法。</p>
+<ol>
+<li><p>let 和 const：ES6 引入了新的关键字 let 和 const，可以用来声明变量和常量，let 声明的变量是块级作用域，const 声明的常量是不可修改的。</p>
+</li>
+<li><p>箭头函数：箭头函数是一种更简洁的函数定义方式，它使用 &#x3D;&gt; 符号来定义函数，可以省略 function 关键字和 return 语句，同时还可以继承外部作用域的 this 关键字。</p>
+</li>
+<li><p>模板字符串：ES6 引入了模板字符串，可以用来定义多行字符串和插入变量，使用反引号 &#96; 来定义模板字符串，使用 ${} 来插入变量。</p>
+</li>
+<li><p>解构赋值：ES6 中可以使用解构赋值来提取对象或数组中的值，可以用来快速获取对象或数组中的属性或元素。</p>
+</li>
+<li><p>for…of 循环：ES6 引入了 for…of 循环，可以用来遍历可迭代对象（如数组、字符串、Set 和 Map）中的元素。</p>
+</li>
+<li><p>Promise：Promise 是一种异步编程的解决方案，可以用来处理异步操作和回调地狱的问题。</p>
+</li>
+<li><p>async&#x2F;await：async&#x2F;await 是 ES7 中引入的异步编程的解决方案，可以用来处理异步操作和 Promise 的问题，让异步代码看起来更像同步代码。</p>
+</li>
+<li><p>扩展运算符：扩展运算符（…）可以用来将一个数组或对象展开成多个参数，也可以用来将多个参数合并成一个数组或对象。</p>
+</li>
+<li><p>Set 和 Map：ES6 引入了新的数据结构 Set 和 Map，Set 是一种无重复元素的集合，Map 是一种键值对的集合。</p>
+</li>
+<li><p>class：ES6 引入了 class 关键字，可以用来定义类和构造函数，使得 JavaScript 的面向对象编程更加规范和易用。</p>
+</li>
+</ol>
+<p>这些是 ES6 中常用的一些内置方法和语言特性，它们可以让 JavaScript 代码更加简洁、易读和易维护。</p>
+<h2 id="二十三-JS常用数组方法"><a href="#二十三-JS常用数组方法" class="headerlink" title="二十三.JS常用数组方法"></a>二十三.JS常用数组方法</h2><p>JavaScript 中数组是一种常见的数据结构，它提供了很多内置方法用来处理和操作数组。下面介绍一些常用的数组方法：</p>
+<ol>
+<li><p>push()：将一个或多个元素添加到数组的末尾，并返回新数组的长度。</p>
+</li>
+<li><p>pop()：移除数组的最后一个元素，并返回该元素的值。</p>
+</li>
+<li><p>shift()：移除数组的第一个元素，并返回该元素的值。</p>
+</li>
+<li><p>unshift()：将一个或多个元素添加到数组的开头，并返回新数组的长度。</p>
+</li>
+<li><p>splice()：从数组中添加或移除元素，可以用来删除、插入或替换元素。</p>
+</li>
+<li><p>slice()：返回数组的一个子数组，从开始索引到结束索引（不包括结束索引）。</p>
+</li>
+<li><p>forEach()：遍历数组中的每个元素，执行指定的回调函数。</p>
+</li>
+<li><p>map()：对数组中的每个元素执行指定的操作，并返回操作后的新数组。</p>
+</li>
+<li><p>filter()：返回一个新数组，包含数组中所有符合条件的元素。</p>
+</li>
+<li><p>reduce()：对数组中的所有元素进行累加或其他操作，返回一个累加结果。</p>
+</li>
+<li><p>find()：返回数组中第一个符合条件的元素，如果没有符合条件的元素，则返回 undefined。</p>
+</li>
+<li><p>findIndex()：返回数组中第一个符合条件的元素的索引，如果没有符合条件的元素，则返回 -1。</p>
+</li>
+<li><p>concat()：将两个或多个数组合并成一个新数组。</p>
+</li>
+<li><p>join()：将数组中的所有元素转换为字符串，并用指定的分隔符连接起来。</p>
+</li>
+<li><p>reverse()：反转数组中的元素顺序。</p>
+</li>
+<li><p>sort()：对数组中的元素进行排序，默认按照 Unicode 字符顺序进行排序。</p>
+</li>
+</ol>
+<p>这些是 JavaScript 中常用的一些数组方法，它们可以让我们更方便地处理和操作数组，提高代码的效率和可读性。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2162,125 +2569,6 @@
 </ul>
 <p>为何要避免</p>
 <p>上下文切换，GPU额外的开销<br>创建新的渲染缓冲区，内存损耗<br>最优回答： 触发离屏渲染会增加GPU的工作量，而增加GPU的工作量很有可能导致GPU和CPU的工作总耗时超过了16.67ms，有可能导致UI的卡顿和掉帧。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/08/11/iOS-Runtime/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="kyan">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Next">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Next">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/08/11/iOS-Runtime/" class="post-title-link" itemprop="url">iOS Runtime</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2017-08-11 10:59:29" itemprop="dateCreated datePublished" datetime="2017-08-11T10:59:29+08:00">2017-08-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7c6565e271234c4997d0c2e61affb8d7~tplv-k3u1fbpfcp-watermark.image" alt="1f4ce094cc33d1f03f59588c71aefec1.jpg"></p>
-<p>本文主要梳理iOS Runtime 核心知识</p>
-<ol>
-<li>数据结构</li>
-<li>method_t </li>
-<li>类对象与元类对象</li>
-<li>方法缓存</li>
-<li>消息传递</li>
-<li>消息转发</li>
-<li>Method-Swizzling</li>
-<li>动态添加方法</li>
-<li>动态方法解析</li>
-</ol>
-<h2 id="Runtime-数据结构"><a href="#Runtime-数据结构" class="headerlink" title="Runtime 数据结构"></a>Runtime 数据结构</h2><p>1.objc_class</p>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dc29829492444b4eac6220bd9cb85e96~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p>2.isa 指针</p>
-<p>结构</p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ae4d9575f39d47d1a6f9b4baf0c818b0~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p>isa指针主要分为几种</p>
-<ul>
-<li>共用体isa  </li>
-<li>指针型isa   isa的值代表class的地址</li>
-<li>非指针isa   isa的值部分代表class的地址</li>
-</ul>
-<p>isa指向</p>
-<p>关于对象，指向其类对象<br>关于类对象，其指向元类对象</p>
-<h2 id="method-t"><a href="#method-t" class="headerlink" title="method_t"></a>method_t</h2><p>是个结构体，包含了函数四要素（名称 返回值 参数  函数体）</p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8c91420c93ee450ea5384b39841e417f~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/85710dc53b554019976f5327c6af6dc7~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h2 id="类对象与元类对象"><a href="#类对象与元类对象" class="headerlink" title="类对象与元类对象"></a>类对象与元类对象</h2><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d7dbe7e33e0b4f91ab97146cb303767b~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h2 id="方法缓存"><a href="#方法缓存" class="headerlink" title="方法缓存"></a>方法缓存</h2><p>runtime是如何通过Selector找到对应的Imp地址的</p>
-<p><strong>1.cache 中查找</strong></p>
-<p>hash 查找 给定值是sel，目标是对应的bucket_t的imp</p>
-<p><strong>2.当前类中查找</strong></p>
-<p>已排序好的列表，二分查找方法对应执行函数</p>
-<p>没有排序的，一般遍历查找方法对应执行函数</p>
-<p><strong>3.父类逐级查找</strong></p>
-<h2 id="消息传递"><a href="#消息传递" class="headerlink" title="消息传递"></a>消息传递</h2><p>1.缓存是否命中</p>
-<p>2.当前类方法列表是否命中</p>
-<p>3.逐级父类方法列表是否命中</p>
-<p>4.消息转发流程</p>
-<h2 id="消息转发"><a href="#消息转发" class="headerlink" title="消息转发"></a>消息转发</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b43e83026a8b4403b996bec5ba420aa0~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p>4步骤<br><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/28aa9f31c5134ed6898fd346e1fee6e8~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h2 id="Method-Swizzling"><a href="#Method-Swizzling" class="headerlink" title="Method-Swizzling"></a>Method-Swizzling</h2><p>方法交换 hook</p>
-<h2 id="动态添加方法"><a href="#动态添加方法" class="headerlink" title="动态添加方法"></a>动态添加方法</h2><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bf441bf4455c48a2a5fc430fab76d596~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h2 id="动态方法解析"><a href="#动态方法解析" class="headerlink" title="动态方法解析"></a>动态方法解析</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e26aeb8dd1ce4512aec09eae5718aafc~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p>参考文章:</p>
-<p>runtime</p>
-<p><a target="_blank" rel="noopener" href="https://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/">https://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/</a></p>
-<p>消息转发机制原理</p>
-<p><a target="_blank" rel="noopener" href="https://yulingtianxia.com/blog/2016/06/15/Objective-C-Message-Sending-and-Forwarding/">https://yulingtianxia.com/blog/2016/06/15/Objective-C-Message-Sending-and-Forwarding/</a></p>
 
       
     </div>

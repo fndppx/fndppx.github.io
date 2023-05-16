@@ -113,7 +113,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -122,7 +122,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -139,6 +139,125 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/08/11/iOS-Runtime/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="kyan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Next">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Next">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2017/08/11/iOS-Runtime/" class="post-title-link" itemprop="url">iOS Runtime</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-08-11 10:59:29" itemprop="dateCreated datePublished" datetime="2017-08-11T10:59:29+08:00">2017-08-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7c6565e271234c4997d0c2e61affb8d7~tplv-k3u1fbpfcp-watermark.image" alt="1f4ce094cc33d1f03f59588c71aefec1.jpg"></p>
+<p>本文主要梳理iOS Runtime 核心知识</p>
+<ol>
+<li>数据结构</li>
+<li>method_t </li>
+<li>类对象与元类对象</li>
+<li>方法缓存</li>
+<li>消息传递</li>
+<li>消息转发</li>
+<li>Method-Swizzling</li>
+<li>动态添加方法</li>
+<li>动态方法解析</li>
+</ol>
+<h2 id="Runtime-数据结构"><a href="#Runtime-数据结构" class="headerlink" title="Runtime 数据结构"></a>Runtime 数据结构</h2><p>1.objc_class</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dc29829492444b4eac6220bd9cb85e96~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>2.isa 指针</p>
+<p>结构</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ae4d9575f39d47d1a6f9b4baf0c818b0~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>isa指针主要分为几种</p>
+<ul>
+<li>共用体isa  </li>
+<li>指针型isa   isa的值代表class的地址</li>
+<li>非指针isa   isa的值部分代表class的地址</li>
+</ul>
+<p>isa指向</p>
+<p>关于对象，指向其类对象<br>关于类对象，其指向元类对象</p>
+<h2 id="method-t"><a href="#method-t" class="headerlink" title="method_t"></a>method_t</h2><p>是个结构体，包含了函数四要素（名称 返回值 参数  函数体）</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8c91420c93ee450ea5384b39841e417f~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/85710dc53b554019976f5327c6af6dc7~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="类对象与元类对象"><a href="#类对象与元类对象" class="headerlink" title="类对象与元类对象"></a>类对象与元类对象</h2><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d7dbe7e33e0b4f91ab97146cb303767b~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="方法缓存"><a href="#方法缓存" class="headerlink" title="方法缓存"></a>方法缓存</h2><p>runtime是如何通过Selector找到对应的Imp地址的</p>
+<p><strong>1.cache 中查找</strong></p>
+<p>hash 查找 给定值是sel，目标是对应的bucket_t的imp</p>
+<p><strong>2.当前类中查找</strong></p>
+<p>已排序好的列表，二分查找方法对应执行函数</p>
+<p>没有排序的，一般遍历查找方法对应执行函数</p>
+<p><strong>3.父类逐级查找</strong></p>
+<h2 id="消息传递"><a href="#消息传递" class="headerlink" title="消息传递"></a>消息传递</h2><p>1.缓存是否命中</p>
+<p>2.当前类方法列表是否命中</p>
+<p>3.逐级父类方法列表是否命中</p>
+<p>4.消息转发流程</p>
+<h2 id="消息转发"><a href="#消息转发" class="headerlink" title="消息转发"></a>消息转发</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b43e83026a8b4403b996bec5ba420aa0~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>4步骤<br><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/28aa9f31c5134ed6898fd346e1fee6e8~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="Method-Swizzling"><a href="#Method-Swizzling" class="headerlink" title="Method-Swizzling"></a>Method-Swizzling</h2><p>方法交换 hook</p>
+<h2 id="动态添加方法"><a href="#动态添加方法" class="headerlink" title="动态添加方法"></a>动态添加方法</h2><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bf441bf4455c48a2a5fc430fab76d596~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="动态方法解析"><a href="#动态方法解析" class="headerlink" title="动态方法解析"></a>动态方法解析</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e26aeb8dd1ce4512aec09eae5718aafc~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>参考文章:</p>
+<p>runtime</p>
+<p><a target="_blank" rel="noopener" href="https://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/">https://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/</a></p>
+<p>消息转发机制原理</p>
+<p><a target="_blank" rel="noopener" href="https://yulingtianxia.com/blog/2016/06/15/Objective-C-Message-Sending-and-Forwarding/">https://yulingtianxia.com/blog/2016/06/15/Objective-C-Message-Sending-and-Forwarding/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
