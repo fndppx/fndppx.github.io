@@ -113,7 +113,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -139,6 +139,159 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/11/29/iOS-UI%E8%A7%86%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="kyan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Next">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Next">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2017/11/29/iOS-UI%E8%A7%86%E5%9B%BE/" class="post-title-link" itemprop="url">iOS UI视图</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-29 10:56:34" itemprop="dateCreated datePublished" datetime="2017-11-29T10:56:34+08:00">2017-11-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c9c15cc932b4f6ab1a20e2d80698d31~tplv-k3u1fbpfcp-watermark.image" alt="u=361136753,1329746390&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG.webp"></p>
+<p>本文主要梳理iOS UI 核心知识</p>
+<ul>
+<li><ol>
+<li>UITableView 相关</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>事件传递&amp;视图响应</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>图像显示原理</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>卡顿&amp;掉帧原因方案</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>绘制原理&amp;异步绘制</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>离屏渲染触发时机&amp;为什么要避免离屏渲染</li>
+</ol>
+</li>
+</ul>
+<h2 id="1-UITableView-相关"><a href="#1-UITableView-相关" class="headerlink" title="1.UITableView 相关"></a>1.UITableView 相关</h2><p>UITableView核心主要在于 重用机制和数据源同步</p>
+<h3 id="重用机制"><a href="#重用机制" class="headerlink" title="重用机制"></a><strong>重用机制</strong></h3><p>如图列表会维持一个重用池子，当cell从列表消失的时候会放到重用池里边，后续使用如果重用池里边有直接取出来，否则重新alloc 创建。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0749ef1438ad4ec99f3b8316f00f63ee~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h3 id="数据源同步"><a href="#数据源同步" class="headerlink" title="数据源同步"></a>数据源同步</h3><p>对于多线程情况需要注意的是数据源同步的问题，一般在新闻，咨询类app中，主要考虑问题，如何在tableview解决多线程情况下，数据的处理。</p>
+<h5 id="并发访问，数据拷贝"><a href="#并发访问，数据拷贝" class="headerlink" title="并发访问，数据拷贝"></a><strong>并发访问，数据拷贝</strong></h5><p>对于并发访问，一般在子线程处理数据，如请求网络，在此之前需要先copy原始列表数据，当子线程处理完数据后，再copy回到主任务线程，刷新ui，保证数据完整性。</p>
+<h5 id="串行访问"><a href="#串行访问" class="headerlink" title="串行访问"></a><strong>串行访问</strong></h5><h5 id=""><a href="#" class="headerlink" title=""></a></h5><p>对于串行访问，保证数据请求完成后，再去刷新ui。</p>
+<h2 id="2-事件传递-amp-视图响应"><a href="#2-事件传递-amp-视图响应" class="headerlink" title="2.事件传递&amp;视图响应"></a>2.事件传递&amp;视图响应</h2><h4 id="事件传递"><a href="#事件传递" class="headerlink" title="事件传递"></a>事件传递</h4><p>事件传递核心在于 事件的传递链和响应链</p>
+<p>两个方法</p>
+<ul>
+<li><p>(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {<br>}</p>
+</li>
+<li><p>(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {<br>}</p>
+</li>
+</ul>
+<p>事件传递从uiapplication-&gt;uiwindow-&gt;uiview </p>
+<p>hitTest 返回命中的目标视图，最佳响应者，如果是uiview的子视图，会递归倒序遍历子视图里边的 hitTest（hitTest会判断 alpha &gt; 0.1 ,userInteractionEnabled &#x3D; true , opaque &#x3D; 1），如果有命中，会通过pointInside 判断当前点击区域是否在视图内，如果在就响应事件, 通过 pointInside还可以自定义响应区域。</p>
+<p><strong>需要注意如果点击的一个子视图超出了父试图，那么传递链 在判断父试图的时候已经被中断，因为点击区域不在父试图里边，从而最终丢弃了事件传递。</strong></p>
+<h4 id="视图响应"><a href="#视图响应" class="headerlink" title="视图响应"></a>视图响应</h4><p>响应链从 first view -&gt; super view -&gt; … -&gt; view controller -&gt; window -&gt; Application -&gt; AppDelegate</p>
+<p>简单总结，事件链包含传递链和响应链，事件通过传递链传递上去，通过响应链找到相应的 <code>UIResponse</code>。</p>
+<p><strong>完整流程</strong></p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9c26ec4bc74e4499a058ba858c24b150~tplv-k3u1fbpfcp-watermark.image" alt="3704739-b9721e05e0cda6b2.png"></p>
+<p>主要有uiview和calayer</p>
+<p>uiview 为calayer 提供内容，以及负责处理触摸等事件，参与响应链</p>
+<p>calyer 负责显示内容 contents </p>
+<p>符合单一职责模式</p>
+<p><strong>响应链顺序</strong></p>
+<p>是从当前最上层的view -&gt; superview -&gt; uiviewcontroller -&gt;uiwindow -&gt;uiapplication </p>
+<p><strong>继承关系</strong></p>
+<p>uibutton -&gt;uicontrol-&gt;uiview -&gt;uireponder</p>
+<h2 id="3-图像显示原理"><a href="#3-图像显示原理" class="headerlink" title="3.图像显示原理"></a>3.图像显示原理</h2><p>通过cpu计算 gpu渲染 最终提交到帧缓冲区，通过视图控制器显示到屏幕上。</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b8e0e8c031d24c2ba69077ecd065407c~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="4-卡顿-amp-掉帧原因"><a href="#4-卡顿-amp-掉帧原因" class="headerlink" title="4.卡顿&amp;掉帧原因"></a>4.卡顿&amp;掉帧原因</h2><p><strong>卡顿原因</strong></p>
+<p>在规定的16.7ms之内，下-帧VSync信号到来之前，并没有cpu和gpu共同完成下一帧画面的合成，于是就造成了卡顿和掉帧。</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-ZMCk0_Mc1xKth32GI_mPA">https://mp.weixin.qq.com/s/-ZMCk0_Mc1xKth32GI_mPA</a></p>
+<p><strong>滑动优化方案</strong></p>
+<p>从cpu 和 gpu</p>
+<p>cpu<br>1.对象创建，调整，销毁<br>2.预排班（布局计算，文本计算）<br>3.预渲染（文本等异步绘制，图片编解码等）</p>
+<p>gpu<br>1.纹理渲染<br>2.视图混合</p>
+<p><strong>通用渲染流水线</strong></p>
+<p> <strong>应用阶段</strong></p>
+<p> <strong>几何阶段</strong></p>
+<p> <strong>光栅化阶段</strong></p>
+<p> <strong>像素处理阶段</strong></p>
+<h2 id="5-绘制原理-amp-异步绘制"><a href="#5-绘制原理-amp-异步绘制" class="headerlink" title="5.绘制原理&amp;异步绘制"></a>5.绘制原理&amp;异步绘制</h2><p>[layer.delegate displayLayer:]</p>
+<p>代理负责生成对应的bitmap ，设置该bitmap作为layer.contents属性的值</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/78e0774861d54376840a8ea0b9967995~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p><strong>异步绘制：</strong><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3NzM0NzkxMQ==&mid=2655379516&idx=3&sn=8748f40b2b835a91f11315b321755d10&chksm=84e22d14b395a402eaf9eebde59df55df85988d2b1db09ae471546a07d7a12b432e6d389e5db&scene=27">https://mp.weixin.qq.com/s?__biz=MzA3NzM0NzkxMQ==&amp;mid=2655379516&amp;idx=3&amp;sn=8748f40b2b835a91f11315b321755d10&amp;chksm=84e22d14b395a402eaf9eebde59df55df85988d2b1db09ae471546a07d7a12b432e6d389e5db&amp;scene=27</a></p>
+<h2 id="6-离屏渲染触发时机-amp-为什么要避免离屏渲染"><a href="#6-离屏渲染触发时机-amp-为什么要避免离屏渲染" class="headerlink" title="6.离屏渲染触发时机&amp;为什么要避免离屏渲染"></a><strong>6.离屏渲染触发时机&amp;为什么要避免离屏渲染</strong></h2><p>当我们处理图层的属性在被指定为未被预合成之前不能直接在屏幕上显示，就触发了离屏渲染。离屏渲染的概念起源于gpu层面，指的是gpu在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作。</p>
+<p>何时触发</p>
+<ul>
+<li>圆角 </li>
+<li>图层蒙版</li>
+<li>阴影</li>
+<li>光栏化</li>
+</ul>
+<p>为何要避免</p>
+<p>上下文切换，GPU额外的开销<br>创建新的渲染缓冲区，内存损耗<br>最优回答： 触发离屏渲染会增加GPU的工作量，而增加GPU的工作量很有可能导致GPU和CPU的工作总耗时超过了16.67ms，有可能导致UI的卡顿和掉帧。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

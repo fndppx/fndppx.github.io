@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景移动端热修复是指在移动应用程序中对已发布的应用进行动态修复和更新，而无需用户重新下载安装新版本的应用。以下是一些研究移动端热修复的原因：  修复应用程序漏洞和Bug：移动应用程序可能存在各种漏洞和Bug，这些问题可能会导致应用程序崩溃、功能失效或数据泄露等问题。通过研究移动端热修复技术，开发人员可以快速响应并修复这些问题，而无需用户等待和下载完整的应用程序更新。  提供快速更新和功能迭代：移动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="热修复之我看">
+<meta property="og:url" content="http://example.com/2023/05/19/%E7%83%AD%E4%BF%AE%E5%A4%8D%E4%B9%8B%E6%88%91%E7%9C%8B/index.html">
+<meta property="og:site_name" content="Next">
+<meta property="og:description" content="背景移动端热修复是指在移动应用程序中对已发布的应用进行动态修复和更新，而无需用户重新下载安装新版本的应用。以下是一些研究移动端热修复的原因：  修复应用程序漏洞和Bug：移动应用程序可能存在各种漏洞和Bug，这些问题可能会导致应用程序崩溃、功能失效或数据泄露等问题。通过研究移动端热修复技术，开发人员可以快速响应并修复这些问题，而无需用户等待和下载完整的应用程序更新。  提供快速更新和功能迭代：移动">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cbeff23ce5df43db8a2c6e6facb8ed7d~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/28c270ef23144fef90020a7dd228f4dc~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1eb9840ad7d344a79d541b779fcdbe54~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/61ef21479d6e4f1089d48f04ca4cd06b~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e0d39c4c2c17411eb61b0832e8bac10f~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1d4efc8667164905b8057a1ac5ef8a3e~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f0a53c29e939425abb1eeda2402cadce~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e5dea8873ee64d538b19288cd21a705f~tplv-k3u1fbpfcp-watermark.image">
+<meta property="article:published_time" content="2023-05-19T15:12:03.000Z">
+<meta property="article:modified_time" content="2023-05-19T15:12:44.164Z">
+<meta property="article:author" content="kyan">
+<meta property="article:tag" content="性能优化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cbeff23ce5df43db8a2c6e6facb8ed7d~tplv-k3u1fbpfcp-watermark.image">
+
+
+<link rel="canonical" href="http://example.com/2023/05/19/%E7%83%AD%E4%BF%AE%E5%A4%8D%E4%B9%8B%E6%88%91%E7%9C%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/05/19/%E7%83%AD%E4%BF%AE%E5%A4%8D%E4%B9%8B%E6%88%91%E7%9C%8B/","path":"2023/05/19/热修复之我看/","title":"热修复之我看"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>热修复之我看 | Next</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Next</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">代码小记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%97%9B%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">痛点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%9A%E7%95%8C%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">业界方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jspatch-%E7%9B%AE%E5%89%8D%E4%B8%8D%E8%83%BD%E4%B8%8A%E6%9E%B6"><span class="nav-number">3.1.</span> <span class="nav-text">jspatch 目前不能上架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ocrunner"><span class="nav-number">3.2.</span> <span class="nav-text">Ocrunner</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mangofix"><span class="nav-number">3.3.</span> <span class="nav-text">mangofix</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mango%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">Mango源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">4.1.</span> <span class="nav-text">目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Compiler"><span class="nav-number">4.1.1.</span> <span class="nav-text">Compiler</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Execute"><span class="nav-number">4.1.2.</span> <span class="nav-text">Execute</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#libffi"><span class="nav-number">4.1.3.</span> <span class="nav-text">libffi</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E9%9D%A2%E6%9D%A5%E7%9C%8B%E6%BA%90%E7%A0%81%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="nav-number">4.2.</span> <span class="nav-text">下面来看源码执行流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%AF%B9%E8%84%9A%E6%9C%AC%E8%BF%9B%E8%A1%8CASE%E5%8A%A0%E5%AF%86%EF%BC%8C%E6%AD%A4%E6%AD%A5%E9%AA%A4%E4%B8%80%E8%88%AC%E6%9C%80%E5%90%8E%E4%BC%9A%E4%B8%8A%E4%BC%A0%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E9%80%9A%E8%BF%87%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8B%E5%8F%91%E3%80%82"><span class="nav-number">4.2.1.</span> <span class="nav-text">1.对脚本进行ASE加密，此步骤一般最后会上传到服务器，通过服务器下发。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-context-%E5%88%9D%E5%A7%8B%E5%8C%96%E8%A7%A3%E5%AF%86%E8%84%9A%E6%9C%AC%EF%BC%8C%E6%89%A7%E8%A1%8C%E6%95%B4%E4%B8%AA%E6%B5%81%E7%A8%8B"><span class="nav-number">4.2.2.</span> <span class="nav-text">2.context 初始化解密脚本，执行整个流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E6%A0%B8%E5%BF%83%E6%AD%A5%E9%AA%A4"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">几个核心步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-mf-set-current-compile-util"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">1.mf_set_current_compile_util</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-mf-add-built-in"><span class="nav-number">4.2.2.3.</span> <span class="nav-text">2.mf_add_built_in</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-compileSourceWithString-%E6%8E%A5%E4%B8%8B%E6%9D%A5%E5%BC%80%E5%A7%8B%E8%BF%9B%E8%A1%8C%E7%9B%B8%E5%85%B3%E8%A7%A3%E6%9E%90%E5%B7%A5%E4%BD%9C"><span class="nav-number">4.2.2.4.</span> <span class="nav-text">3.compileSourceWithString 接下来开始进行相关解析工作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-mf-set-source-string"><span class="nav-number">4.2.2.5.</span> <span class="nav-text">4.mf_set_source_string</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E7%BB%8F%E8%BF%87%E4%BA%86lex%E5%92%8C-yacc-%E7%9A%84%E5%A4%84%E7%90%86%E5%90%8E%E7%84%B6%E5%90%8E%E6%8A%8A%E5%86%85%E5%AE%B9%E6%94%BE%E5%88%B0%E4%BA%86%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8%E5%AF%B9%E8%B1%A1%E4%B8%AD%EF%BC%8C%E6%8B%BFmf-add-class-definition%E6%9D%A5%E5%88%86%E6%9E%90"><span class="nav-number">4.2.2.6.</span> <span class="nav-text">5.经过了lex和 yacc 的处理后然后把内容放到了一个容器对象中，拿mf_add_class_definition来分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-%E6%9C%80%E7%BB%88%E4%BF%9D%E5%AD%98%E5%88%B0%E4%BA%86-topList-%E6%95%B0%E7%BB%84%E4%B8%AD"><span class="nav-number">4.2.2.7.</span> <span class="nav-text">6.最终保存到了  topList 数组中</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-mf-interpret"><span class="nav-number">4.2.2.8.</span> <span class="nav-text">7.mf_interpret</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%80%A7%E8%83%BD%EF%BC%9A"><span class="nav-number">4.2.3.</span> <span class="nav-text">关于性能：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">kyan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/19/%E7%83%AD%E4%BF%AE%E5%A4%8D%E4%B9%8B%E6%88%91%E7%9C%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="kyan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Next">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="热修复之我看 | Next">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          热修复之我看
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-05-19 23:12:03" itemprop="dateCreated datePublished" datetime="2023-05-19T23:12:03+08:00">2023-05-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>移动端热修复是指在移动应用程序中对已发布的应用进行动态修复和更新，而无需用户重新下载安装新版本的应用。以下是一些研究移动端热修复的原因：</p>
+<ol>
+<li><p>修复应用程序漏洞和Bug：移动应用程序可能存在各种漏洞和Bug，这些问题可能会导致应用程序崩溃、功能失效或数据泄露等问题。通过研究移动端热修复技术，开发人员可以快速响应并修复这些问题，而无需用户等待和下载完整的应用程序更新。</p>
+</li>
+<li><p>提供快速更新和功能迭代：移动应用程序的开发和发布通常需要经过一定的时间和审核过程，这使得快速修复和更新应用程序变得困难。通过研究移动端热修复技术，开发人员可以更快地推出新功能和修复问题，以满足用户的需求并提供更好的用户体验。</p>
+</li>
+<li><p>减少用户流失和提高用户满意度：当用户遇到应用程序中的问题或缺陷时，他们可能会感到不满并选择卸载应用程序。通过使用移动端热修复技术，开发人员可以在最短时间内修复问题，并避免用户因问题而离开应用程序，从而提高用户满意度和用户留存率。</p>
+</li>
+<li><p>降低应用程序维护成本：传统的应用程序更新需要发布新版本，并要求用户下载和安装更新，这需要耗费开发人员和用户的时间和资源。通过使用移动端热修复技术，可以减少应用程序的发布次数和用户的下载次数，从而降低应用程序的维护成本。</p>
+</li>
+</ol>
+<p>总而言之，研究移动端热修复可以提供一种快速、高效和经济的方式来修复移动应用程序中的问题，提供更好的用户体验，并降低开发和维护成本。</p>
+<h2 id="痛点"><a href="#痛点" class="headerlink" title="痛点"></a>痛点</h2><p>移动端热修复的痛点主要有以下几个：</p>
+<p>1.上架问题: 如果被商店查到使用此功能可能会面临被拒风险。</p>
+<p>2.安全风险：热修复可能会导致应用程序的安全风险，因为攻击者可能会篡改热修复包，导致应用程序崩溃或泄露敏感信息。</p>
+<p>3.兼容性问题：热修复可能会引起应用程序的兼容性问题，因为新的代码可能与旧的代码不兼容，导致应用程序崩溃或异常。</p>
+<p>4.调试困难：热修复的代码通常比较难以调试，因为它是动态加载的，不容易在开发环境中调试。</p>
+<p>5。性能问题：热修复可能会导致应用程序的性能问题，因为它需要动态加载代码，这可能会导致应用程序响应速度变慢或者增加内存占用。</p>
+<p>6.维护存在一定成本：热修复需要额外的维护成本，因为需要开发额外的代码和测试热修复的效果。</p>
+<p>因此，在使用移动端热修复技术时，需要仔细权衡各种利弊，并采取相应的安全措施来确保应用程序的安全性。同时，开发人员需要充分考虑兼容性问题和性能问题，并进行充分的测试和调试工作。</p>
+<h2 id="业界方案"><a href="#业界方案" class="headerlink" title="业界方案"></a>业界方案</h2><h3 id="jspatch-目前不能上架"><a href="#jspatch-目前不能上架" class="headerlink" title="jspatch 目前不能上架"></a>jspatch 目前不能上架</h3><p>JSPatch 是一个用于 iOS 应用的热修复框架，它允许开发者在不重新发布应用的情况下修复线上的 Bug 或者添加新功能。JSPatch 的原理可以简单概括如下：</p>
+<ol>
+<li><p>JSPatch 的运行环境是 JavaScriptCore，它是苹果提供的 JavaScript 引擎，可以在 iOS 应用中执行 JavaScript 代码。</p>
+</li>
+<li><p>在应用启动时，JSPatch 将下载的 JavaScript 脚本注入到 JavaScriptCore 中，并创建一个全局的 JavaScript 上下文。</p>
+</li>
+<li><p>JSPatch 使用 JavaScriptCore 提供的 Objective-C 与 JavaScript 交互的 API。开发者可以通过这些 API 将 Objective-C 对象和方法暴露给 JavaScript，从而实现在 JavaScript 中调用原生的 Objective-C 方法。</p>
+</li>
+<li><p>JavaScript 脚本中的代码可以直接访问应用中的 Objective-C 对象和方法，以及修改和执行这些对象和方法。</p>
+</li>
+<li><p>当开发者需要修复 Bug 或者添加新功能时，他们可以在 JavaScript 脚本中编写相应的逻辑。然后将这个脚本发布到服务器，并通知应用更新。</p>
+</li>
+<li><p>应用在后台通过网络请求下载最新的 JavaScript 脚本，并将其注入到 JavaScriptCore 中。</p>
+</li>
+<li><p>下次应用启动时，注入的新 JavaScript 脚本将生效，并可以执行修复 Bug 或者添加新功能的逻辑。</p>
+</li>
+</ol>
+<p>总的来说，JSPatch 的原理是通过将 JavaScript 脚本注入到 iOS 应用中的 JavaScriptCore 中，实现在运行时修复 Bug 或者添加新功能。开发者可以通过 JavaScript 代码访问和修改应用中的 Objective-C 对象和方法，从而实现动态修复和扩展应用的能力。</p>
+<h3 id="Ocrunner"><a href="#Ocrunner" class="headerlink" title="Ocrunner"></a>Ocrunner</h3><p>是基于 mangofix做了优化，支持直接使用oc语法做脚本，原理和mangofix 一样</p>
+<h3 id="mangofix"><a href="#mangofix" class="headerlink" title="mangofix"></a>mangofix</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cbeff23ce5df43db8a2c6e6facb8ed7d~tplv-k3u1fbpfcp-watermark.image" alt="1709476-16c9960a772355e4.webp"></p>
+<h2 id="Mango源码分析"><a href="#Mango源码分析" class="headerlink" title="Mango源码分析"></a>Mango源码分析</h2><h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/28c270ef23144fef90020a7dd228f4dc~tplv-k3u1fbpfcp-watermark.image" alt="&amp; MangoFixDemo.png"></p>
+<p>主要有 Compiler , Execute，libffi，symdl 这几个核心模块组成</p>
+<h4 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h4><p>主要  yacc 词法，语法解析器，内置对象映射表，AST 解析后的内置对象相关的model类组成。</p>
+<h4 id="Execute"><a href="#Execute" class="headerlink" title="Execute"></a>Execute</h4><p>主要来承接yacc 处理后的后续操作，把对脚本解析后转换成相应的内置对象。 </p>
+<p>包含 MFContext执行的上下文 它用来执行整个热修复的 脚本初始化，加密，解密执行，以及解析入口等。</p>
+<p> MangoFix脚本中很多功能都是通过预先创建内置对象的方式支持的，比如常用结构体的声明、变量、宏、C函数和GCD相关的操作等，如果想详细了解MangoFix中有哪些内置对象，当然MangoFix也开放了相关接口，你也可以向MangoFix执行上下文中注入你需要的对象。</p>
+<h4 id="libffi"><a href="#libffi" class="headerlink" title="libffi"></a>libffi</h4><p>主要用来动态的执行某些函数方法。</p>
+<blockquote>
+<p> libffi（The Foreign Function Interface library）是一个开源的软件库，它提供了一种通用的编程接口，用于调用不同编程语言之间的函数。它允许在运行时动态地调用和执行函数，而无需在编译时提前知道函数的签名或参数类型。</p>
+<p>libffi的设计目标是为不同的编程语言提供一个统一的接口，使它们能够相互调用。它为许多常见的编程语言，如C、C++、Python、Ruby等提供了支持，并可以方便地扩展到其他语言。</p>
+<p>libffi的核心功能是动态地生成机器码来调用函数，这使得在运行时可以根据需要解析函数的签名、分配内存、处理参数传递和返回值等操作。它提供了一个高度灵活和可移植的接口，使得开发者可以轻松地在不同的编程环境中进行函数调用。</p>
+<p>libffi的主要用途之一是在解释型语言中实现对外部库的调用。通过使用libffi，解释型语言的开发者可以方便地扩展语言的功能，调用本地代码库或其他语言编写的函数。它还可以用于实现动态链接，通过在运行时加载和执行共享库中的函数。</p>
+<p>总的来说，libffi是一个非常有用的库，它提供了一种通用的方式来调用不同编程语言之间的函数，为开发者提供了更大的灵活性和互操作性。无论你是开发解释型语言、扩展其他编程语言功能，还是需要实现动态链接，libffi都是一个值得考虑的选择。</p>
+</blockquote>
+<p>symdl是一个简单的小工具，它的功能与dlsym非常相似，使用symdl，可以传入动态链接的C函数名字符串，获取函数指针，从而实现对C函数的动态调用。</p>
+<h3 id="下面来看源码执行流程"><a href="#下面来看源码执行流程" class="headerlink" title="下面来看源码执行流程"></a>下面来看源码执行流程</h3><p>首先来看下mango 脚本格式</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1eb9840ad7d344a79d541b779fcdbe54~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>关于脚本语法可以去相应地址查看</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/YPLiang19/Mango">https://github.com/YPLiang19/Mango</a></p>
+<p><strong>注意事项</strong></p>
+<p>一般来说在脚本是需要加密解密的，因为如果被别人动态的修改，可能会对app造成一定的影响。</p>
+<h4 id="1-对脚本进行ASE加密，此步骤一般最后会上传到服务器，通过服务器下发。"><a href="#1-对脚本进行ASE加密，此步骤一般最后会上传到服务器，通过服务器下发。" class="headerlink" title="1.对脚本进行ASE加密，此步骤一般最后会上传到服务器，通过服务器下发。"></a>1.对脚本进行ASE加密，此步骤一般最后会上传到服务器，通过服务器下发。</h4><figure class="highlight plaintext"><figcaption><span>(BOOL)encryptPlainScirptToDocument &#123;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    NSError *outErr = nil;</span><br><span class="line"></span><br><span class="line">    BOOL writeResult = NO;</span><br><span class="line"></span><br><span class="line">    NSURL *scriptUrl = [[NSBundle mainBundle] URLForResource:@&quot;demo&quot; withExtension:@&quot;mg&quot;];</span><br><span class="line"></span><br><span class="line">    NSString *plainScriptString = [NSString stringWithContentsOfURL:scriptUrl encoding:NSUTF8StringEncoding error:&amp;outErr];</span><br><span class="line"></span><br><span class="line">    if (outErr) goto err;</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        NSData *scriptData = [plainScriptString dataUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line"></span><br><span class="line">        NSData *encryptedScriptData = [scriptData AES128ParmEncryptWithKey:aes128Key iv:aes128Iv];</span><br><span class="line"></span><br><span class="line">        NSString * encryptedPath= [(NSString *)[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@&quot;demo_encrypted.mg&quot;];</span><br><span class="line"></span><br><span class="line">        NSFileManager *fileManager = [NSFileManager defaultManager];</span><br><span class="line"></span><br><span class="line">        if (![fileManager fileExistsAtPath:encryptedPath]) &#123;</span><br><span class="line"></span><br><span class="line">            [fileManager createFileAtPath:encryptedPath contents:nil attributes:nil];</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        writeResult = [encryptedScriptData writeToFile:encryptedPath options:NSDataWritingAtomic error:&amp;outErr];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">err:</span><br><span class="line"></span><br><span class="line">    if (outErr) NSLog(@&quot;%@&quot;,outErr);</span><br><span class="line"></span><br><span class="line">    return writeResult;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-context-初始化解密脚本，执行整个流程"><a href="#2-context-初始化解密脚本，执行整个流程" class="headerlink" title="2.context 初始化解密脚本，执行整个流程"></a>2.context 初始化解密脚本，执行整个流程</h4><pre><code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;
+
+    BOOL writeResult = [self encryptPlainScirptToDocument];
+
+    if (!writeResult) &#123;
+
+        return NO;
+
+    &#125;
+
+    MFContext *context = [[MFContext alloc] initWithAES128Key:aes128Key iv:aes128Iv];
+
+    NSString * encryptedPath= [(NSString *)[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@&quot;demo_encrypted.mg&quot;];
+
+    [NSURL URLWithString:@&quot;&quot;];
+
+    NSURL *scriptUrl = [NSURL fileURLWithPath:encryptedPath];
+
+    [context evalMangoScriptWithURL:scriptUrl];
+
+return YES;
+
+&#125;
+</code></pre>
+<p>evalMangoScriptWithAES128Data是解密并执行的核心方法。</p>
+<pre><code>- (void)evalMangoScriptWithURL:(NSURL *)url&#123;
+
+    @autoreleasepool &#123;
+
+        NSError *error;
+
+        NSData *encryptedData = [NSData dataWithContentsOfURL:url];
+
+        if (error) &#123;
+
+            NSLog(@&quot;[MangoFix] [ERROR] : %@&quot;,error);
+
+            return;
+
+        &#125;
+
+        [self evalMangoScriptWithAES128Data:encryptedData];
+
+    &#125;
+&#125;
+
+
+- (void)evalMangoScriptWithAES128Data:(NSData *)scriptData &#123;
+
+    @autoreleasepool &#123;
+
+        NSData *mangoFixData = [scriptData AES128ParmDecryptWithKey:_key iv:_iv];
+
+        NSString *mangoFixString = [[NSString alloc] initWithData:mangoFixData encoding:NSUTF8StringEncoding];
+
+        if (!mangoFixString.length) &#123;
+
+            NSLog(@&quot;[MangoFix] [ERROR] : AES128(ECBMode) decrypt error!&quot;);
+
+            return;
+
+        &#125;
+
+        mf_set_current_compile_util(self.interpreter);
+
+        mf_add_built_in(self.interpreter);
+
+        [self.interpreter compileSourceWithString:mangoFixString];
+
+        mf_set_current_compile_util(nil);
+
+        mf_interpret(self.interpreter);
+
+    &#125;
+
+&#125;
+</code></pre>
+<h5 id="几个核心步骤"><a href="#几个核心步骤" class="headerlink" title="几个核心步骤"></a>几个核心步骤</h5><ul>
+<li>mf_set_current_compile_util(self.interpreter);</li>
+<li>mf_add_built_in(self.interpreter);</li>
+<li>[self.interpreter compileSourceWithString:mangoFixString];</li>
+<li>mf_set_current_compile_util(nil);</li>
+<li>mf_interpret(self.interpreter);</li>
+</ul>
+<h5 id="1-mf-set-current-compile-util"><a href="#1-mf-set-current-compile-util" class="headerlink" title="1.mf_set_current_compile_util"></a>1.mf_set_current_compile_util</h5><p>会创建一个解析对象，通过 mf_set_current_compile_util 设置在对于线程里，推测是为了后续获取访问。</p>
+<h5 id="2-mf-add-built-in"><a href="#2-mf-add-built-in" class="headerlink" title="2.mf_add_built_in"></a>2.mf_add_built_in</h5><p>这段代码是为了向MFInterpreter对象添加内置功能，包括 结构体，方法，变量，gcd相关等。通过使用dispatch_once函数，这些内置操作只会在第一次调用mf_add_built_in函数时执行一次，确保添加内置功能的唯一性和线程安全性。</p>
+<pre><code>void mf_add_built_in(MFInterpreter *inter)&#123;
+
+    static dispatch_once_t onceToken;
+
+    dispatch_once(&amp;onceToken, ^&#123;
+
+    add_built_in_struct_declare();
+
+    add_build_in_function(inter);
+
+    add_build_in_var(inter);
+
+    add_gcd_build_in(inter);
+
+    &#125;);
+&#125;
+</code></pre>
+<h5 id="3-compileSourceWithString-接下来开始进行相关解析工作"><a href="#3-compileSourceWithString-接下来开始进行相关解析工作" class="headerlink" title="3.compileSourceWithString 接下来开始进行相关解析工作"></a>3.compileSourceWithString 接下来开始进行相关解析工作</h5><pre><code>- (void)compileSourceWithString:(NSString *)source&#123;
+
+    extern void mf_set_source_string(char const *source);
+
+    mf_set_source_string([source UTF8String]);
+
+    extern void yyrestart  (FILE * input_file );
+
+    extern int yyparse(void);
+
+        yyrestart(NULL); /* 每次解析前，重置yylex */
+
+    if (yyparse()) &#123;
+
+    return;
+
+    &#125;
+&#125;
+</code></pre>
+<h5 id="4-mf-set-source-string"><a href="#4-mf-set-source-string" class="headerlink" title="4.mf_set_source_string"></a>4.mf_set_source_string</h5><p>是yacc + lex 的解析入口</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/61ef21479d6e4f1089d48f04ca4cd06b~tplv-k3u1fbpfcp-watermark.image" alt="wunder YY INPUT.png"></p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e0d39c4c2c17411eb61b0832e8bac10f~tplv-k3u1fbpfcp-watermark.image" alt="AST.png"></p>
+<h5 id="5-经过了lex和-yacc-的处理后然后把内容放到了一个容器对象中，拿mf-add-class-definition来分析"><a href="#5-经过了lex和-yacc-的处理后然后把内容放到了一个容器对象中，拿mf-add-class-definition来分析" class="headerlink" title="5.经过了lex和 yacc 的处理后然后把内容放到了一个容器对象中，拿mf_add_class_definition来分析"></a>5.经过了lex和 yacc 的处理后然后把内容放到了一个容器对象中，拿mf_add_class_definition来分析</h5><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1d4efc8667164905b8057a1ac5ef8a3e~tplv-k3u1fbpfcp-watermark.image" alt="Jerinlelen Jist definition.png"></p>
+<h5 id="6-最终保存到了-topList-数组中"><a href="#6-最终保存到了-topList-数组中" class="headerlink" title="6.最终保存到了  topList 数组中"></a>6.最终保存到了  topList 数组中</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">void mf_add_class_definition(MFClassDefinition *classDefinition)&#123;</span><br><span class="line"></span><br><span class="line">MFInterpreter *interpreter = mf_get_current_compile_util();</span><br><span class="line"></span><br><span class="line">interpreter.classDefinitionDic[classDefinition.name] = classDefinition;</span><br><span class="line"></span><br><span class="line">[interpreter.topList addObject:classDefinition];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="7-mf-interpret"><a href="#7-mf-interpret" class="headerlink" title="7.mf_interpret"></a>7.mf_interpret</h5><p>最终通过 mf_interpret 遍历 topList 中的对象，通过runtime执行相应的操作，如动态添加方法 属性，交换方法等。最终通过 fix_class函数执行完整个流程，后续在程序动态执行的时候 会调用事先交换处理好的方法等。</p>
+<pre><code>void mf_interpret(MFInterpreter *interpreter)&#123;
+
+    for (__kindof NSObject *top in interpreter.topList) &#123;
+
+        if ([top isKindOfClass:[MFStatement class]]) &#123;
+
+            execute_statement(interpreter, interpreter.topScope, top);
+
+        &#125;else if ([top isKindOfClass:[MFStructDeclare class]])&#123;
+
+            add_struct_declare(interpreter,top);
+
+        &#125;else if ([top isKindOfClass:[MFClassDefinition class]])&#123;
+
+            define_class(interpreter, top);
+
+        fix_class(interpreter,top);
+
+        &#125;
+
+    &#125;
+
+&#125;
+</code></pre>
+<p>看几个关键 代码 </p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f0a53c29e939425abb1eeda2402cadce~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e5dea8873ee64d538b19288cd21a705f~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h4 id="关于性能："><a href="#关于性能：" class="headerlink" title="关于性能："></a>关于性能：</h4><p>关于性能，我没有详细分析过，但是之前看到过一篇文章，对三种方案做过性能对比如下</p>
+<blockquote>
+<p>性能:</p>
+<p>设备: iPhone SE 2，iOS 14.3</p>
+<p>在求斐波那契数列第25项的测试中:</p>
+<ul>
+<li><strong>JSPatch</strong>: 执行时间，平均为 0.169 s。内存占用一直稳定在 12 MB 左右。</li>
+<li><strong>OCRunner</strong>: 执行时间，平均为 1.05 s。内存占用，峰值为 60 MB 左右，其他稳定在 12 MB 左右。</li>
+<li><strong>Mango</strong>: 执行时间，平均时间为 2.38 s。内存占用，持续走高，最高的时候大约为 350 MB。</li>
+</ul>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我这里初衷也是对mangofix 使用流程和源码做一下简单的分析，对于最后的选择当然还要根据自身需求场景 和业务来决定是否使用哪一种，当然无论那种方案都是有一定风险的，希望能对大家有一定帮助。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag"># 性能优化</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/05/16/JavaScript%E5%B0%8F%E8%BF%B0/" rel="prev" title="JavaScript小述">
+                  <i class="fa fa-chevron-left"></i> JavaScript小述
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kyan</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
