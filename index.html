@@ -113,7 +113,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -139,6 +139,223 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/20/iOS%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%E7%9C%8B%E6%88%91%E5%B0%B1%E5%A4%9F%E4%BA%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="kyan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Next">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Next">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/20/iOS%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%E7%9C%8B%E6%88%91%E5%B0%B1%E5%A4%9F%E4%BA%86/" class="post-title-link" itemprop="url">iOS启动优化看我就够了</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-06-20 23:15:52" itemprop="dateCreated datePublished" datetime="2023-06-20T23:15:52+08:00">2023-06-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>iOS启动优化是指在iOS设备上提升应用程序的启动速度和响应性能的一系列技术和方法。随着移动设备的普及和应用程序的功能复杂化，用户对应用程序的响应速度要求也越来越高，因此启动优化成为了开发者们关注的重要领域。</p>
+<p>说到启动，这其实是一个非常重要的用户体验场景，早期有些博主喜欢拿安卓和苹果打开某个应用的时间来对比设备之间的差异，也通过这个启动某个软件的时间这个指标判断两者系统的优劣。</p>
+<p>当然对于用户来说在某些场景也是影响很大，拿我之前遇到一个场景来说，当时和多年未见的朋友见面，说好了请对方吃饭，到了付钱的时候，我的朋友也抢着去付钱，在这个时候，我准备点开微信app 启动的时候，忽然卡住了，然后最后让朋友抢先一步付了钱，这是不是很尴尬。</p>
+<p>话说回来，苹果对于启动时间过长会有一个看门狗机制，如果启动时间过长，看门狗将终止它，这对用户来说也是致命的。</p>
+<p>通常情况下，如果应用程序是他们常规工作流程的一部分，用户一天会多次启动该应用程序，而较长的启动时间会导致执行任务的延迟。</p>
+<p>当用户点击主屏幕上的应用程序图标时，iOS 会在将控制权移交给应用程序进程之前准备启动应用程序。该应用程序然后运行代码以准备将其 UI 绘制到屏幕上。即使在应用的 UI 可见之后，应用可能仍在准备内容或用最终控件替换间隙界面。这些步骤中的每一个都会影响应用程序的总感知启动时间。</p>
+<h1 id="启动流程"><a href="#启动流程" class="headerlink" title="启动流程"></a>启动流程</h1><p>下面就先从启动的整个流程来看看启动到底都做了哪些事情</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/95ac028121b243b5a8a2867b46a0f39f~tplv-k3u1fbpfcp-watermark.image" alt="iOS 启动优化.png"></p>
+<h2 id="从几个大的阶段来划分"><a href="#从几个大的阶段来划分" class="headerlink" title="从几个大的阶段来划分"></a>从几个大的阶段来划分</h2><p>可以看出主要分为以下几个大阶段</p>
+<p> 1.加载Mach-O阶段</p>
+<p> 2.dyld 阶段 </p>
+<p> 3.main 之后阶段：加载启动项到最终的viewDidAppear调用加载第一帧。</p>
+<h2 id="从dyld和runtime角度来划分"><a href="#从dyld和runtime角度来划分" class="headerlink" title="从dyld和runtime角度来划分"></a>从dyld和runtime角度来划分</h2><p>如果结合dyld 和runtime 这两个核心模块来划分，启动阶段主要由他们两者协作完成。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5a8a220428b045df93c5007d296787ff~tplv-k3u1fbpfcp-watermark.image" alt="Launch Time.webp"><br><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a441c5bd54d04955b78ea21368dc8cdf~tplv-k3u1fbpfcp-watermark.image" alt="image2.png"></p>
+<h2 id="详细阶段步骤"><a href="#详细阶段步骤" class="headerlink" title="详细阶段步骤"></a>详细阶段步骤</h2><p>那么整体的流程可以梳理为以下步骤</p>
+<h3 id="一-内核态加载mach-o文件和可执行文件"><a href="#一-内核态加载mach-o文件和可执行文件" class="headerlink" title="一.内核态加载mach-o文件和可执行文件"></a>一.内核态加载mach-o文件和可执行文件</h3><p>关于mach-o文件</p>
+<p><strong>Mach-O文件简介</strong></p>
+<ul>
+<li>Mach object的缩写，是Mac、iOS上用于存储程序、库的标准格式 ，Mach-O文件是一种叫法，就像以 .text 结尾的文件，被叫做为text文件</li>
+</ul>
+<p><strong>常见的Mach-O文件有：</strong></p>
+<ul>
+<li>MH_OBJECT：目标文件(.o)、静态库文件(.a) 静态库其实就是N个.o合并在一起</li>
+<li>MH_EXECUTE：可执行文件 .app&#x2F;xx</li>
+<li>MH_DYLIB：动态库文件 .dylib 或 .framework&#x2F;xx</li>
+<li>MH_DYLINKER：动态链接编辑器 &#x2F;usr&#x2F;lib&#x2F;dyld</li>
+<li>MH_DSYM：存储着二进制文件符号信息的文件 .dSYM&#x2F;Contents&#x2F;Resources&#x2F;DWARF&#x2F;xx（常用于分析APP的崩溃信息）</li>
+</ul>
+<p><strong>可执行文件:</strong></p>
+<ul>
+<li>平时编写的代码最终会被编译成为一个Mach-O格式的文件</li>
+<li>开发过程中所用到的动态库(比如：UIKit、Foundation) 依赖信息也会存储在可执行文件中</li>
+</ul>
+<h3 id="二-dyld-阶段"><a href="#二-dyld-阶段" class="headerlink" title="二.dyld 阶段"></a>二.dyld 阶段</h3><p>简单介绍下dyld是什么</p>
+<blockquote>
+<p>“dyld” 是苹果操作系统中的一个重要组件，它是动态链接器（dynamic linker）的缩写。动态链接器是操作系统加载和链接可执行文件所需的共享库的核心组件之一。</p>
+<p>dyld 的主要功能是在程序启动时加载和链接程序所依赖的共享库，并将其映射到进程的内存空间中。它负责解析和处理共享库之间的符号依赖关系，以及处理运行时的符号重定位。</p>
+<p>具体来说，dyld 的工作流程如下：</p>
+<ol>
+<li>加载：当一个可执行文件（如应用程序）启动时，dyld 负责加载可执行文件和它所依赖的共享库到内存中。</li>
+<li>符号解析：dyld 解析可执行文件和共享库中的符号引用，找到对应的符号定义，以便正确地链接和运行程序。</li>
+<li>符号重定位：在加载和链接过程中，dyld 会处理符号重定位，将程序中的符号引用指向正确的地址。</li>
+<li>启动程序：完成加载和链接后，dyld 将控制权转交给程序的入口点，使其开始执行。</li>
+</ol>
+<p>dyld 的存在使得应用程序可以动态地加载和链接共享库，从而实现了代码的共享和重用。这也是为什么在 iOS 开发中，我们可以使用各种系统提供的框架和库来构建应用程序。dyld 是苹果操作系统中负责动态加载和链接共享库的组件，它在应用程序启动时发挥着关键的作用，确保程序能够正确地加载和执行所需的代码和库。</p>
+</blockquote>
+<p><strong>关于动态库:</strong></p>
+<ul>
+<li>程序运行时由系统动态加载到内存，而不是复制，供程序调用。</li>
+<li>系统只加载一次，多个程序共用，节省内存。因此，编译内容更小，而且因为动态库是需要时才被引用，所以更快。 简单认识：系统的UIKit框架最终被dyld以动态库的形式加载到内存 ！</li>
+</ul>
+<h4 id="dyld阶段所做的事情"><a href="#dyld阶段所做的事情" class="headerlink" title="dyld阶段所做的事情"></a>dyld阶段所做的事情</h4><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e14bff4660b44449918d65718dea6a45~tplv-k3u1fbpfcp-watermark.image" alt="Dyld Steps.png"></p>
+<p><strong>load dylibs &gt; rebase bind &gt; objc（Notify ObjC Runtime） &gt; initializers</strong></p>
+<h5 id="1-load-dylibs"><a href="#1-load-dylibs" class="headerlink" title="1.load dylibs"></a>1.load dylibs</h5><p>装载app的可执行文件，同时会递归加载所有依赖的动态库。</p>
+<ul>
+<li><p>Parse image（解析图像）：在这个步骤中，dyld 解析可执行文件或共享库的二进制格式。它会读取可执行文件的头部和段（segments），以及共享库的符号表和重定位信息等。通过解析图像，dyld 能够了解文件的结构、符号引用和重定位需求。</p>
+</li>
+<li><p>Map image（映射图像）：在这一阶段，dyld 将可执行文件或共享库映射到进程的内存空间中。它会分配适当的内存区域，并将二进制文件的内容加载到这些内存区域中。通过映射图像，dyld 将文件中的代码、数据和资源加载到内存，为后续的重定位和符号绑定做准备。</p>
+</li>
+</ul>
+<p>当dyld加载完可执行文件 和动态库 之后通知runtime进行下一步操作。</p>
+<h5 id="2-Rebase-bind"><a href="#2-Rebase-bind" class="headerlink" title="2.Rebase + bind"></a>2.Rebase + bind</h5><ul>
+<li><p>Rebase image（重定位图像）：在此步骤中，dyld 处理可执行文件和共享库中的重定位信息。重定位信息描述了代码和数据的位置相对于内存中的基地址的偏移量。dyld 根据基地址和重定位信息来计算并更新代码和数据的绝对地址，以确保它们在内存中正确定位。</p>
+</li>
+<li><p>Bind image（符号绑定图像）：在这个阶段，dyld 解析可执行文件和共享库中的符号引用，并将它们绑定到相应的符号定义。符号绑定是将符号引用与符号定义相关联的过程，确保程序能够正确地访问和执行所需的符号。通过符号绑定，dyld 确保程序能够正确链接并执行依赖的函数和变量。</p>
+</li>
+</ul>
+<h5 id="3-objc（Notify-ObjC-Runtime）"><a href="#3-objc（Notify-ObjC-Runtime）" class="headerlink" title="3.objc（Notify ObjC Runtime）"></a>3.objc（Notify ObjC Runtime）</h5><ul>
+<li>mapimages 对二进制文件内容解析处理。</li>
+<li>runtime在此处初始化，对class和category进行注册。</li>
+<li>进行各种objc结构的初始化（objc 类被定义和注册）。</li>
+<li>分类被插入到方法列表中。</li>
+<li>selector唯一性判断。</li>
+</ul>
+<h5 id="4-Initializers"><a href="#4-Initializers" class="headerlink" title="4.Initializers"></a>4.Initializers</h5><ul>
+<li>loadimages 调用 call_load_images 加载 类和 分类的 load方法</li>
+<li>调用c++静态初始化器和__attribute（construct）修饰的函数</li>
+</ul>
+<p>至此可执行文件和动态库的符号sel  class protocol IMP 都已经按需加载到内存中了，被runtime管理最后,Dyld calls main()</p>
+<h3 id="三-进入main函数"><a href="#三-进入main函数" class="headerlink" title="三.进入main函数"></a>三.进入main函数</h3><ul>
+<li><p>接下来就是 UIApplicationMain 函数，相关的调用了，Appdelegate会依次执行 对应的生命周期方法。</p>
+</li>
+<li><p>创建整个app的autoreleasepool，初始化初始window，app界面开始展。</p>
+</li>
+<li><p>指定rootviewcontroller，调用业务代码，完成各阶段业务。</p>
+</li>
+<li><p>main页面viewDidAppear 完成页面第一帧渲染。至此启动完成。</p>
+</li>
+</ul>
+<h2 id="关于启动标准"><a href="#关于启动标准" class="headerlink" title="关于启动标准"></a>关于启动标准</h2><p>苹果的标准</p>
+<ul>
+<li><p>针对启动时间的最佳标准 （400ms 是一个很好的目标）</p>
+</li>
+<li><p>最坏的情况 （不要超过20秒否则应用程序将被杀死）</p>
+</li>
+</ul>
+<h2 id="关于优化方案"><a href="#关于优化方案" class="headerlink" title="关于优化方案"></a>关于优化方案</h2><p>优化方案从各个阶段来考虑</p>
+<h3 id="1-加载mach-o阶段"><a href="#1-加载mach-o阶段" class="headerlink" title="1.加载mach-o阶段"></a>1.加载mach-o阶段</h3><p>重新排列函数符号位置，降低MACH-O文件载入内存时PageFault缺页中断频率 - 二进制重排</p>
+<ul>
+<li>一种是抖音的方案二进制重排。（官方说会有百分之30提升，自己尝试并没有太大提升。）</li>
+<li>另外是苹果推出的pgo。（大概有百分之10左右的提升）</li>
+</ul>
+<p>两者类似</p>
+<p><strong>原理</strong></p>
+<p>二进制重排实际上是在windows和linux上就存在的技术，旨在将启动用到的函数方法尽可能的放置在二进制文件加载的前面，并且是将函数符号地址连续的编译在一起，以减少Page Fault的次数和频率，加快启动速度。现在这项技术已经移植运用到了移动端app上。</p>
+<p>操作系统为了解决安全问题和效率问题，抽象出了虚拟内存页的概念。内存都是分页访问的。这里的page指的就是内存页。(就像磁盘存储的最小单位 磁盘簇，大小是4k一样) MacOS 、linux (4K为一页) iOS(16K为一页)</p>
+<p>PageFault就是缺页中断：当app调用一个方法，发现该方法没有在内存中，此时操作系统就会立刻阻塞整个app进程，触发一个缺页中断。操作系统会从磁盘中读取这页数据到物理内存上 , 然后再将其映射到虚拟内存上 ( 如果当前内存已满 , 操作系统会通过置换页算法 <strong>找一页数据进行覆盖，</strong> 这也是为什么开再多的应用也不会崩掉 , 但是之前开的应用再打开时 , 就重新启动了的根本原因 )。</p>
+<p>假如，app启动时期需要调用 method1、method5和method6，这三个方法分布在page1、page2和page3上。每装载一个内存页page都会发生一次PageFault(缺页终端)。通常一个PageFault的处理时间是0.1ms~1ms，取0.5ms计算。这三次处理PageFault时间是 3 * 0.5ms &#x3D; 1.5ms。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/03c1e6e02db94bd487a540263e9a2c3c~tplv-k3u1fbpfcp-watermark.image" alt="page1.webp"></p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/72692b3c5e834446b3c939f439d8b137~tplv-k3u1fbpfcp-watermark.image" alt="page1.png"></p>
+<h3 id="2-针对dyld阶段"><a href="#2-针对dyld阶段" class="headerlink" title="2.针对dyld阶段"></a>2.针对dyld阶段</h3><ul>
+<li><p>减少动态库 合并动态库 （定期清理不必要的动态库）</p>
+</li>
+<li><p>减少oc 类 分类 方法 sel（定期清理不必要的类 分类）</p>
+</li>
+<li><p>减少c++虚函数数量</p>
+</li>
+<li><p>swift尽量使用struct</p>
+</li>
+</ul>
+<h3 id="3-针对objc-和-initialize-可以看做是-runtime-阶段"><a href="#3-针对objc-和-initialize-可以看做是-runtime-阶段" class="headerlink" title="3.针对objc 和 initialize 可以看做是 runtime  阶段"></a>3.针对objc 和 initialize 可以看做是 runtime  阶段</h3><ul>
+<li>用+initialize方法和dispatch_once取代所有的__attribute__((constructor))、C++静态构造器、ObjC的+load</li>
+</ul>
+<h3 id="4-针对-main函数之后阶段"><a href="#4-针对-main函数之后阶段" class="headerlink" title="4.针对 main函数之后阶段"></a>4.针对 main函数之后阶段</h3><ul>
+<li>在不影响用户体验的前提下，尽可能将一些操作延迟，不要全部都放在finishLaunching方法中</li>
+<li>启动任务的顺序调整优化</li>
+<li>降低初始视图的复杂性</li>
+<li>按需加载</li>
+</ul>
+<h2 id="关于测试（建议在支持的最慢设备上测试）"><a href="#关于测试（建议在支持的最慢设备上测试）" class="headerlink" title="关于测试（建议在支持的最慢设备上测试）"></a>关于测试（建议在支持的最慢设备上测试）</h2><p>1.推荐2个github 工具</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ming1016/GCDFetchFeed">https://github.com/ming1016/GCDFetchFeed</a> （SMCallTrace）</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/EmergeTools/ETTrace">https://github.com/EmergeTools/ETTrace</a></li>
+</ul>
+<p>2.Xcode 和 instrument自带工具</p>
+<ul>
+<li>lldb调试工具设置 <strong>Edit scheme -&gt; Run -&gt; Arguments 中将环境变量 DYLD_PRINT_STATISTICS 设为 1统计结果会在打印窗口输出</strong></li>
+</ul>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f773a4f9c8e44e5bae8aa790f0bee20e~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/34b20c78d5a54d85a24864d5828b5cf2~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<ul>
+<li>通过instrument 的 launching</li>
+</ul>
+<p>3.线上监控</p>
+<p>主动埋点 分为pre-main 和 main 之后</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/667d94baa924493c9eb4fa9d0196054d~tplv-k3u1fbpfcp-watermark.image" alt="v2-d46b6f2bd967c78f704cccbb05584caa_1440w.webp"></p>
+<p>通过苹果的metric</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cc0051c3e40e42488266b5ea82965b75~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上基本涵盖了iOS 启动各个阶段的详细流程，以及优化方案，当然启动优化也是一个长期需要关注的稳定性指标，也要结合当前项目情况分步优化，通过优化&gt;监控&gt;优化 形成闭环，发现问题并解决问题，最终持续下去肯定会有收益的。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2562,159 +2779,6 @@ return YES;
 <p>可以利用<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/objectivec/nsobject/1571947-dealloc">dealloc</a>方法会自动实现父类的dealloc方法的特性，hook住NSObject和NSProxy两个oc的根类的dealloc方法，然后在调剂方法中将本来即将释放的对象的isa指针改为指向我们创建的一个新的僵尸类，然后外界对这个僵尸类发送任何消息(objc_msgSend)都会走方法调用流程，可以在此流程做处理。（需要考虑Zombie池子的释放）</p>
 <p>参考 ：<a target="_blank" rel="noopener" href="http://sindrilin.com/2017/11/01/local_zombie.html">http://sindrilin.com/2017/11/01/local_zombie.html</a></p>
 <h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec20cbe686bc4c6d8c5d54c8b2bcc0db~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/19/%E4%B8%80%E6%AC%A1AppDelegate%E8%A7%A3%E8%80%A6%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="kyan">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Next">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Next">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/19/%E4%B8%80%E6%AC%A1AppDelegate%E8%A7%A3%E8%80%A6%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">一次AppDelegate解耦学习</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-04-19 16:13:28" itemprop="dateCreated datePublished" datetime="2022-04-19T16:13:28+08:00">2022-04-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="1-背景-amp-问题"><a href="#1-背景-amp-问题" class="headerlink" title="1.背景&amp;问题"></a>1.背景&amp;问题</h1><p>在传统的 iOS 应用开发中，往往会将所有的应用逻辑都写在一个文件中，即 App Delegate 文件中。这种方式虽然简单直观，但是当应用程序越来越复杂时，这个文件会变得非常庞大和难以维护，同时也容易引入不必要的耦合和依赖关系。</p>
-<h2 id="存在问题："><a href="#存在问题：" class="headerlink" title="存在问题："></a>存在问题：</h2><h2 id="1-难以扩展"><a href="#1-难以扩展" class="headerlink" title="1.  难以扩展"></a>1.  难以扩展</h2><p>   当两个或多个模块之间高度耦合或具有强依赖关系时，很难添加新的模块或功能，因为修改一个模块可能会影响到其他模块，需要对整个系统进行重新设计、测试和部署。</p>
-<h2 id="2-难以维护"><a href="#2-难以维护" class="headerlink" title="2.  难以维护"></a>2.  难以维护</h2><p>   高度耦合或具有强依赖关系的代码通常难以理解和维护。这意味着开发人员需要花费更多的时间来诊断和修复错误，从而降低了生产力。</p>
-<h2 id="3-缺乏灵活性"><a href="#3-缺乏灵活性" class="headerlink" title="3.  缺乏灵活性"></a>3.  缺乏灵活性</h2><p>   当代码耦合和依赖严重时，系统变得僵化和静态，很难适应变化和不同的需求。这也使得在不破坏现有代码的情况下进行改进变得更加困难。</p>
-<h2 id="4-代码可读性差"><a href="#4-代码可读性差" class="headerlink" title="4.  代码可读性差"></a>4.  代码可读性差</h2><p>   重度耦合和依赖会导致代码结构混乱，使得代码难以阅读和理解。这增加了调试问题的难度，并使得代码更加难以维护。</p>
-<h2 id="5-可测试性差"><a href="#5-可测试性差" class="headerlink" title="5.  可测试性差"></a>5.  可测试性差</h2><p>   当代码耦合和依赖严重时，很难编写有效的单元测试，因为测试可能需要依赖于太多的其他代码。这意味着测试套件可能不够充分，从而增加了系统出错的风险。</p>
-<p>因此，随着 iOS 应用程序规模的不断扩大和功能的不断增加，模块化设计变得越来越重要。模块化能够将一个大型的应用程序分解成独立的、可重用的模块，每个模块负责自己的职责和功能，并通过明确定义的接口与其他模块进行通信和协作。</p>
-<h1 id="2-目标-amp-收益"><a href="#2-目标-amp-收益" class="headerlink" title="2.目标&amp;收益"></a>2.目标&amp;收益</h1><p>对于 App Delegate 来说，模块化可以帮助解决以下一些问题：</p>
-<h2 id="1-代码膨胀和可维护性"><a href="#1-代码膨胀和可维护性" class="headerlink" title="1.  代码膨胀和可维护性"></a>1.  代码膨胀和可维护性</h2><p>   将 App Delegate 中的职责和事件处理分解为多个独立的模块，可以避免代码膨胀和提高代码的可维护性。</p>
-<h2 id="2-耦合度降低"><a href="#2-耦合度降低" class="headerlink" title="2.  耦合度降低"></a>2.  耦合度降低</h2><p>   模块化可以降低模块之间的耦合度，从而使得各个模块更加独立和灵活。</p>
-<h2 id="3-可测试性"><a href="#3-可测试性" class="headerlink" title="3.  可测试性"></a>3.  可测试性</h2><p>   模块化可以提高代码的可测试性，让开发人员更容易进行单元测试和集成测试。</p>
-<h2 id="4-可扩展性"><a href="#4-可扩展性" class="headerlink" title="4.  可扩展性"></a>4.  可扩展性</h2><p>   模块化可以使得应用程序更容易进行功能扩展和组件替换，同时也方便开发人员进行代码重构和维护。</p>
-<h2 id="5-模块化设计"><a href="#5-模块化设计" class="headerlink" title="5.  模块化设计"></a>5.  模块化设计</h2><p>   App壳工程通常采用模块化设计，可以方便地添加、删除或替换某些功能模块，实现定制化开发和灵活调整。</p>
-<h2 id="6-未来实现平台化提供基础"><a href="#6-未来实现平台化提供基础" class="headerlink" title="6.  未来实现平台化提供基础"></a>6.  未来实现平台化提供基础</h2><h2 id="7-定制性强"><a href="#7-定制性强" class="headerlink" title="7.  定制性强"></a>7.  定制性强</h2><p>   开发者仍然可以根据自己的需求进行修改和定制，以满足特定的业务场景或用户需求。</p>
-<p>因此，App Delegate 模块化可以帮助开发人员更好地管理和维护 iOS 应用程序，增强应用程序的可维护性、可测试性和可扩展性。</p>
-<h1 id="3-常见解决方案"><a href="#3-常见解决方案" class="headerlink" title="3.常见解决方案"></a>3.常见解决方案</h1><p>在 iOS 应用程序开发中，解耦 App Delegate 的常用方案包括以下几个方面：</p>
-<h2 id="1-模块化设计"><a href="#1-模块化设计" class="headerlink" title="1.  模块化设计"></a>1.  模块化设计</h2><p>   将 App Delegate 中的职责和事件处理分解为多个独立的模块，每个模块负责自己的职责和功能，并通过明确定义的接口与其他模块进行通信和协作。例如，可以将网络请求、推送消息等功能模块独立出来，使用面向协议编程的方式进行调用。</p>
-<h2 id="2-代理模式"><a href="#2-代理模式" class="headerlink" title="2.  代理模式"></a>2.  代理模式</h2><p>   将 App Delegate 中的职责和事件处理委托给其他对象，实现事件响应和数据传递的解耦。例如，在应用程序启动时，可以创建一个独立的对象作为代理，来处理应用程序的生命周期事件。</p>
-<h2 id="3-注册机制"><a href="#3-注册机制" class="headerlink" title="3.  注册机制"></a>3.  注册机制</h2><p>   通过注册机制实现事件响应和数据传递的解耦。例如，可以在应用程序初始化时，使用 NSNotificationCenter 注册通知，然后在各个模块中监听和处理通知，从而实现解耦。</p>
-<h2 id="4-面向服务的架构"><a href="#4-面向服务的架构" class="headerlink" title="4.  面向服务的架构"></a>4.  面向服务的架构</h2><p>   采用面向服务的架构，将应用程序的各个功能模块封装成独立的服务，通过 Service API 进行通信和调用。这种方式可以实现应用程序的可扩展性和可维护性，并同时解耦 App Delegate。</p>
-<p>需要注意的是，在解耦 App Delegate 的过程中，需要确保各个模块之间的接口约定清晰、可靠和封装良好，避免出现依赖关系混乱、重复代码等问题。同时，还需要注意防止循环引用和内存泄漏等问题。</p>
-<h1 id="4-优缺点"><a href="#4-优缺点" class="headerlink" title="4.优缺点"></a>4.优缺点</h1><h2 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h2><ol>
-<li>模块化设计可以降低耦合度，提高代码的复用性和可维护性，使得各个模块更加独立和灵活。</li>
-<li>代理模式可以将 App Delegate 中的职责和事件处理委托给其他对象，实现事件响应和数据传递的解耦，减少代码的冗余和依赖关系。</li>
-<li>注册机制可以通过通知的方式实现解耦，各个模块之间只需要订阅、发布自己感兴趣的事件即可，避免了直接使用 App Delegate 的问题。</li>
-<li>面向服务的架构可以将应用程序的各个功能模块封装成独立的服务，通过 Service API 进行通信和调用，实现了应用程序的可扩展性和可维护性。</li>
-</ol>
-<h2 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h2><ol>
-<li>模块化设计可能导致代码分散、难以维护和测试，需要对模块之间的依赖关系进行仔细管理和测试。</li>
-<li>代理模式和注册机制可能会引入过多的事件通知和回调，降低代码的执行效率和性能。</li>
-<li>注册机制需要非常小心地管理通知的订阅和取消，否则容易出现内存泄漏、循环引用等问题。</li>
-<li>面向服务的架构可能会带来额外的开销和复杂性，需要进行更多的设计和实现工作。</li>
-</ol>
-<h1 id="5-当前项目存在的问题"><a href="#5-当前项目存在的问题" class="headerlink" title="5.当前项目存在的问题"></a>5.当前项目存在的问题</h1><p>appdelegate 模块流程过多，分工不明确</p>
-<h1 id="6-如何解决"><a href="#6-如何解决" class="headerlink" title="6.如何解决"></a>6.如何解决</h1><h2 id="业界第三方实现思路"><a href="#业界第三方实现思路" class="headerlink" title="业界第三方实现思路"></a>业界第三方实现思路</h2><p>一.BeeHive (框架过于庞大，用到了自动注册，其他类似)</p>
-<p>1.可以通过plist获取模块项，自动注册，或者创建注册</p>
-<p>2.通过manager 分发app生命周期</p>
-<p>地址:<a target="_blank" rel="noopener" href="https://github.com/lincode/FRDModuleManager">https://github.com/lincode/FRDModuleManager</a>（类似）</p>
-<p>二.FRDModuleManager </p>
-<p>1.注册通过plist获取模块项</p>
-<p>2.通过manager 分发app生命周期</p>
-<p>两者共同点:</p>
-<p>可以使得留在 AppDelegate 的钩子方法被统一管理。实现了协议 UIApplicationDelegate 的 AppDelegate 是我知晓应用生命周期的重要途径。如果，某个模块需要在应用启动时初始化，那么我们就需要在 AppDelegate 的 application:didFinishLaunchingWithOptions: 调用一个该模块的初始化方法。模块多了，调用的初始化方法也会增多。最后，AppDelegate 会越来越臃肿。FRDModuleManager 提供了一个统一的接口，让各模块知晓应用的生命周期。在 AppDelegate 中留下钩子，在特定的生命周期调用模块的对应方法。这样将使得 AppDelegate 更简单。对于应用生命周期的使用也更清晰。</p>
-<h1 id="7-优化思路"><a href="#7-优化思路" class="headerlink" title="7.优化思路:"></a>7.优化思路:</h1><p>1.Manager手动注册各个模块，方便控制</p>
-<p>2.划分各个模块，通过分类扩展各个子模块的差异功能</p>
-<p>3.通过协议接口实现方法调用</p>
-<p>模块化 （单一职责原则）+ 分类 + 协议 </p>
-<p>具体流程:</p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e6a8d426b74348aeae84e6d66316b02f~tplv-k3u1fbpfcp-watermark.image" alt="appdelegate.png"></p>
-<p>1.通过模块管理类注册所有启动模块，需要设置先后顺序依赖，可使用数组添加，保证顺序设置。</p>
-<p>2.档app 启动后 进入声明周期代理方法，此时 在各个生命周期方法内，统一使用moduleManager 调用， 如果有自定义流程如 首次启动的引导页等，都可以在modulemnager 增加</p>
-<p>3.模块管理者收到了生命周期方法调用 ，此时，在内部方法内，依次调用提前注册的类，需要判断是否实现了协议方法，这样能灵活调用不同需求的模块。</p>
-<p>4.模块管理者 可以提供两种方法设置模块调用 ，同步或者异步，各个模块根据需求按需实现协议即可。</p>
-<p>5.模块本身通过分类分离自己的功能，如crash sdk模块 有多种 bugly 其他，那个模块A就可以创建 module+buglly，module+其他 划分子功能。</p>
-<p>关键类图:</p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f0f4f3b532a34d9a99f550bb8566e52c~tplv-k3u1fbpfcp-watermark.image" alt="启动模块类图.png"></p>
-<p>后续使用扩展</p>
-<p>1.如果协议方法不满足增加协议方法，</p>
-<p>2.Manager增加生命周期转发方法，内部实现协议接口调用</p>
-<p>3.新增模块直接在注册方法追加模块即可</p>
-<p>关键代码:</p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9c4cdb2913764dcbb28a79269eb6f11c~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic.png"></p>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/991f340a3a334901a7d73015d2ec9236~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 1.png"></p>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8dd035a4b437468a8e517cdd7652df71~tplv-k3u1fbpfcp-watermark.image" alt="KModulestarturstepTypeisteoType.png"></p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0ff0c514cb2848c18f6f573ade73d473~tplv-k3u1fbpfcp-watermark.image" alt="#import •ModuleA.h®.png"></p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d52d63b11a4241809f042b3ef5276976~tplv-k3u1fbpfcp-watermark.image" alt="Ps KAppDelegate Module.png"></p>
-<h1 id="8-最终结果"><a href="#8-最终结果" class="headerlink" title="8.最终结果"></a>8.最终结果</h1><p>1.各个模块职责单一，独立性强。</p>
-<p>2.后续新增模块方便扩展，不影响appdelegate</p>
-<p>3.如果要实现多app 直接根据模块管理类 增加或者减少即可</p>
-<p>过程总结</p>
-<p>1.业界方案很多，找到适合自己项目的方法</p>
-<p>2.跟据实际情况选择合适时机去追求模块化代码</p>
-<p>3.考虑当前的实际场景，来设计适合自己的模块化方式</p>
-<p>参考：<br>1.<a target="_blank" rel="noopener" href="https://github.com/lincode/FRDModuleManager">https://github.com/lincode/FRDModuleManager</a><br>2.<a target="_blank" rel="noopener" href="https://github.com/alibaba/BeeHive">https://github.com/alibaba/BeeHive</a></p>
-<p>最终结果</p>
-<p>1.各个模块职责单一，独立性强。</p>
-<p>2.后续新增模块方便扩展，不影响appdelegate</p>
-<p>3.如果要实现多app 直接根据模块管理类 增加或者减少即可</p>
-<p>过程总结</p>
-<p>1.业界方案很多，找到适合自己项目的方法</p>
-<p>2.跟据实际情况选择合适时机去追求模块化代码</p>
-<p>3.考虑当前的实际场景，来设计适合自己的模块化方式</p>
-<blockquote>
-<p>移动应用的业务模块化架构设计，其真正的目标是提升开发质量和效率。单从实现角度来看并没有什么黑魔法或技术难点，更多的是结合团队实际开发协作方式和业务场景的具体考量——“适合自己的才是最好的”。某移动团队通过过往3年的实践，发现一味的追求性能，绝对的追求模块间编译隔离，过早的追求模块代码管理隔离等方式都偏离了模块化设计的真正目的，是得不偿失的。更合适的方式是在可控的改造代价下，一定程度考虑未来的优化方式，更多的考虑当前的实际场景，来设计适合自己的模块化方式。希望大家都能找到适合自己应用的业务模块化之路。</p>
-</blockquote>
 
       
     </div>
