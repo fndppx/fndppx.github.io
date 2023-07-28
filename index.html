@@ -113,7 +113,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -139,6 +139,289 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/07/28/iOS%E5%AE%89%E8%A3%85%E5%8C%85%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="kyan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Next">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Next">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/07/28/iOS%E5%AE%89%E8%A3%85%E5%8C%85%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">iOS安装包优化笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-07-28 22:23:42" itemprop="dateCreated datePublished" datetime="2023-07-28T22:23:42+08:00">2023-07-28</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="一-前言"><a href="#一-前言" class="headerlink" title="一.前言"></a>一.前言</h1><h2 id="App安装包日益增大原因"><a href="#App安装包日益增大原因" class="headerlink" title="App安装包日益增大原因"></a>App安装包日益增大原因</h2><p>随着技术飞速发展，功能不断迭代，APP不断更新和改版，越来越大、越来越全，因此造成了app安装包的不断膨胀。</p>
+<ol>
+<li>新功能的增加：新的功能需要更多的代码和资源来实现，导致APP体积增大。</li>
+<li>针对不同设备的优化代码：为了在各种不同分辨率和硬件平台的手机上正常使用，APP需要针对每种设备分别编写优化代码。这种“碎片化”代码会包含很多冗余代码，从而增加软件体积。</li>
+<li>硬件设备规格的改变：当硬件设备的某些规格改变后，APP也必须做出相应的改变，这通常会导致APP体积增大。例如，当iPhone的屏幕分辨率提高后，APP需要适配新的分辨率，导致界面素材的部分需要占用更大的存储空间。</li>
+<li>优先适配旗舰机：大部分APP在测试时优先适配旗舰机，这会导致在低端机上使用时可能出现不流畅或闪退等问题，而高端机则不会出现这些问题。</li>
+</ol>
+<h3 id="安装包大小首今夕对比"><a href="#安装包大小首今夕对比" class="headerlink" title="安装包大小首今夕对比"></a>安装包大小首今夕对比</h3><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d1b31d61076041c9ba1f7ede8d601339~tplv-k3u1fbpfcp-watermark.image" alt="50个用户没楼过亿的.webp"></p>
+<h2 id="为什么要优化包大小"><a href="#为什么要优化包大小" class="headerlink" title="为什么要优化包大小"></a>为什么要优化包大小</h2><p>在精细化运营的角逐中，用户体验、版本更新、内容品质、安装包大小等因素都影响着移动应用厂商的生存状态。特别是安装包体大小，无论是手游还是移动应用，包体变大不仅关系着用户下载转化，也关系着渠道推广成本和难度，在整体大盘用户规模增长的情况下，应用获量的竞争日益激烈，有40.8%的开发者认为投入产出比相对于去年同期呈现下降趋势，51.5%的开发者认为，与去年同期相比应用产品的获客成本单价有所上升，这是用户获取成本的增加与付费能力的限制。（来自网络）</p>
+<h3 id="对比举例"><a href="#对比举例" class="headerlink" title="对比举例"></a>对比举例</h3><p>为什么微信小程序相比app 有更好的转化和推广能力呢，其实有很大原因也是因为用户能快速使用安装</p>
+<p>微信小程序与APP相比有以下优势：</p>
+<ol>
+<li>无需下载和安装：微信小程序可以直接在微信中使用，无需下载和安装，这样可以节省用户的存储空间和下载时间。</li>
+<li>快速加载：微信小程序采用轻量级的技术架构，加载速度快，用户可以快速打开使用。</li>
+<li>无需更新：微信小程序可以在后台自动更新，用户无需手动更新应用程序。</li>
+<li>便于分享：微信小程序可以通过微信分享给好友、群组或朋友圈，方便用户分享应用程序。</li>
+<li>轻量级：微信小程序相对于App来说，占用的存储空间更小，对手机性能的消耗也更少。</li>
+<li>跨平台：微信小程序可以同时运行在ios和Android平台上，无需为不同平台开发不同版本的应用程序。</li>
+</ol>
+<p>总之，微信小程序相比APP具有无需下载安装、快速加载、无需更新、便于分享、轻量级、开发成本低、跨平台等优势。</p>
+<p>因此相对于小程序 来说，app 如果想更好的发挥转化使用率等因素，就需要在安装包上下功夫了。</p>
+<h3 id="官方数据"><a href="#官方数据" class="headerlink" title="官方数据"></a>官方数据</h3><p>此外<strong>包体大小每上升6MB，应用下载转化率就会下降1%</strong></p>
+<p>数据来在2019谷歌开发者大会上</p>
+<p>谷歌给出了一个很详细的数据，包体大小每上升6MB，应用下载转化率就会下降1%。不同地区转化率略有差异，APK包体大小每减少10MB ，全球平均下载转化率会提升1.75%，新兴国家代表印度和巴西下载转化率提升2.0%以上，高端市场代表美国和德国下载转化率提升1.5%。</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0360e7a171374cb7ba008647bee057df~tplv-k3u1fbpfcp-watermark.image" alt="8694a4c27d1ed21b776225488b5c2bce50da3fb4.png@f_auto.webp"></p>
+<h3 id="其他因素"><a href="#其他因素" class="headerlink" title="其他因素"></a>其他因素</h3><p><a target="_blank" rel="noopener" href="https://developer.apple.com/help/app-store-connect/reference/maximum-build-file-sizes">https://developer.apple.com/help/app-store-connect/reference/maximum-build-file-sizes</a></p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4a0f6b06baf04d8ebe3f499ac407d151~tplv-k3u1fbpfcp-watermark.image" alt="Maximum build file sizes.png"></p>
+<h4 id="App-Store-OTA-下载大小限制"><a href="#App-Store-OTA-下载大小限制" class="headerlink" title="App Store OTA 下载大小限制"></a>App Store OTA 下载大小限制</h4><p>苹果公司为了避免用户超出运营商套餐流量，限制了用户通过流量从 AppStore 下载 App 的最大大小， 简称 OTA 下载大小限制。其历史沿革：</p>
+<ul>
+<li>2017 年 9 月，限制从 100MB 提升到了 150MB；</li>
+<li>2019 年 5 月下旬，苹果把 OTA 下载限制放宽到 200MB；</li>
+<li>iOS 13 发布之后 iOS13 及以上用户可以使用流量下载超出 200MB 的 App， 但需要用户「设置」选择策略，默认为「超过 200MB 请求许可」，而 iOS13 以下用户仍然无法下载。</li>
+</ul>
+<p>除了上边的限制之外 Apple 对可执行文件__TEXT 段的限制则更为严苛，如果超出这个限制 APP 将无法通过 AppStore 审核。这个限制简而言之，如果要支持 iOS8 的设备， App 单架构主二进制 __TEXT 段上限为 60MB（以 1000KB 为 1M，而不是 1024），放弃对 iOS8 的支持二进制大小限制则变为安装包内最大二进制所有架构的总和不超过 500MB。</p>
+<h4 id="安装包大小增长的影响"><a href="#安装包大小增长的影响" class="headerlink" title="安装包大小增长的影响"></a>安装包大小增长的影响</h4><p>AppStore 下载大小如果在 OTA 下载限制内增长，对用户新增、留存等指标影响不大。而一旦超过 OTA 下载限制，则对整体指标产生明显影响。之前统计的劣化数据指标：当限制在 150MB 并且无法下载的时候，对用户的新增有 10%的影响。由于 iOS13 限制的宽松化，所以在 iOS13 之后设备上这个数据将低于 10%。此数据仅供参考并不能一概而论，对于不同类型的 App 首次安装的场景会呈现差异，比如生活服务、出行类 App 对应蜂窝下载场景会多于影音类、游戏类 App。</p>
+<p>其次对仍然需要支持 iOS8 以下的 App， 超出 __TEXT 段大小的限制将会很大程度上影响审核以及发版进度。当然可以通过一些手段进行救急，比如拆分动态库的方式绕过。但是这些手段可能导致安装包整体变得更大。</p>
+<p>除了 Apple 的限制外，包大小的劣化一定程度上意味着更加慢的启动速度；更多的的代码逻辑；更低研发效率；过于复杂的代码还会带来对代码修改的风险将对稳定性产生负面影响；让性能等基础体验变差，所以包大小不是一个孤立的指标，它从侧面的反映出 App 的健康状态。</p>
+<p><strong>综上，对于用户来说安装包大小是一个非常重要的指标，安装包资源大小优化是非常重要的</strong>。</p>
+<h1 id="二-苹果对安装包做的优化"><a href="#二-苹果对安装包做的优化" class="headerlink" title="二.苹果对安装包做的优化"></a>二.苹果对安装包做的优化</h1><p><a target="_blank" rel="noopener" href="https://help.apple.com/xcode/mac/current/#/devbbdc5ce4f">https://help.apple.com/xcode/mac/current/#/devbbdc5ce4f</a></p>
+<p>App Store和操作系统优化了iOS、tvOS和watchOS应用程序的安装，根据用户特定设备和操作系统版本的功能定制应用程序交付，以最小的占用空间。这种优化被称为应用精简，允许你创建使用最多设备功能，占用最小磁盘空间，并适应苹果未来可能应用的更新的应用。更快的下载速度和更多的空间为其他应用程序和内容提供了更好的用户体验。</p>
+<h2 id="Slicing-iOS-tvOS"><a href="#Slicing-iOS-tvOS" class="headerlink" title="Slicing (iOS, tvOS)"></a>Slicing (iOS, tvOS)</h2><p>针对不同目标设备和操作系统版本创建和发布应用包变体的过程。变体只包含目标设备和操作系统版本所需的可执行体系结构和资源。你可以继续开发并将应用的完整版本上传到app Store Connect。App Store会根据你的应用支持的设备和操作系统版本，创建并发布不同的版本。使用资产目录，以便App Store可以为每个变体选择图像，GPU资源和其他数据。当用户安装应用程序时，将下载并安装用户设备和操作系统版本的变体。</p>
+<p>在运行iOS和tvOS 9.0及更高版本的设备上支持切片应用。否则，App Store会向用户提供通用版本。通用版本也可以通过移动设备管理(MDM)，通过Apple School Manager或Apple Business Manager批量购买的应用程序，或使用iTunes 12.6或更早版本下载的应用程序提供。</p>
+<p>对于在 AppStore 发布的包，苹果也为 App 提供了很多优化方式，而这些是通过企业证书签发的包无法做到的。</p>
+<p>当 App 构建完安装包之后上传到 AppStore Connect 后, AppStore Connect 会根据设备、系统来创建其变体（variant）以适配不同的设备，用户从 App Store 中下载到的安装包时候，只下载自己设备用到变体。</p>
+<p>变体之间的差异取决于设备的处理器架构（arm64, armv7）、屏幕分辨率（2x, 3x）、iOS 系统版本。</p>
+<p>当然这也导致很难用线下构建的安装包来量化最终对下载大小的影响。</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/896b81a6911e425eb066e2c38de4600f~tplv-k3u1fbpfcp-watermark.image" alt="App record.png"></p>
+<h2 id="Bitcode"><a href="#Bitcode" class="headerlink" title="Bitcode"></a>Bitcode</h2><p>位码是已编译程序的中间表示形式。你上传到App Store Connect的包含位码的应用程序将被编译并链接到App Store上。包含位码将允许苹果在未来重新优化你的应用二进制，而无需向app Store提交新版本的应用。</p>
+<p>对于iOS应用程序，比特码是默认的，但也是可选的。对于watchOS和tvOS应用程序，需要位码。如果你提供了bitcode，那么app bundle中的所有应用和框架(项目中的所有目标)都需要包含bitcode。</p>
+<p>Xcode默认隐藏应用程序的符号，所以苹果无法读取它们。当你将应用上传到app Store Connect时，你可以选择包含符号。当你使用TestFlight或通过app Store发布应用时，包含符号可以让苹果为你的应用提供崩溃报告。如果你想自己收集和标记崩溃报告，你不需要上传符号。相反，您可以在发布应用程序后下载位码编译dSYM文件。</p>
+<h2 id="按需资源-iOS、tvOS"><a href="#按需资源-iOS、tvOS" class="headerlink" title="按需资源(iOS、tvOS)"></a>按需资源(iOS、tvOS)</h2><p>按需资源是指可以用关键字标记并按标记分组请求的资源(例如图像和声音)。App Store托管苹果服务器上的资源，并为你管理下载。App Store还按需分割资源，进一步优化应用的变体。</p>
+<p>按需资源提供更好的用户体验:</p>
+<ul>
+<li><p>应用尺寸更小，所以下载速度更快，改善了首次发布的体验。</p>
+</li>
+<li><p>当用户浏览应用程序时，根据需要在后台下载按需资源。</p>
+</li>
+<li><p>操作系统在不再使用或磁盘空间不足时清理按需资源。</p>
+</li>
+</ul>
+<p>例如，应用程序可以将资源划分为级别，并仅在应用程序预计用户将移动到下一级别时请求下一级别的资源。同样，只有当用户进行了相应的应用内购买时，应用才能请求应用内购买资源。</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0b2ea85a78cd49ecae3b4aa3cd59f416~tplv-k3u1fbpfcp-watermark.image" alt="Appicon.png"></p>
+<p>综上苹果架构优化主要体现在</p>
+<p><strong>关于指令集</strong></p>
+<p>x86_64 和 i386，是用于模拟器的芯片指令集架构文件；arm64、armv7、armv7s ，是真机的芯片指令集架构文件。</p>
+<ul>
+<li><p>使用 App Thinning 后，用户下载时就只会下载一个适合自己设备的芯片指令集架构文件。App Thinning 有三种方式，包括：App Slicing、Bitcode、On-Demand Resources。</p>
+</li>
+<li><p>App Slicing，会在你向 iTunes Connect 上传 App 后，对 App 做切割，创建不同的变体，这样就可以适用到不同的设备。</p>
+</li>
+<li><p>On-Demand Resources，主要是为游戏多关卡场景服务的。它会根据用户的关卡进度下载随后几个关卡的资源，并且已经过关的资源也会被删掉，这样就可以减少初装 App 的包大小。</p>
+</li>
+<li><p>Bitcode ，是针对特定设备进行包大小优化，优化不明显。</p>
+</li>
+</ul>
+<h1 id="三-优化准备工作"><a href="#三-优化准备工作" class="headerlink" title="三.优化准备工作"></a>三.优化准备工作</h1><h2 id="分析安装包组成"><a href="#分析安装包组成" class="headerlink" title="分析安装包组成"></a>分析安装包组成</h2><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a5014b7577c2405ba6cb4380e225eea7~tplv-k3u1fbpfcp-watermark.image" alt="DemoProject.png"></p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0f6aa1ef17e3483b9dd6bf971cda1111~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h1 id="四-技术方案"><a href="#四-技术方案" class="headerlink" title="四.技术方案"></a>四.技术方案</h1><h2 id="资源优化"><a href="#资源优化" class="headerlink" title="资源优化"></a>资源优化</h2><h3 id="大资源优化"><a href="#大资源优化" class="headerlink" title="大资源优化"></a>大资源优化</h3><p>资源是指plist、js、css、json、端智能模型文件等，因这些文件和图片在优化方式差异很大，所以把两者区分开来。获取大资源主要途径是递归遍历ipa包的所有资源，体积大于指定阈值（一般20-40kb）的文件就是需要对其优化的文件</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/fndppx/PracticallyScripts/blob/main/%E6%96%87%E4%BB%B6%E6%A3%80%E6%B5%8B/big_file_check.py">https://github.com/fndppx/PracticallyScripts/blob/main/%E6%96%87%E4%BB%B6%E6%A3%80%E6%B5%8B/big_file_check.py</a></p>
+<p>通过扫描可以看到对应超过阈值的文件:</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ee0a75cacdbb485b853f9ae9f255b40a~tplv-k3u1fbpfcp-watermark.image" alt="pythons UsersdDesktopgithubPractical1ySeripts交件.png"></p>
+<p>此外可以对其他大资源，比如皮肤资源，h5缓存文件等采用下载zip包方式获取，下载成功后合适的时机解压。</p>
+<ul>
+<li>异步下载：只要APP首次启动时不需要加载该资源，或者即使首次启动需要加载但是使用频率不高，那么该资源就可以走异步下载;</li>
+<li>资源压缩：当APP首次启动需要加载且频率较高的情况下，可以对大块资源先进行压缩内置APP，启动阶段异步线程解压再使用；</li>
+</ul>
+<h3 id="无用配置或者图片文件"><a href="#无用配置或者图片文件" class="headerlink" title="无用配置或者图片文件"></a>无用配置或者图片文件</h3><p>针对特定的配置文件类型非必要的进行扫描，自己控制类型，如扫描图片和 html 文件目录是否有其他类型文件</p>
+<p>针对图片资源首先将png、webp、gif、jpg排除掉，JS&amp;CSS资源是一般HTML加载的，对于需要扫描图片资源目录通过排除</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/fndppx/PracticallyScripts/blob/main/%E6%96%87%E4%BB%B6%E6%A3%80%E6%B5%8B/type_check.py">https://github.com/fndppx/PracticallyScripts/blob/main/%E6%96%87%E4%BB%B6%E6%A3%80%E6%B5%8B/type_check.py</a></p>
+<h3 id="重复资源优化"><a href="#重复资源优化" class="headerlink" title="重复资源优化"></a>重复资源优化</h3><p><a target="_blank" rel="noopener" href="https://github.com/fndppx/PracticallyScripts/blob/main/%E6%96%87%E4%BB%B6%E6%A3%80%E6%B5%8B/type_check.py">https://github.com/fndppx/PracticallyScripts/blob/main/%E6%96%87%E4%BB%B6%E6%A3%80%E6%B5%8B/type_check.py</a></p>
+<p>指定目录或者从iPA包中获取所有资源文件，通过MD5判断资源是否重复</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9431bd5827e74b89843a16225be926d3~tplv-k3u1fbpfcp-watermark.image" alt="Base.lproj.png"></p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3e370c41bdba49a8870a2d92bd05137c~tplv-k3u1fbpfcp-watermark.image" alt="python3 Users ma DesktopgithubPracticallyseripts文伴检果.png"></p>
+<h2 id="图片优化"><a href="#图片优化" class="headerlink" title="图片优化"></a>图片优化</h2><h3 id="无用图片优化：-基于开源工具扫描"><a href="#无用图片优化：-基于开源工具扫描" class="headerlink" title="无用图片优化： 基于开源工具扫描"></a>无用图片优化： 基于开源工具扫描</h3><p>LSUnusedResources</p>
+<p>如何扫描的</p>
+<ul>
+<li><p>在文件夹[imageset, launchimage, appiconset, bundle, png]中获取资源文件(默认:[imageset, jpg, png, gif])。</p>
+</li>
+<li><p>使用正则表达式搜索代码文件中的所有字符串名称(默认值:[h, m, mm, swift, xib, storyboard, strings, c, cpp, html, js, json, plist, css])。</p>
+</li>
+<li><p>从资源文件中排除所有使用的字符串名称，我们得到所有未使用的资源文件。</p>
+</li>
+</ul>
+<h3 id="Asset-Catalog图片优化"><a href="#Asset-Catalog图片优化" class="headerlink" title="Asset Catalog图片优化"></a>Asset Catalog图片优化</h3><p>之前在bundle需要放二倍图和三倍图，同一张图片最后在用户手机上会有两份，iOS7系统有了Asset Catalog后，Asset Catalog为不同类型设备(分辨率不同)或者相同类型设备但不同配置(磁盘不同)提供定制化资源下载，当用户下载App时，只有跟用户手机硬件设备参数相匹配的资源才会被下载，其他不会下载，从而降低下载包体积；</p>
+<p>优势</p>
+<ul>
+<li><p>包体积瘦身</p>
+</li>
+<li><p>统一的图片无损压缩</p>
+</li>
+<li><p>便利的资源管理</p>
+</li>
+<li><p>高效的<strong><strong>I&#x2F;O</strong></strong>操作</p>
+</li>
+</ul>
+<p>苹果官方对比：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a24adaef848c406c9eef54b8cd2a552e~tplv-k3u1fbpfcp-watermark.image" alt="Apple Deep Pixel Image Compression.png"></p>
+<h3 id="HEIC图片优化"><a href="#HEIC图片优化" class="headerlink" title="HEIC图片优化"></a>HEIC图片优化</h3><p>更改PNG和JPEG图片编码格式，选择HEIC方案，基于以下优点：1、体积最小，HEIC比PNG体积减少50%，WebP比PNG优化30%；2、解码效率高，跟WebP相比，HEIC硬解码效率高，略慢于JPEG；</p>
+<blockquote>
+<p>HEIC(High Efficiency Image Coding)是一种图像编码标准，它可以极大提升压缩率，并有效减小储存占用，自iOS 11和macOS High Sierra(10.13)开始，苹果将HEIC设置为图片存储的默认格式，它由动态影像专家小组（MPEG）开发，并在MPEG-H Part 12（ISO&#x2F;IEC 23008-12）中定义，以下是HEIC图片的特点：</p>
+</blockquote>
+<p><strong>压缩率高</strong>：HEIC图片比JPEG图片压缩率高1.5倍，比PNG图片压缩率高3倍，也比GIF图片压缩率高3倍。</p>
+<p><strong>节省内存</strong>：HEIC图片比JPEG图片节省20%的存储空间，比PNG图片节省50%的存储空间，比GIF图片节省80%的存储空间。</p>
+<p><strong>解码效率高</strong>：在iOS系统中，HEIC采用硬解码，解码效率高，跟WebP(软编码)相比，是其100倍，但略慢于JPEG。</p>
+<p><strong>保留原始图像质量</strong>：HEIC图片采用H.264和JEP格式压缩，可以保留原始图像质量。</p>
+<p><strong>支持无损放大</strong>：HEIC图片支持无损放大，可以将图片放大两倍而不失真。</p>
+<p><strong>色彩处理方面：</strong> HEIC图片可以根据像素点的亮度分布自动亮度、对比度和饱和度，从而更好地还原图像的真实色彩。</p>
+<p><strong>系统兼容性好</strong>：我们知道iOS 11开始HEIC是图片存储的默认格式，也就是iOS 11以后的系统都支持HEIC图片，对这部分用户如何处理？在实践中发现，在iOS10系统上，当把HEIC图片放xcasset文件里，最后图片也是可以正常显示的，用Asset Catalog Tinkerer工具解压出Assets.car 文件，发现在xcasset里的HEIC图片，对于iOS10的系统，在打包时会被系统转化为png格式图片，Asset Catalog解决了HEIC图片的兼容性问题。</p>
+<h4 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h4><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/715d4a8acdb44363b98203898f2c0c2d~tplv-k3u1fbpfcp-watermark.image" alt="打开.png"></p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dc9437bb2dba4194be87a8c0f9a03f88~tplv-k3u1fbpfcp-watermark.image" alt="转换图像.png"></p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/70b3e57d9829434f987e102337c7ce9d~tplv-k3u1fbpfcp-watermark.image" alt="转换图像.png"></p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/17672525eff942cf91e9d4b5fafab0b3~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 4.png"></p>
+<p>代码加载和png无差异</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">UIImageView *img = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@&quot;test_image_h&quot;]];</span><br><span class="line"></span><br><span class="line">[self.view addSubview:img];</span><br><span class="line"></span><br><span class="line">img.frame = CGRectMake(100, 100, 200, 100);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对于大图HEIC格式明显体积小</li>
+</ul>
+<p>理论上来说，HEIC格式图片的体积是PNG格式图片的三分之一，但实际过程发现对于大图，这个优化效果很明显，但是对于小图尤其是小于10K的图片，HEIC图片还有可能超过PNG格式图片，所以我们在做HEIC图片编码优化时，对于小图不建议用这种方式。</p>
+<ul>
+<li>带有Alpha通道的PNG图片不要做有损压缩</li>
+</ul>
+<p>在实践过程中发现，一张PNG原图，尤其是带有Alpha通道，经过有损压缩(TinyPng或ImageOptim)后，再生成HEIC图片时，在iOS12，13，14系统上会显示绿幕，所以带有Alpha通道的PNG图片不要做有损压缩，存在兼容性问题。</p>
+<p><strong>转换完成最好要测试下保证不会出现异常加载失败的问题</strong></p>
+<h3 id="WebP-压缩优化"><a href="#WebP-压缩优化" class="headerlink" title="WebP****压缩优化"></a>WebP****压缩优化</h3><p>HEIC是iOS12以后推出来一种新格式，对于带有Alpha通道的并经过压缩的PNG图片，转换为HEIC格式后，在iOS12和13系统存在兼容性问题，Alpha通道全变为0，为此对于这种case，尤其是大图，如果图片大小超过了 100KB，可以考虑使用 WebP可以采用WebP压缩优化；</p>
+<h4 id="来将其他图片转成-WebP"><a href="#来将其他图片转成-WebP" class="headerlink" title="来将其他图片转成 WebP"></a>来将其他图片转成 WebP</h4><p>Google开发的</p>
+<p><a target="_blank" rel="noopener" href="https://developers.google.com/speed/webp/docs/precompiled">https://developers.google.com/speed/webp/docs/precompiled</a></p>
+<p>腾讯开发的</p>
+<p><a target="_blank" rel="noopener" href="http://isparta.github.io/">http://isparta.github.io/</a></p>
+<p>转换完毕后显示图片时使用 libwebp 进行解析</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/carsonmcdonald/WebP-iOS-example">https://github.com/carsonmcdonald/WebP-iOS-example</a></p>
+<p>对于小于 100KB 时，你可以使用网页工具 TinyPng 或者 GUI 工具ImageOptim进行图片压缩。</p>
+<h3 id="TinyPng压缩"><a href="#TinyPng压缩" class="headerlink" title="TinyPng压缩"></a>TinyPng压缩</h3><p> WebP 在 CPU 消耗和解码时间上会比 PNG 高两倍，因为对于大于100KB的图片可以使用 WebP，对于小于 100KB 图片，使用TinyPng进行压缩，虽然压缩率没有 WebP 那么高，但是没有改变图片编码方式，所以不会增加解析性能损耗。</p>
+<h2 id="编译器优化-amp-xcode架构优化"><a href="#编译器优化-amp-xcode架构优化" class="headerlink" title="编译器优化 &amp; xcode架构优化"></a>编译器优化 &amp; xcode架构优化</h2><h3 id="xcode14优化"><a href="#xcode14优化" class="headerlink" title="xcode14优化"></a>xcode14优化</h3><p><strong>Xcode</strong> <strong>支持</strong> ****XCode14的升级对包体积带来比较明显的优化，官方给出数据是应用程序下载包体积减小了 30%</p>
+<h3 id="编译器优化"><a href="#编译器优化" class="headerlink" title="编译器优化"></a>编译器优化</h3><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8bd9fe0cf6c649ff8bb46e5464bf6cce~tplv-k3u1fbpfcp-watermark.image" alt="OC&amp;Ge+请有编洋优 Optimization.png"></p>
+<h2 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h2><p><strong>LinkMap检查每个类占用大小</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/jayden320/LinkMap"><strong>https://github.com/jayden320/LinkMap</strong></a></p>
+<p>Link Map 是 Mach-O 格式的二进制文件的一种辅助文件，它描述了可执行文件的全貌，包括编译后的每一个目标文件的信息以及它们在可执行文件中的代码段、数据段存储详情。通过Link Map文件，我们可以知道可执行文件的路径、CPU架构、目标文件、符号等信息，分析可执行文件中哪个类或库占用比较大，进行安装包瘦身，此外，我们可以清楚地了解可执行文件的内部结构和各个目标文件在其中的位置关系，这对于分析和调试非常有帮助。</p>
+<p>Mach-O 查看</p>
+<p><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/machoview/"><strong>https://sourceforge.net/projects/machoview/</strong></a></p>
+<p><strong>Object文件列表</strong></p>
+<p>Object文件列表列出了所有编译后的目标文件，包括.o文件和dylib库。每个目标文件都有一个对应的编号，通过该编号可以对应到具体的类，Symbols会用到此编号。</p>
+<p><strong>Section段表</strong></p>
+<p>section段表描述了各个段在最终编译成的可执行文件中的偏移位置及大小，包括代码段（TEXT）和数据段（DATA）。段表中第一列是数据在文件的偏移位置，第二列是Section占用大小，第三列是Segment类型，第四列是Section类型，关于Segment和Section</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/981765798cb74a5a9a3e644c0517c197~tplv-k3u1fbpfcp-watermark.image" alt="Sectiions.webp"></p>
+<p><strong>2.3.4 Symbols</strong></p>
+<hr>
+<p>Symbols模块给出了类里面的方法在内存具体情况。其中</p>
+<ul>
+<li>第一列是方法起始地址，通过这个地址我们可以查上面的段表；</li>
+<li>第二列是大小，通过这个可以算出方法占用的大小；</li>
+<li>第三列是归属的类(.o)，值是具体编号，通过反查目标文件列表可以知道对应的类；</li>
+<li>第四列是方法名称。</li>
+</ul>
+<p>通过Symbols模块我们可以分析出来每个类对应方法的大小。</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6e0f61225b1f46b08a944a423a19eca1~tplv-k3u1fbpfcp-watermark.image" alt="File NM.webp"></p>
+<h3 id="静态检查"><a href="#静态检查" class="headerlink" title="静态检查"></a>静态检查</h3><p><strong>58开源的工具</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/wuba/WBBlades">https://github.com/wuba/WBBlades</a></p>
+<p><strong>利用appcode 工具检测无用的代码</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com.cn/objc/">https://www.jetbrains.com.cn/objc/</a></p>
+<p>用 AppCode 做分析的方法很简单，直接在 AppCode 里选择 Code-&gt;Inspect Code 就可以进行静态分析。</p>
+<ul>
+<li><p>无用类：Unused class 是无用类，Unused import statement 是无用类引入声明，Unused property 是无用的属性；</p>
+</li>
+<li><p>无用方法：Unused method 是无用的方法，Unused parameter 是无用参数，Unused instance variable 是无用的实例变量，Unused local variable 是无用的局部变量，Unused value 是无用的值；</p>
+</li>
+<li><p>无用宏：Unused macro 是无用的宏。</p>
+</li>
+<li><p>无用全局：Unused global declaration 是无用全局声明。</p>
+</li>
+</ul>
+<p><strong>appcode缺点</strong></p>
+<ul>
+<li><p>某些库里定义了未使用的协议会被判定为无用协议</p>
+</li>
+<li><p>如果子类使用了父类的方法，父类的这个方法不会被认为使用了；通过点的方式使用属性，该属性会被认为没有使用；使用 performSelector 方式调用的方法也检查不出来，比如 self performSelector:@selector(arrivalRefreshTime)；</p>
+</li>
+<li><p>运行时声明类的情况检查不出来。比如通过 NSClassFromString 方式调用的类会被查出为没有使用的类，比如 layerClass &#x3D; NSClassFromString(@“SMFloatLayer”)。还有以[[self class] accessToken] 这样不指定类名的方式使用的类，会被认为该类没有被使用。像 UITableView 的自定义的 Cell 使用 registerClass，这样的情况也会认为这个 Cell 没有被使用。</p>
+</li>
+<li><p>使用 AppCode 检查出来的无用代码，还需要人工二次确认才能够安全删除掉。</p>
+</li>
+</ul>
+<h3 id="动态检查"><a href="#动态检查" class="headerlink" title="动态检查"></a>动态检查</h3><p>运行时检查类是否真正被使用过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#define RW_INITIALIZED (1&lt;&lt;29)</span><br><span class="line"></span><br><span class="line">bool isInitialized() &#123;</span><br><span class="line"></span><br><span class="line">   return getMeta()-&gt;data()-&gt;flags &amp; RW_INITIALIZED;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>isInitialized 的结果会保存到元类的 class_rw_t 结构体的 flags 信息里，flags 的 1&lt;&lt;29 位记录的就是这个类是否初始化了的信息。而 flags 的其他位记录的信息，objc runtime 的源码，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 类的方法列表已修复</span><br><span class="line"></span><br><span class="line">#define RW_METHODIZED         (1&lt;&lt;30)</span><br><span class="line"></span><br><span class="line">// 类已经初始化了</span><br><span class="line"></span><br><span class="line">#define RW_INITIALIZED        (1&lt;&lt;29)</span><br><span class="line"></span><br><span class="line">// 类在初始化过程中</span><br><span class="line"></span><br><span class="line">#define RW_INITIALIZING       (1&lt;&lt;28)</span><br><span class="line"></span><br><span class="line">// class_rw_t-&gt;ro 是 class_ro_t 的堆副本</span><br><span class="line"></span><br><span class="line">#define RW_COPIED_RO          (1&lt;&lt;27)</span><br><span class="line"></span><br><span class="line">// 类分配了内存，但没有注册</span><br><span class="line"></span><br><span class="line">#define RW_CONSTRUCTING       (1&lt;&lt;26)</span><br><span class="line"></span><br><span class="line">// 类分配了内存也注册了</span><br><span class="line"></span><br><span class="line">#define RW_CONSTRUCTED        (1&lt;&lt;25)</span><br><span class="line"></span><br><span class="line">// GC：class有不安全的finalize方法</span><br><span class="line"></span><br><span class="line">#define RW_FINALIZE_ON_MAIN_THREAD (1&lt;&lt;24)</span><br><span class="line"></span><br><span class="line">// 类的 +load 被调用了</span><br><span class="line"></span><br><span class="line">#define RW_LOADED             (1&lt;&lt;23)</span><br></pre></td></tr></table></figure>
+
+<h1 id="五-其他流程阶段预防"><a href="#五-其他流程阶段预防" class="headerlink" title="五.其他流程阶段预防"></a>五.其他流程阶段预防</h1><p>1.开发阶段图片大小把关</p>
+<p> 使用前压缩，命名规范，xcassets统一管理图片</p>
+<p>2.通过Jenkins打包监控对比包大小增长</p>
+<p><strong>总结</strong>：</p>
+<p>通过上述对包大小优化的背景和收益的理解，再到结合工具和流程方案找出其短板，根据自己项目的情况合理采取对应方案持续优化关注，才是需要长期坚持做下去的。</p>
+<p><strong>感谢参考</strong></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5MjU0NTI5OQ==&mid=2247560043&idx=1&sn=4ff274eb120078bdd8d0f2bddda8e1f6&chksm=c03fdb17f748520153979d2a80e86eda4d72bf549ff9ce6d8045982aad33e814927de239bfb6&scene=21#wechat_redirect">https://mp.weixin.qq.com/s?__biz=Mzg5MjU0NTI5OQ==&amp;mid=2247560043&amp;idx=1&amp;sn=4ff274eb120078bdd8d0f2bddda8e1f6&amp;chksm=c03fdb17f748520153979d2a80e86eda4d72bf549ff9ce6d8045982aad33e814927de239bfb6&amp;scene=21#wechat_redirect</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6916317500992913421">https://juejin.cn/post/6916317500992913421</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2512,293 +2795,8 @@ return YES;
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/11/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8BCrash%E6%94%B6%E9%9B%86%E4%B8%8E%E9%98%B2%E6%8A%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="kyan">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Next">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Next">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/11/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8BCrash%E6%94%B6%E9%9B%86%E4%B8%8E%E9%98%B2%E6%8A%A4/" class="post-title-link" itemprop="url">性能优化之Crash收集与防护</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-05-11 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-11T00:00:00+08:00">2022-05-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">性能优化</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
-<p>crash指标是项目稳定性的一个重要指标，本文主要针对crash崩溃原理以及防护做了总结和初步研究。</p>
-</blockquote>
-<h1 id="如何让crash变得可控"><a href="#如何让crash变得可控" class="headerlink" title="如何让crash变得可控"></a>如何让crash变得可控</h1><p>针对这个问题我们需要从以下几方面着手</p>
-<ul>
-<li>崩溃发生的原因有哪些</li>
-<li>崩溃底层触发流程</li>
-<li>崩溃的归类</li>
-<li>怎么防护崩溃</li>
-</ul>
-<h2 id="一-崩溃发生的原因有哪些"><a href="#一-崩溃发生的原因有哪些" class="headerlink" title="一.崩溃发生的原因有哪些"></a>一.崩溃发生的原因有哪些</h2><h2 id="1-cpu无法执行的代码"><a href="#1-cpu无法执行的代码" class="headerlink" title="1.cpu无法执行的代码"></a>1.cpu无法执行的代码</h2><ul>
-<li>执行了非法指令，通常是因为可执行文件本身出现错误, 或者试图执行数据段. 堆栈溢出时也有可能产生这个信号</li>
-<li>无效指令或操作、访问无效地址及不具有权限的内存地址、除以0等 </li>
-<li>僵尸对象，野指针导致的访问无效内存地址等等</li>
-</ul>
-<h2 id="2-被系统强杀"><a href="#2-被系统强杀" class="headerlink" title="2.被系统强杀"></a>2.被系统强杀</h2><p>  1.应用内存消耗过高 </p>
-<p>  2.主线程长时间无法响应 </p>
-<ul>
-<li>操作系统采用看门狗来监控应用程序的响应能力。如果应用程序没有响应，看门狗会终止它，这会使用0x8badf00d终止原因中的代码创建崩溃报告</li>
-</ul>
-<p> 3.资源异常 </p>
-<ul>
-<li>1.线程频繁唤醒 ，Wakeups 是“资源异常”下的一个子类，指的是频繁唤醒线程，消耗cpu资源并增加 功耗，在超过阈值并处于 FATAL CONDITION 的条件下触发崩溃;如果300秒内的 总wakeup数超过45000(300 * 150)就会被判定为超出阈值;</li>
-<li>2.进程中的线程过多的占用了cpu，限制为 50% ，时间不超过 180秒 ;</li>
-<li>3.线程短时间过多的磁盘写入</li>
-</ul>
-<ol start="4">
-<li>死锁</li>
-<li>非法的应用签名<br> 6.后台执行超时</li>
-</ol>
-<p> </p>
-<ul>
-<li>1.App退至后台后若执行时间过⻓就会导致被系统被杀，比如 Backgroud Task 方式可以在后台 执行3min，若超过3min还未运行完成就会被系统强杀</li>
-</ul>
-<p>7.设备总内存吃紧</p>
-<ul>
-<li>因为Mac平台存在内存交换机制，而iOS平台没有，就导致整个设备内存吃紧的时候，系统就 会杀掉优先级不高且占用内存多大的应用</li>
-</ul>
-<p> </p>
-<p>8.设备过热</p>
-<ul>
-<li>一般见于低端的设备</li>
-</ul>
-<h2 id="3-语言触发异常"><a href="#3-语言触发异常" class="headerlink" title="3.语言触发异常"></a>3.语言触发异常</h2><p>1.OC语言抛出异常 </p>
-<ul>
-<li>1.数组越界</li>
-<li>2.未找到的方法或者 NSDictionary 添加 nil 对象等导致的非法参数异 常 NSInvalidArgumentException </li>
-<li>3.KVC未找到相对应的 key 抛出 NSUnknownKeyException ）</li>
-</ul>
-<ol start="2">
-<li>C++抛出异常</li>
-</ol>
-<ul>
-<li>如图为c++环境下的一些异常类</li>
-</ul>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1ce8112423b14a92b7025945a36f9467~tplv-k3u1fbpfcp-watermark.image" alt="image.png"><br>语言异常抛出后最后都会调用到 abort 来终止应用，调用栈如下图所示</p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/169908fe86b8438a8d499e57976f6005~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h2 id="4-开发者触发-（断言，-NSAssert-或者-asset-函数等-）"><a href="#4-开发者触发-（断言，-NSAssert-或者-asset-函数等-）" class="headerlink" title="4.开发者触发 （断言， NSAssert 或者 asset 函数等 ）"></a>4.开发者触发 （断言， NSAssert 或者 asset 函数等 ）</h2><h2 id="5-…（其他）"><a href="#5-…（其他）" class="headerlink" title="5 …（其他）"></a>5 …（其他）</h2><h2 id="二-崩溃如何发生"><a href="#二-崩溃如何发生" class="headerlink" title="二.崩溃如何发生"></a>二.崩溃如何发生</h2><p>大部分应用程序都可能崩溃，在Unix中崩溃和一个信号有关系，但是追究其根本原因，是来自于内核，内核发现进程无法继续执行时，生成这个信号作为最后的补救办法。</p>
-<h3 id="系统是如何把异常转换成singnal呢"><a href="#系统是如何把异常转换成singnal呢" class="headerlink" title="系统是如何把异常转换成singnal呢"></a>系统是如何把异常转换成singnal呢</h3><p><strong>Mach-&gt;singnal-&gt;异常</strong></p>
-<p>程序的崩溃都会转换为异常，被cpu通过中断向量表指定的异常类型捕获，进而触发异常处理程序处理， 比如cpu无效指令、无效的地址或者无权限的访问，这些都是<strong>硬件产生的异常</strong>;被系统强杀的崩溃最终 会调用到 kill 函数发送 SIGKILL 信号进而引发应用被强杀;语言及开发者触发崩溃最终会通过 abort 函数毅然会最终调用到 kill 函数发送 SIGABRT 信号引发应用被杀，这都是<strong>软件引发的异常</strong>。</p>
-<p><strong>Mach层</strong></p>
-<p>Mach在系统中处于最接近底层的模块，是XNU内核的内核，被BSD包裹。Mach内核作为系统一个底层的基础，仅与驱动操作系统所需的最低需要有关。 其他所有内容都由操作系统的更高层来实现，然后再利用Mach并以其认为合适的任何方式对其进行操作。</p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/545dcb36f3144e73bf8b60ca6f1e168c~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6deaa5690e514bb5855d7ce12a5e8149~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p>整个操作系统核心包括了 Mach 微内核、BSD层(大家熟悉的 POSIX 接口就在这一层)、I&#x2F;O Kit设备驱动框 架以及核心库，其中 Mach 微内核负责进程和线程抽象、虚拟内存管理、任务管理以及进程间通信和消息 传递机制，所以 Mach 微内核就是整个操作系统的核心。</p>
-<p>如runloop mach port 的消息就是基于mach微内核的消息机制的体现 </p>
-<p>Mach 异常是在已有的消息传递架构上实现的一种独有的异常处理方法，是一种轻量级的架构。</p>
-<p><strong>信号处理流程图</strong></p>
-<ul>
-<li>异常封装、转换、发送。</li>
-<li>异常消息接收处理。</li>
-<li>异常消息转换为BSD信号。</li>
-</ul>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/696143ddcb9d401c9767733bc559b228~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h2 id="三-崩溃的归类"><a href="#三-崩溃的归类" class="headerlink" title="三.崩溃的归类"></a>三.崩溃的归类</h2><p><strong>根据上图可以总结为以下几大类</strong></p>
-<ul>
-<li>1.mach exception</li>
-<li>2.signal（BSD信号）</li>
-<li>3.NSException</li>
-<li>4.其他 如c++异常 和 主线程死锁</li>
-</ul>
-<p>最终不管是硬件异常还是语言异常及用户抛出异常都会产生信号，那信号与Mach异常有何关 系?首先来带大家了解下什么是 Mach 异常。</p>
-<h3 id="1-mach-异常"><a href="#1-mach-异常" class="headerlink" title="1.mach 异常"></a>1.mach 异常</h3><ul>
-<li><p>Mach 异常是指最底层的内核级异常。用户态的开发者可以直接通过Mach API设置thread，task，host的异常端口，来捕获Mach异常</p>
-</li>
-<li><p>Mach异常由处理器陷阱引发，在异常发生后会被异常处理程序转换成Mach消息，接着依次投递到thread、task和host端口。如果没有一个端口处理这个异常并返回KERN_SUCCESS，那么应用将被终止。每个端口拥有一个异常端口数组，系统暴露了后缀为task_set_exception_ports的多个API让我们注册对应的异常处理到端口中。</p>
-</li>
-</ul>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a8df719508014be891bcd0c34fd15ca7~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="Mach异常处理流程"><a href="#Mach异常处理流程" class="headerlink" title="Mach异常处理流程"></a>Mach异常处理流程</h3><p>针对mach 异常处理参考开源库有完整的crash处理流程。<br><a target="_blank" rel="noopener" href="https://github.com/kstenerud/KSCrash">https://github.com/kstenerud/KSCrash</a></p>
-<h4 id="KSCrash处理流程"><a href="#KSCrash处理流程" class="headerlink" title="KSCrash处理流程"></a><strong>KSCrash处理流程</strong></h4><ul>
-<li>备份当前异常端口</li>
-<li>分配新的异常端口并设置给task作为新的接收异常的端口</li>
-<li>创建两个线程用于监听异常端口</li>
-<li>线程中监听并处理异常</li>
-</ul>
-<h5 id="1-备份当前异常端口"><a href="#1-备份当前异常端口" class="headerlink" title="1.备份当前异常端口"></a>1.备份当前异常端口</h5><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d94f44faacb846e9a7a94db855990c52~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h5 id="2-分配新的异常端口并设置给task作为新的接收异常的端口"><a href="#2-分配新的异常端口并设置给task作为新的接收异常的端口" class="headerlink" title="2.分配新的异常端口并设置给task作为新的接收异常的端口"></a>2.分配新的异常端口并设置给task作为新的接收异常的端口</h5><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/53117766804443c9a6d752a9df0c5d9d~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h5 id="3-创建两个线程用于监听异常端口，线程中监听并处理异常"><a href="#3-创建两个线程用于监听异常端口，线程中监听并处理异常" class="headerlink" title="3.创建两个线程用于监听异常端口，线程中监听并处理异常"></a>3.创建两个线程用于监听异常端口，线程中监听并处理异常</h5><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2820fb1b43b4403ea54ab34e031e5655~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6f6a7441127941599ea52659388209d1~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h5 id="4-所有Mach异常未处理，它将在host层被ux-exception转换为相应的Unix信号，并通过threadsignal将信号投递到出错的线程。"><a href="#4-所有Mach异常未处理，它将在host层被ux-exception转换为相应的Unix信号，并通过threadsignal将信号投递到出错的线程。" class="headerlink" title="4.所有Mach异常未处理，它将在host层被ux_exception转换为相应的Unix信号，并通过threadsignal将信号投递到出错的线程。"></a>4.所有Mach异常未处理，它将在host层被ux_exception转换为相应的Unix信号，并通过threadsignal将信号投递到出错的线程。</h5><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ba911c392a36487687a5934ac1cf4d58~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="2-signal（UNIX信号）"><a href="#2-signal（UNIX信号）" class="headerlink" title="2.signal（UNIX信号）"></a>2.signal（UNIX信号）</h3><p>信号是什么?信号是一种异步处理的软中断，内核会发送给进程某些异步事件，这些异步事件可能 来自硬件，比如除0或者访问了非法地址;也可能来自其他进程或用户输入，比如 ctrl+c ，就会产 生 SIGINT 信号由内核发送至当前终端执行进程，若进程未处理该信号，就会导致进程退<br>出; ctrl+\ 就会产生 SIGQUIT 退出信号来终止进程执行，并且会产生崩溃日志报告，如下图所 示:</p>
-<p>信号(signal)是一种POSIX标准通信方式。通常用于<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unix">Unix</a>、<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unix-like">类 Unix</a>和其他<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unix-like">符合</a><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/POSIX">POSIX</a>的操作系统。信号是发送到<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Process_(computing)">进程</a>或同一进程内的特定<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Thread_(computer_science)">线程</a>以通知其事件的<a target="_blank" rel="noopener" href="https://en.wiktionary.org/wiki/asynchronous">异步</a>通知。</p>
-<p><strong>那最终信号如何处理呢?</strong> </p>
-<p>上面我们讲到用户态进程若指定了信号处理函数(比如 SIGINT )则可以自己来处理，若未指定呢?比较有 意思的地方开始了，内核发现信号未存在异常处理函数，就会将其抛给崩溃报告守护进<br>程 ReportCrash </p>
-<p>因此异常消息是通过 Mach 消息的形式发送出去的，那我们就可以截获这个消息</p>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/390f71e396714a46b11a83713d6d1a66~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="3-NSException-异常捕获（应用级别的异常）"><a href="#3-NSException-异常捕获（应用级别的异常）" class="headerlink" title="3.NSException 异常捕获（应用级别的异常）"></a>3.NSException 异常捕获（应用级别的异常）</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c57ffd4e3ca411f9acb4c97a4ecbccf~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/182b6857cc8449b4a96263c4e0f43ec6~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2e635293da1f4aaea21c865bb5bee10e~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="4-c-异常"><a href="#4-c-异常" class="headerlink" title="4.c++异常"></a>4.c++异常</h3><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b64cd3d5f3ba4d3bb408469a3e4ef9fd~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="5-主线程死锁"><a href="#5-主线程死锁" class="headerlink" title="5.主线程死锁"></a>5.主线程死锁</h3><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/038582f01d7f4f7195825a854b43b8a5~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b4de7c1390d14fc5a4cb34a9a989f0df~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h2 id="四-怎么防护崩溃"><a href="#四-怎么防护崩溃" class="headerlink" title="四. 怎么防护崩溃?"></a>四. 怎么防护崩溃?</h2><ul>
-<li>1.crash防护 增加程序的健壮性（代码规范，cr等等…）</li>
-<li>2.crash拦截 尽可能多的拦截所有的crash类型</li>
-<li>3.crash上报日志</li>
-<li>4.crash 后续流程 优雅的crash 提升用户体验度</li>
-</ul>
-<h3 id="crash拦截"><a href="#crash拦截" class="headerlink" title="crash拦截"></a>crash拦截</h3><h4 id="主动防护"><a href="#主动防护" class="headerlink" title="主动防护"></a><strong>主动防护</strong></h4><ul>
-<li>在将要执行的api前增加异常处理判断等（如通过扩展分类添加异常判断）</li>
-<li>通过其他手段如中间类处理（如通过weakProxy 处理timer 强引用）</li>
-<li>通过proxy类处理kvc 安全添加移除</li>
-<li>……..</li>
-</ul>
-<h4 id="AOP拦截防护"><a href="#AOP拦截防护" class="headerlink" title="AOP拦截防护"></a><strong>AOP拦截防护</strong></h4><ul>
-<li>通过拦截调用添加异常判断，之后再调用本身的Selector</li>
-</ul>
-<h3 id="AOP拦截调用"><a href="#AOP拦截调用" class="headerlink" title="AOP拦截调用"></a>AOP拦截调用</h3><p>1.Hook的类添加Category，在各个分类中通过Method Swizzling拦截容易造成崩溃的系统方法</p>
-<p>2.将系统原有方法与添加的防护方法的selector（方法选择器）与IMP（函数实现指针）进行对调</p>
-<p>3.然后在替换方法中添加防护操作，从而达到避免复崩溃的目的。</p>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ff798207f1a64c8cb8e3a887e4e863df~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="目前可以处理掉的crash类型"><a href="#目前可以处理掉的crash类型" class="headerlink" title="目前可以处理掉的crash类型"></a><strong>目前可以处理掉的crash类型</strong></h3><ul>
-<li>1.unrecognized selector crash</li>
-<li>2.KVO</li>
-<li>3.NSNotification</li>
-<li>4.NSTimer</li>
-<li>5.Container crash（数组越界，插nil等）</li>
-<li>6.NSString crash （字符串操作的crash）</li>
-<li>7.Bad Access crash （野指针）</li>
-</ul>
-<h3 id="1-Unrecognized-Selector类型crash防护"><a href="#1-Unrecognized-Selector类型crash防护" class="headerlink" title="1.Unrecognized Selector类型crash防护"></a>1.Unrecognized Selector类型crash防护</h3><ul>
-<li>原因: 通常是因为一个对象调用了一个不属于它方法的方法导致的是</li>
-<li>方法的查找流程-&gt;runtime消息转发流程-&gt;最终未处理-&gt;程序报错crash</li>
-<li>防护方案:在消息转发过程中拦截</li>
-</ul>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a8e4f9a52a864b55ad00cbc0c2b91257~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p>所以当函数找不到时，runtime提供了三种方式去补救：</p>
-<p>1.调用resolveInstanceMethod给个机会让类添加这个实现这个函数。<br>2.调用forwardingTargetForSelector让别的对象去执行这个函数。</p>
-<p>3.调用forwardInvocation（函数执行器）灵活的将目标函数以其他形式执行。</p>
-<p><strong>优缺点</strong></p>
-<ul>
-<li>resolveInstanceMethod需要在类的本身上动态添加它本身不存在的方法，这些方法对于该类本身来说冗余的。</li>
-<li>forwardInvocation可以通过NSInvocation的形式将消息转发给多个对象，但是其开销较大，需要创建新的NSInvocation对象，并且forwardInvocation的函数经常被使用者调用，来做多层消息转发选择机制，不适合多次重写。</li>
-<li>forwardingTargetForSelector可以将消息转发给一个对象，开销较小，并且被重写的概率较低，适合重写。</li>
-</ul>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3c7d52b15e9d4529b6b7ae1f3d9b2586~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<ul>
-<li><p>动态创建一个桩类。  </p>
-</li>
-<li><p>动态为桩类添加对应的Selector，用一个通用的返回0的函数来实现该SEL的IMP。  </p>
-</li>
-<li><p>将消息直接转发到这个桩类对象上。</p>
-</li>
-</ul>
-<p><strong>注意：如果对象的类本事如果重写了forwardInvocation方法的话，就不应该对forwardingTargetForSelector进行重写了，否则会影响到该类型的对象原本的消息转发流程。</strong></p>
-<h3 id="2-KVO-crash"><a href="#2-KVO-crash" class="headerlink" title="2.KVO crash"></a>2.KVO crash</h3><p>  ** crash原因**</p>
-<ul>
-<li>1.添加KVO重复添加观察者或重复移除观察者。</li>
-<li>2.KVO的被观察者dealloc时仍然注册着KVO导致的crash。</li>
-<li>解决方法</li>
-<li>通过中间delegate来进行管理，delegate通过建立一张map来维护KVO整个关系。</li>
-</ul>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/73016e20946f40eda4572c727c3b4db9~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec1e0d2e55a04f66968e2fd811e931a0~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<ul>
-<li>由于是分类会在多个地方使用，添加移除kvo 需要加线程锁。</li>
-</ul>
-<h3 id="3-KVC"><a href="#3-KVC" class="headerlink" title="3.KVC"></a>3.KVC</h3><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b653935e35d3413989228fbb40db704c~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<ul>
-<li>1.重写- (void)setValue:(id)value forUndefinedKey:(NSString *)key</li>
-<li>2.重写- (nullable id)valueForUndefinedKey:(NSString *)key</li>
-<li><ol start="3">
-<li>key 为 nil 可以通过hook setValue:forKey:</li>
-</ol>
-</li>
-<li>4.value 为nil重写setNilValueForKey:</li>
-</ul>
-<p> <em><strong>1和2可以解决key不是对象的属性和keyPath不正确情况</strong></em></p>
-<h3 id="4-NSNotification-crash"><a href="#4-NSNotification-crash" class="headerlink" title="4.NSNotification crash"></a>4.NSNotification crash</h3><ul>
-<li>原因:由于dealloc时候没有移除通知导致。</li>
-<li>解决方法：保证dealloc移除通知。</li>
-</ul>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5bd9fdaebef4469a8f46a470f3887696~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="5-NSTimer-crash"><a href="#5-NSTimer-crash" class="headerlink" title="5.NSTimer crash"></a>5.NSTimer crash</h3><p>1.NSTimer所产生的问题的主要原因是因为其没有再一个合适的时机invalidate。</p>
-<p>2.同时还有NSTimer对target的强引用导致的内存泄漏问题。</p>
-<p>解决方法一般通过中间对象 弱引用</p>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a88a3f4510fc49c286cd0821f38b244c~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<h3 id="6-Container类型-NSString-类型-crash"><a href="#6-Container类型-NSString-类型-crash" class="headerlink" title="6.Container类型,NSString 类型 crash"></a>6.Container类型,NSString 类型 crash</h3><h3 id=""><a href="#" class="headerlink" title=""></a></h3><ul>
-<li>Container 类型的crash 指的是容器类的crash，常见的有NSArray／NSMutableArray／NSDictionary／NSMutableDictionary／NSCache的crash。 一些常见的越界、插入nil等错误操作均会导致此类crash发生(容易排查 但是crash概率高)</li>
-<li>Container crash 类型的防护方案也比较简单，针对于NSArray／NSMutableArray／NSDictionary／NSMutableDictionary／NSCache的一些常用的会导致崩溃的API进行method swizzling，然后在swizzle的新方法中加入一些条件限制和判断，(或者通过添加相关分类方法处理)从而让这些API变的安全。</li>
-</ul>
-<h3 id="7-野指针crash"><a href="#7-野指针crash" class="headerlink" title="7.野指针crash"></a>7.野指针crash</h3><p>如果一个指针先前指向一个对象，但这个对象随后被释放了，如果该指针没有做任何的修改，导致仍然指向着那块内存地址，则该指针已成为了野指针。</p>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d0dbdfa4b67c4ee8ba91f7b4b4b5b470~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d9e61bb978494fa8a44cbee2a556a5c6~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p>可以利用<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/objectivec/nsobject/1571947-dealloc">dealloc</a>方法会自动实现父类的dealloc方法的特性，hook住NSObject和NSProxy两个oc的根类的dealloc方法，然后在调剂方法中将本来即将释放的对象的isa指针改为指向我们创建的一个新的僵尸类，然后外界对这个僵尸类发送任何消息(objc_msgSend)都会走方法调用流程，可以在此流程做处理。（需要考虑Zombie池子的释放）</p>
-<p>参考 ：<a target="_blank" rel="noopener" href="http://sindrilin.com/2017/11/01/local_zombie.html">http://sindrilin.com/2017/11/01/local_zombie.html</a></p>
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec20cbe686bc4c6d8c5d54c8b2bcc0db~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
