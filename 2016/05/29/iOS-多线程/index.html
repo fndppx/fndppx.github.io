@@ -19,24 +19,23 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="本文主要梳理iOS 内存管理 核心知识  NSThread 多线程和锁 GCD NSOperation  1.  NSThread 2.  多线程和锁 OSSpinLock dispatch_semaphore pthread_mutex NSLock NSCondition pthread_mutex(recursive) NSRecursiveLock NSConditionLock @syn">
+    <meta name="description" content="![552ccf48ef6a14c8692f56aa84e42c4182b412e2.jpg](https:&#x2F;&#x2F;p6-juejin.byteimg.com&#x2F;tos-cn-i-k3u1fbpfcp&#x2F;6132eaa2c474437cb9f629b23b29b30f~tplv-k3u1fbpfcp-watermark.image?) 本文主要梳理iOS 内存管理 核心知识   NSThread 多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 多线程">
 <meta property="og:url" content="http://example.com/2016/05/29/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Next">
-<meta property="og:description" content="本文主要梳理iOS 内存管理 核心知识  NSThread 多线程和锁 GCD NSOperation  1.  NSThread 2.  多线程和锁 OSSpinLock dispatch_semaphore pthread_mutex NSLock NSCondition pthread_mutex(recursive) NSRecursiveLock NSConditionLock @syn">
+<meta property="og:description" content="![552ccf48ef6a14c8692f56aa84e42c4182b412e2.jpg](https:&#x2F;&#x2F;p6-juejin.byteimg.com&#x2F;tos-cn-i-k3u1fbpfcp&#x2F;6132eaa2c474437cb9f629b23b29b30f~tplv-k3u1fbpfcp-watermark.image?) 本文主要梳理iOS 内存管理 核心知识   NSThread 多线程">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6132eaa2c474437cb9f629b23b29b30f~tplv-k3u1fbpfcp-watermark.image">
 <meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/86e3d6fa59e343b1aa4a6b438378d1b5~tplv-k3u1fbpfcp-watermark.image">
 <meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/74dda8241b30428bb560633f1aca5db2~tplv-k3u1fbpfcp-watermark.image">
 <meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/213a5eb5c07c4662b7f2a7b1cbff50df~tplv-k3u1fbpfcp-watermark.image">
 <meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5ec7de717e4e4ac28ff24ce966d970f7~tplv-k3u1fbpfcp-watermark.image">
 <meta property="article:published_time" content="2016-05-29T03:01:48.000Z">
-<meta property="article:modified_time" content="2023-05-01T02:55:45.495Z">
+<meta property="article:modified_time" content="2023-07-31T13:49:28.281Z">
 <meta property="article:author" content="kyan">
 <meta property="article:tag" content="iOS 知识汇总">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6132eaa2c474437cb9f629b23b29b30f~tplv-k3u1fbpfcp-watermark.image">
+<meta name="twitter:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/86e3d6fa59e343b1aa4a6b438378d1b5~tplv-k3u1fbpfcp-watermark.image">
 
 
 <link rel="canonical" href="http://example.com/2016/05/29/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
@@ -203,7 +202,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6132eaa2c474437cb9f629b23b29b30f~tplv-k3u1fbpfcp-watermark.image" alt="552ccf48ef6a14c8692f56aa84e42c4182b412e2.jpg"><br>本文主要梳理iOS 内存管理 核心知识</p>
+        <meta name="referrer" content="no-referrer" />
+![552ccf48ef6a14c8692f56aa84e42c4182b412e2.jpg](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6132eaa2c474437cb9f629b23b29b30f~tplv-k3u1fbpfcp-watermark.image?)
+本文主要梳理iOS 内存管理 核心知识
+
 <ol>
 <li>NSThread</li>
 <li>多线程和锁</li>

@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="本文主要梳理iOS Objective-C 相关 核心知识 1.分类 2.关联对象 3.扩展 4.代理 5.通知 6.KVO 7.KVC 8.属性关键字 1.分类分类都做了哪些事情 声明私有方法分解体积较大的类文件把Framework的私有方法公开 分类中都可以添加哪些内容 实例方法类方法协议属性 （关联对象 类别） 特点 运行时决议 可以为系统类添加分类 类拓展可以添加实例变量，分类不能添加实例">
+    <meta name="description" content="本文主要梳理iOS Objective-C 相关 核心知识 1.分类 2.关联对象 3.扩展 4.代理 5.通知 6.KVO 7.KVC 8.属性关键字 1.分类分类都做了哪些事情 声明私有方法分解体积较大的类文件把Framework的私有方法公开 分类中都可以添加哪些内容 实例方法类方法协议属性 （关联对象 类别） 特点 运行时决议 可以为系统类添加分类 类拓展可以添加实例变量，分类不能添加">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Objective-C 相关">
 <meta property="og:url" content="http://example.com/2015/10/29/Objective-C-%E7%9B%B8%E5%85%B3/index.html">
 <meta property="og:site_name" content="Next">
-<meta property="og:description" content="本文主要梳理iOS Objective-C 相关 核心知识 1.分类 2.关联对象 3.扩展 4.代理 5.通知 6.KVO 7.KVC 8.属性关键字 1.分类分类都做了哪些事情 声明私有方法分解体积较大的类文件把Framework的私有方法公开 分类中都可以添加哪些内容 实例方法类方法协议属性 （关联对象 类别） 特点 运行时决议 可以为系统类添加分类 类拓展可以添加实例变量，分类不能添加实例">
+<meta property="og:description" content="本文主要梳理iOS Objective-C 相关 核心知识 1.分类 2.关联对象 3.扩展 4.代理 5.通知 6.KVO 7.KVC 8.属性关键字 1.分类分类都做了哪些事情 声明私有方法分解体积较大的类文件把Framework的私有方法公开 分类中都可以添加哪些内容 实例方法类方法协议属性 （关联对象 类别） 特点 运行时决议 可以为系统类添加分类 类拓展可以添加实例变量，分类不能添加">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/409ba8510df0470a98813b1a57cc0b6a~tplv-k3u1fbpfcp-watermark.image">
 <meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cbfbd89c3beb4ce187fda73e4f8db2de~tplv-k3u1fbpfcp-watermark.image">
@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8a28967617814d40a27ef1632b53c17e~tplv-k3u1fbpfcp-watermark.image">
 <meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1ad35f8e8c5e40f9b3ea347f43838c92~tplv-k3u1fbpfcp-watermark.image">
 <meta property="article:published_time" content="2015-10-29T03:00:11.000Z">
-<meta property="article:modified_time" content="2023-05-01T02:57:18.425Z">
+<meta property="article:modified_time" content="2023-07-31T13:50:14.807Z">
 <meta property="article:author" content="kyan">
 <meta property="article:tag" content="iOS 知识汇总">
 <meta name="twitter:card" content="summary">
@@ -210,7 +210,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/409ba8510df0470a98813b1a57cc0b6a~tplv-k3u1fbpfcp-watermark.image" alt="b65cda3ae320a00df6218371d9b979570ee25078.jpg"><br>本文主要梳理iOS Objective-C 相关 核心知识</p>
+        <meta name="referrer" content="no-referrer" />
+
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/409ba8510df0470a98813b1a57cc0b6a~tplv-k3u1fbpfcp-watermark.image" alt="b65cda3ae320a00df6218371d9b979570ee25078.jpg"><br>本文主要梳理iOS Objective-C 相关 核心知识</p>
 <p>1.分类</p>
 <p>2.关联对象</p>
 <p>3.扩展</p>

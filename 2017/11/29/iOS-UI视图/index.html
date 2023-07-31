@@ -19,24 +19,23 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="本文主要梳理iOS UI 核心知识   UITableView 相关    事件传递&amp;视图响应    图像显示原理    卡顿&amp;掉帧原因方案    绘制原理&amp;异步绘制    离屏渲染触发时机&amp;为什么要避免离屏渲染    1.UITableView 相关UITableView核心主要在于 重用机制和数据源同步 重用机制如图列表会维持一个重用池子，当cell从列表消失">
+    <meta name="description" content="![u&#x3D;361136753,1329746390&amp;fm&#x3D;253&amp;fmt&#x3D;auto&amp;app&#x3D;138&amp;f&#x3D;JPEG.webp](https:&#x2F;&#x2F;p9-juejin.byteimg.com&#x2F;tos-cn-i-k3u1fbpfcp&#x2F;4c9c15cc932b4f6ab1a20e2d80698d31~tplv-k3u1fbpfcp-watermark.image?)  本文主要梳理iOS UI 核心知识">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS UI视图">
 <meta property="og:url" content="http://example.com/2017/11/29/iOS-UI%E8%A7%86%E5%9B%BE/index.html">
 <meta property="og:site_name" content="Next">
-<meta property="og:description" content="本文主要梳理iOS UI 核心知识   UITableView 相关    事件传递&amp;视图响应    图像显示原理    卡顿&amp;掉帧原因方案    绘制原理&amp;异步绘制    离屏渲染触发时机&amp;为什么要避免离屏渲染    1.UITableView 相关UITableView核心主要在于 重用机制和数据源同步 重用机制如图列表会维持一个重用池子，当cell从列表消失">
+<meta property="og:description" content="![u&#x3D;361136753,1329746390&amp;fm&#x3D;253&amp;fmt&#x3D;auto&amp;app&#x3D;138&amp;f&#x3D;JPEG.webp](https:&#x2F;&#x2F;p9-juejin.byteimg.com&#x2F;tos-cn-i-k3u1fbpfcp&#x2F;4c9c15cc932b4f6ab1a20e2d80698d31~tplv-k3u1fbpfcp-watermark.image?)  本文主要梳理iOS UI 核心知识">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c9c15cc932b4f6ab1a20e2d80698d31~tplv-k3u1fbpfcp-watermark.image">
 <meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0749ef1438ad4ec99f3b8316f00f63ee~tplv-k3u1fbpfcp-watermark.image">
 <meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9c26ec4bc74e4499a058ba858c24b150~tplv-k3u1fbpfcp-watermark.image">
 <meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b8e0e8c031d24c2ba69077ecd065407c~tplv-k3u1fbpfcp-watermark.image">
 <meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/78e0774861d54376840a8ea0b9967995~tplv-k3u1fbpfcp-watermark.image">
 <meta property="article:published_time" content="2017-11-29T02:56:34.000Z">
-<meta property="article:modified_time" content="2023-05-01T02:57:10.763Z">
+<meta property="article:modified_time" content="2023-07-31T13:49:55.808Z">
 <meta property="article:author" content="kyan">
 <meta property="article:tag" content="iOS 知识汇总">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c9c15cc932b4f6ab1a20e2d80698d31~tplv-k3u1fbpfcp-watermark.image">
+<meta name="twitter:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0749ef1438ad4ec99f3b8316f00f63ee~tplv-k3u1fbpfcp-watermark.image">
 
 
 <link rel="canonical" href="http://example.com/2017/11/29/iOS-UI%E8%A7%86%E5%9B%BE/">
@@ -203,7 +202,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c9c15cc932b4f6ab1a20e2d80698d31~tplv-k3u1fbpfcp-watermark.image" alt="u=361136753,1329746390&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG.webp"></p>
+        <meta name="referrer" content="no-referrer" />
+![u=361136753,1329746390&fm=253&fmt=auto&app=138&f=JPEG.webp](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c9c15cc932b4f6ab1a20e2d80698d31~tplv-k3u1fbpfcp-watermark.image?)
+
 <p>本文主要梳理iOS UI 核心知识</p>
 <ul>
 <li><ol>
