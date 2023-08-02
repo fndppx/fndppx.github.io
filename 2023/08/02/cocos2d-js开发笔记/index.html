@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一.前言之前有机会接触了cocos2d-js(cocos2d-x的一个分支)相关的技术，这里就做一个回顾和讲解，会从cocos2d-x的历史架构再到cocos2d-js和2d-x的差异开始，同时也介绍下之前cocos项目的整体结构和使用到的核心知识点，也方便自己后续回顾，目前，cocos官方目前大力推荐的是cocos creator，由于之前在做项目时候cocos creator不是非常成熟">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cocos2d-js开发笔记">
+<meta property="og:url" content="http://example.com/2023/08/02/cocos2d-js%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Next">
+<meta property="og:description" content="一.前言之前有机会接触了cocos2d-js(cocos2d-x的一个分支)相关的技术，这里就做一个回顾和讲解，会从cocos2d-x的历史架构再到cocos2d-js和2d-x的差异开始，同时也介绍下之前cocos项目的整体结构和使用到的核心知识点，也方便自己后续回顾，目前，cocos官方目前大力推荐的是cocos creator，由于之前在做项目时候cocos creator不是非常成熟">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/47aafa2227c7491e89f022f77601fc25~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2c93521a2b1a4fe699326c2840006892~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cca3eae516fb47628f2b0155872dbbb0~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f8673d0125804e83860de6cef12dddcb~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e8465e3a4a964d45bd66e8244b49f568~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8f2723efb80647e5a92d204bfd95ae97~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f19e96987deb459dae4de61928b17193~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6efb1dbc9eee4cfaaa67df7b10a83456~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/389e33ff318f4af2af5c4dbc4e0247bd~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9d5ee342a38a47eab16e6059397fc139~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ed6c922296304ef79d17f2cf354ac7a5~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9e92e3b3424f4869babac62ed7d2e798~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e0d4b2dbd4a44b19aca802b02ed1130b~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c581b3c119ba4a758964db39d7900596~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5ea1554848b44978825ff0f1c47d25d7~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ded1fb263a0f4b2cb1cd847611d8b812~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b433870fb62d4e04ad08c7cea0059923~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/257aefb16f5a432899a8ce060347440c~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1416a3d9cd114db6a2f43d8292e53999~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/da85d4541c2e43a1bc334a31bc353785~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ebbb14211b914c9c96465d64f259c313~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/79005203b9a641c7a2ffc9993983373e~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e3b3cdefa49a4679995bbbbbf1e6691f~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/94280070849349a0800b7ce66b541987~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c6beb5d278bc4348abecb77ce6fe42ed~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3fc1a741ab8e40b381f1e6b059fc4cad~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/52b178518c9a40798696421889e8f1ff~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d0c8f2a04ed64cf5952135581d1627e9~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1ed0a7cefe5c4347b87ccf8f8b2525a7~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/19e677bae77743b7bbdcbde89e559209~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8aaf89000a1d44abb32566758cb3992b~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/914fc610868d4a88b0552746e2f0cb00~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/147cdee6b1634251a83c7819fa8d31ab~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7ad3281d54164d3caad35809680b57a4~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/834f4d576a15404fb70924cddf490bc9~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ce0f2ed919bc4756a6e804cc5ff17d69~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5d424e7d9761416d800549d3bc8a9873~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ff34e8c268da43f4836487add6afd4de~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/710c23a8c5204b4ea0d5722ffe3f2e80~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/71e771099f5946278a30a88a998405a2~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ae5779385d364d56adc0339c4867d6de~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a17627041c384481bae97b46996fc566~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f1aa4c93581d49c2bda051ee22890126~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/269d2ae9979b4a91ba6296ccbbba6ef0~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0280f4a8e1984f9e9166e9f7df4c2fea~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/08e1e327cc824782a5d88d376d226f71~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/57a54f50cbd2402da868e067c215ac8b~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/36370a5c850845ffab883d47b3c698bf~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8c1aae63ff00411281a59f4932e27b9f~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dfd7260cbb2b4a04a95d2c9e066e958f~tplv-k3u1fbpfcp-watermark.image">
+<meta property="article:published_time" content="2023-08-02T15:14:02.000Z">
+<meta property="article:modified_time" content="2023-08-02T15:14:45.993Z">
+<meta property="article:author" content="kyan">
+<meta property="article:tag" content="cocos">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/47aafa2227c7491e89f022f77601fc25~tplv-k3u1fbpfcp-watermark.image">
+
+
+<link rel="canonical" href="http://example.com/2023/08/02/cocos2d-js%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/08/02/cocos2d-js%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/","path":"2023/08/02/cocos2d-js开发笔记/","title":"cocos2d-js开发笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>cocos2d-js开发笔记 | Next</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Next</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">代码小记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">一.前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-cocos2d-x-%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">二.cocos2d-x 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cocos2d-x%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.</span> <span class="nav-text">cocos2d-x是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E6%93%8E%E7%89%B9%E6%80%A7"><span class="nav-number">2.1.1.</span> <span class="nav-text">引擎特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%82%E5%9C%BA%E5%8D%A0%E6%9C%89"><span class="nav-number">2.1.2.</span> <span class="nav-text">市场占有</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cocos2d-x%E7%9A%84%E5%87%A0%E4%B8%AA%E5%9F%BA%E6%9C%AC%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">2.2.</span> <span class="nav-text">cocos2d-x的几个基本核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E6%BC%94"><span class="nav-number">2.2.1.</span> <span class="nav-text">导演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF-Scene"><span class="nav-number">2.2.2.</span> <span class="nav-text">场景(Scene)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B2%BE%E7%81%B5-Sprite"><span class="nav-number">2.2.3.</span> <span class="nav-text">精灵(Sprite)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E4%BD%9C-Action"><span class="nav-number">2.2.4.</span> <span class="nav-text">动作(Action)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97-Sequence"><span class="nav-number">2.2.5.</span> <span class="nav-text">序列(Sequence)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cocos2d%E5%BC%95%E6%93%8E%E5%AE%B6%E6%97%8F%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.3.</span> <span class="nav-text">Cocos2d引擎家族介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cocos2d%E6%9E%B6%E6%9E%84%E5%9B%BE"><span class="nav-number">2.3.1.</span> <span class="nav-text">cocos2d架构图</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAcocos2d-js%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.</span> <span class="nav-text">二.快速开发一个cocos2d-js项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">项目结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.1.1.</span> <span class="nav-text">文件目录介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#runtime-src"><span class="nav-number">3.1.2.</span> <span class="nav-text">runtime-src</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="nav-number">3.2.</span> <span class="nav-text">开发工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-amp-%E7%94%9F%E6%88%90%E5%B7%A5%E7%A8%8B"><span class="nav-number">3.3.</span> <span class="nav-text">环境搭建&amp;生成工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.4.</span> <span class="nav-text">模板核心源码介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.5.</span> <span class="nav-text">实战项目功能介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cocos2d-js%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-number">3.5.1.</span> <span class="nav-text">cocos2d-js项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E6%A8%A1%E5%9D%97"><span class="nav-number">3.5.2.</span> <span class="nav-text">游戏模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82"><span class="nav-number">3.5.2.1.</span> <span class="nav-text">游戏网络请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E9%83%A8%E5%88%86%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97"><span class="nav-number">3.5.2.2.</span> <span class="nav-text">游戏部分功能模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2"><span class="nav-number">3.5.2.2.1.</span> <span class="nav-text">游戏列表页面</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%86%99%E5%AD%97%E6%A8%A1%E5%9D%97"><span class="nav-number">3.5.2.2.2.</span> <span class="nav-text">游戏写字模块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%9C%BA%E6%99%AF%E6%A8%A1%E5%9D%97"><span class="nav-number">3.5.2.2.3.</span> <span class="nav-text">游戏场景模块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%94%9F%E6%A8%A1%E5%9D%97"><span class="nav-number">3.5.3.</span> <span class="nav-text">原生模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%94%9F%E6%B8%B8%E6%88%8F%E4%BA%A4%E4%BA%92%E6%A8%A1%E5%9D%97"><span class="nav-number">3.5.4.</span> <span class="nav-text">原生游戏交互模块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-%E5%AE%98%E6%96%B9%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">三.官方学习资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">kyan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/02/cocos2d-js%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="kyan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Next">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="cocos2d-js开发笔记 | Next">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cocos2d-js开发笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-08-02 23:14:02" itemprop="dateCreated datePublished" datetime="2023-08-02T23:14:02+08:00">2023-08-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <meta name="referrer" content="no-referrer" />
+
+
+<h1 id="一-前言"><a href="#一-前言" class="headerlink" title="一.前言"></a>一.前言</h1><p>之前有机会接触了cocos2d-js(cocos2d-x的一个分支)相关的技术，这里就做一个回顾和讲解，会从cocos2d-x的历史架构再到cocos2d-js和2d-x的差异开始，同时也介绍下之前cocos项目的整体结构和使用到的核心知识点，也方便自己后续回顾，目前，cocos官方目前大力推荐的是cocos creator，由于之前在做项目时候cocos creator不是非常成熟，加上js语法简洁和跨平台支持等原因，再到项目中的游戏模块不是很复杂择最后了就选择使用cocos2d-js分支来开发。</p>
+<p>如果在现阶段要开发一个cocos 游戏，大力推荐使用cocos creator，这个也是cocos官方大力推荐的，cocos2d-x引擎的更新速度已放慢，cocos2d-js已经不再更新了，creator 已经是未来开发cocos游戏的必选的工具和趋势，cocos creator 和cocos2d-x 是完全不同的两个东西，包括引擎架构和开发流程是完全不一样的，creator这里不再多说，我这边还是要介绍下cocos2d-x相关的技术知识。</p>
+<h1 id="二-cocos2d-x-介绍"><a href="#二-cocos2d-x-介绍" class="headerlink" title="二.cocos2d-x 介绍"></a>二.cocos2d-x 介绍</h1><h2 id="cocos2d-x是什么"><a href="#cocos2d-x是什么" class="headerlink" title="cocos2d-x是什么"></a>cocos2d-x是什么</h2><blockquote>
+<p>Cocos2d-x 是 MIT 许可证下发布的一款功能强大的开源游戏引擎。</p>
+<p>允许开发人员使用 C++、Javascript 及 Lua 三种语言来进行游戏开发。</p>
+<p>支持所有常见平台，包括 iOS、Android、Windows、macOS、Linux。</p>
+</blockquote>
+<h3 id="引擎特性"><a href="#引擎特性" class="headerlink" title="引擎特性"></a>引擎特性</h3><ul>
+<li>现代化的 C++ API</li>
+<li>立足于 C++ 同时支持 JavaScript&#x2F;Lua 作为开发语言</li>
+<li>可以跨平台部署, 支持 iOS、Android、Windows、macOS 和 Linux</li>
+<li>可以在 PC 端完成游戏的测试，最终发布到移动端</li>
+<li>完善的游戏功能支持，包含精灵、动作、动画、粒子特效、场景转换、事件、文件 IO、数据持久化、骨骼动画、3D</li>
+</ul>
+<h3 id="市场占有"><a href="#市场占有" class="headerlink" title="市场占有"></a>市场占有</h3><p>Cocos2d-x 用户不仅包括个人开发者和游戏开发爱好者，还包括许多知名大公司如 Zynga、Wooga、Gamevil、Glu、GREE、Konami、TinyCo、HandyGames、IGG 及 Disney Mobile 等。</p>
+<p>使用 Cocos2d-x 开发的许多游戏占据苹果应用商店和谷歌应用商店排行榜，同时许多公司如触控、谷歌、微软、ARM，英特尔及黑莓的工程师在 Cocos2d-x 领域也非常活跃。</p>
+<p>在中国，每一年的手游榜单大作，Cocos2d-x 从未缺席，市场份额占 50% 以上，游戏品类覆盖从轻度休闲，热火棋牌，到横版，SLG，重度 MMO 等市面全品类。一些以 Cocos2d-x 为基础开发出的游戏如下：</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/47aafa2227c7491e89f022f77601fc25~tplv-k3u1fbpfcp-watermark.image" alt="POWERED BY COCOS.png"></p>
+<blockquote>
+<p>游戏引擎是一种特殊的软件，它提供游戏开发时需要的常见功能；引擎会提供许多组件，使用这些组件能缩短开发时间，让游戏开发变得更简单；专业引擎通常会能比自制引擎表现出更好的性能。游戏引擎通常会包含渲染器，2D&#x2F;3D 图形元素，碰撞检测，物理引擎，声音，控制器支持，动画等部分。</p>
+<p>Cocos2d-x 就是这样的一个游戏引擎，它提供了许多易于使用的组件，有着更好的性能，还同时支持移动端和桌面端。Cocos2d-x 通过封装底层图形接口提供了易用的API，降低了游戏开发的门槛，让使用者可以专注于开发游戏，而不用关注底层的技术细节。更重要的是 Cocos2d-x 是一个完全开源的游戏引擎，这就允许您在游戏开发过程中根据实际需要，定制化引擎的功能，如果您想要一个功能但又不知如何修改，提出这个需求，全世界的开发者可以一起为您完成。</p>
+</blockquote>
+<h2 id="cocos2d-x的几个基本核心概念"><a href="#cocos2d-x的几个基本核心概念" class="headerlink" title="cocos2d-x的几个基本核心概念"></a>cocos2d-x的几个基本核心概念</h2><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2c93521a2b1a4fe699326c2840006892~tplv-k3u1fbpfcp-watermark.image" alt="导演(Director)）.png"></p>
+<h3 id="导演"><a href="#导演" class="headerlink" title="导演"></a>导演</h3><p>Cocos2d-x 使用导演的概念，这个导演和电影制作过程中的导演一样！导演控制电影制作流程，指导团队完成各项任务。在使用 Cocos2d-x 开发游戏的过程中，你可以认为自己是执行制片人，告诉 <strong>导演(Director)</strong> 该怎么办！一个常见的 Director 任务是控制场景替换和转换。 Director是一个共享的单例对象，可以在代码中的任何地方调用。</p>
+<p>如下 Director 就负责场景的转换：</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cca3eae516fb47628f2b0155872dbbb0~tplv-k3u1fbpfcp-watermark.image" alt="scenes.png"></p>
+<h3 id="场景-Scene"><a href="#场景-Scene" class="headerlink" title="场景(Scene)"></a>场景(Scene)</h3><p>在游戏开发过程中，你可能需要一个主菜单，几个关卡和一个结束场景。如何组织所有这些分开的部分？使用 <strong>场景(Scene)</strong> ！当你想到喜欢的电影时，你能观察到它是被分解为不同场景或不同故事线。现在我们对游戏开发应用这个相同的思维过程，你应该很容易就能想出几个场景。</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f8673d0125804e83860de6cef12dddcb~tplv-k3u1fbpfcp-watermark.image" alt="Player 1 00000.png"></p>
+<p>场景图(Scene Graph)是一种安排场景内对象的数据结构，它把场景内所有的 <strong>节点</strong> <strong>(Node)</strong> 都包含在一个 <strong>树</strong> <strong>(tree)</strong> 上。(场景图虽然叫做”图”，但实际使用一个树结构来表示)。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e8465e3a4a964d45bd66e8244b49f568~tplv-k3u1fbpfcp-watermark.image" alt="Root.jpg"></p>
+<p>分解这个场景，看一下它有哪些元素，这些最终会被渲染为一个树。</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8f2723efb80647e5a92d204bfd95ae97~tplv-k3u1fbpfcp-watermark.image" alt="Sceme.png"></p>
+<h3 id="精灵-Sprite"><a href="#精灵-Sprite" class="headerlink" title="精灵(Sprite)"></a>精灵(Sprite)</h3><p>所有的游戏都有 <strong>精灵(Sprite)</strong> 对象，精灵是您在屏幕上移动的对象，它能被控制。你喜欢玩的游戏中主角可能就是一个精灵，我知道你在想是不是每个图形对象都是一个精灵，不是的，为什么? 如果你能控制它，它才是一个精灵，如果无法控制，那就只是一个节点(Node)。</p>
+<p>看下面的图片，我们来指出一下，哪个是精灵(Sprite)，哪个是节点(Node)。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f19e96987deb459dae4de61928b17193~tplv-k3u1fbpfcp-watermark.image" alt="Super Cocos Aliens.png"></p>
+<h3 id="动作-Action"><a href="#动作-Action" class="headerlink" title="动作(Action)"></a>动作(Action)</h3><p>创建一个场景，在场景里面增加精灵只是完成一个游戏的第一步，接下来我们要解决的问题就是，怎么让精灵动起来。<strong>动作(Action)</strong> 就是用来解决这个问题的，它可以让精灵在场景中移动，如从一个点移动到另外一个点。你还可以创建一个动作 <strong>序列(Sequence)</strong> ，让精灵按照这个序列做连续的动作，在动作过程中你可以改变精灵的位置，旋转角度，缩放比例等等。</p>
+<h3 id="序列-Sequence"><a href="#序列-Sequence" class="headerlink" title="序列(Sequence)"></a>序列(Sequence)</h3><p>能在屏幕上移动精灵，是制作一个游戏所需的一切，是吗？不是的，至少要考虑一下如何执行多个 Action。Cocos2d-x 通过 <strong>序列(Sequence)</strong> 来支持这种需求。</p>
+<p>顾名思义，序列就是多个动作按照特定顺序的一个排列，当然反向执行这个序列也是可以的，Cocos2d-x 能很方便的完成这项工作。</p>
+<p>如下是一个通过序列控制精灵移动的例子：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6efb1dbc9eee4cfaaa67df7b10a83456~tplv-k3u1fbpfcp-watermark.image" alt="Move To.png"></p>
+<p>当然远远不止这些，除此之外还有物理引擎的支持(例如碰撞检查重力等)、音视频模块如（音乐音效支持等模块）具体可以查看官方文档</p>
+<p><a target="_blank" rel="noopener" href="https://docs.cocos.com/cocos2d-x/manual/zh/">https://docs.cocos.com/cocos2d-x/manual/zh/</a></p>
+<h2 id="Cocos2d引擎家族介绍"><a href="#Cocos2d引擎家族介绍" class="headerlink" title="Cocos2d引擎家族介绍"></a>Cocos2d引擎家族介绍</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/389e33ff318f4af2af5c4dbc4e0247bd~tplv-k3u1fbpfcp-watermark.image" alt="Creator.png"></p>
+<h3 id="cocos2d架构图"><a href="#cocos2d架构图" class="headerlink" title="cocos2d架构图"></a>cocos2d架构图</h3><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9d5ee342a38a47eab16e6059397fc139~tplv-k3u1fbpfcp-watermark.image" alt="cocos.png"><br>Cocos2d-JS是Cocos2d-x中的JavaScript版本，是Cocos2d-HTML5的延伸，官方对基于Web引擎的H5版本和基于Native的C++版本进行了整合，并在API层提供了统一的JavaScript API，使得Cocos开发更加容易</p>
+<p><strong>由于之前选用的是cocos2d-js，以下会侧重讲解js相关内容</strong></p>
+<h1 id="二-快速开发一个cocos2d-js项目"><a href="#二-快速开发一个cocos2d-js项目" class="headerlink" title="二.快速开发一个cocos2d-js项目"></a>二.快速开发一个cocos2d-js项目</h1><h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><h3 id="文件目录介绍"><a href="#文件目录介绍" class="headerlink" title="文件目录介绍"></a>文件目录介绍</h3><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ed6c922296304ef79d17f2cf354ac7a5~tplv-k3u1fbpfcp-watermark.image" alt="CMakelists.txt.png"></p>
+<ul>
+<li>framework</li>
+<li>cocos2d-html5 网页端的工程目录</li>
+<li>cocos2d-x cocos引擎代码目录</li>
+<li>runtime-src</li>
+</ul>
+<h3 id="runtime-src"><a href="#runtime-src" class="headerlink" title="runtime-src"></a>runtime-src</h3><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9e92e3b3424f4869babac62ed7d2e798~tplv-k3u1fbpfcp-watermark.image" alt="cocos2d-html5.png"></p>
+<ul>
+<li><p>Classes 是navtive 的app入口文件</p>
+</li>
+<li><p>proj.xxx 针对 iOS 安卓  Mac 等平台的工程目录</p>
+</li>
+<li><p>Index.html是网页端的启动文件，如果只是发布客户端可以忽略</p>
+</li>
+<li><p>main.js 是 cocos2d-js的启动入口文件，相当于 iOS 中工程的main文件</p>
+</li>
+<li><p>manifest.webapp 是一些描述信息一般用不到</p>
+</li>
+</ul>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e0d4b2dbd4a44b19aca802b02ed1130b~tplv-k3u1fbpfcp-watermark.image" alt="三 manifest.webapp.png"></p>
+<ul>
+<li>project.json 是配置项目资源的核心文件 主要包括后续js类文件的引用</li>
+</ul>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c581b3c119ba4a758964db39d7900596~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 4.png"></p>
+<ul>
+<li>res 所有用到资源的文件目录（图片 音频 字体 动画资源等等）</li>
+</ul>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5ea1554848b44978825ff0f1c47d25d7~tplv-k3u1fbpfcp-watermark.image" alt="Achievement.png"></p>
+<ul>
+<li>src</li>
+</ul>
+<p>也就是js代码的目录 这个文件夹下有一个resource.js 文件 项目中用到的资源文件需要在此文件中引用方可加载</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ded1fb263a0f4b2cb1cd847611d8b812~tplv-k3u1fbpfcp-watermark.image" alt="Sre.png"></p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b433870fb62d4e04ad08c7cea0059923~tplv-k3u1fbpfcp-watermark.image" alt="THE SOFTMARE..png"></p>
+<p><strong>以上为整个工程的文件目录功能介绍</strong></p>
+<h2 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h2><p>因为cocos2d-js 是基于js来开发的，那么关于编辑器就需要用到js相关开发工具，推荐webstrom 或者 vscode ，另外如果需要用到原生相关的功能，譬如iOS 相关的，那么就需要用到xcode，如果是安卓就要用Android studio。</p>
+<h2 id="环境搭建-amp-生成工程"><a href="#环境搭建-amp-生成工程" class="headerlink" title="环境搭建&amp;生成工程"></a>环境搭建&amp;生成工程</h2><p><a target="_blank" rel="noopener" href="https://github.com/cocos2d/cocos2d-js">https://github.com/cocos2d/cocos2d-js</a></p>
+<p>这里拿<strong>3.17.2</strong>版本为例，下载完成后目录如下</p>
+<p><a target="_blank" rel="noopener" href="https://cocos2d-x.org/filedown/cocos2d-x-3.17.2">https://cocos2d-x.org/filedown/cocos2d-x-3.17.2</a></p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/257aefb16f5a432899a8ce060347440c~tplv-k3u1fbpfcp-watermark.image" alt="AUTHORS.png"></p>
+<p>Setup.py为环境配置脚本，由于目前此版本脚本python 要求 2.x 版本 ，我这边就不去演示了，因为我电脑是python 3.x ，有兴趣的可以自己去安装一个2.x 尝试。</p>
+<p>官方的目录下有关于js的demo 示例 目录在 js-tests里边，有兴趣的可以逐个研究下官方demo</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1416a3d9cd114db6a2f43d8292e53999~tplv-k3u1fbpfcp-watermark.image" alt="Index.html.png"></p>
+<p>安装完成环境 通过 cocos new 快速生成工程模板</p>
+<p><code>cocos **new** -**l** js ProjectName</code></p>
+<p>模板如下</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/da85d4541c2e43a1bc334a31bc353785~tplv-k3u1fbpfcp-watermark.image" alt="。• Ov.png"></p>
+<h2 id="模板核心源码介绍"><a href="#模板核心源码介绍" class="headerlink" title="模板核心源码介绍"></a>模板核心源码介绍</h2><p>拿iOS 工程举例讲解</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ebbb14211b914c9c96465d64f259c313~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 4.png"></p>
+<p>可以看到 和 iOS 新建工程类似，区别在于cocos 项目是在启动生命周期做了cocos引擎的初始化并且加载了一个GLView来渲染</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">cocos2d::Application *app = cocos2d::Application::getInstance();</span><br><span class="line"></span><br><span class="line">    // Initialize the GLView attributes</span><br><span class="line"></span><br><span class="line">    app-&gt;initGLContextAttrs();</span><br><span class="line"></span><br><span class="line">    cocos2d::GLViewImpl::convertAttrs();</span><br><span class="line"></span><br><span class="line">    // Override point for customization after application launch.</span><br><span class="line"></span><br><span class="line">    // Add the view controller&#x27;s view to the window and display.</span><br><span class="line"></span><br><span class="line">    window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];</span><br><span class="line"></span><br><span class="line">    // Use RootViewController to manage CCEAGLView</span><br><span class="line"></span><br><span class="line">    _viewController = [[RootViewController alloc]init];</span><br><span class="line"></span><br><span class="line">    _viewController.wantsFullScreenLayout = YES;</span><br><span class="line"></span><br><span class="line">    // Set RootViewController to window</span><br><span class="line"></span><br><span class="line">    if ( [[UIDevice currentDevice].systemVersion floatValue] &lt; 6.0)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        // warning: addSubView doesn&#x27;t work on iOS6</span><br><span class="line"></span><br><span class="line">        [window addSubview: _viewController.view];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        // use this method on ios6</span><br><span class="line"></span><br><span class="line">        [window setRootViewController:_viewController];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    [window makeKeyAndVisible];</span><br><span class="line">    [[UIApplication sharedApplication] setStatusBarHidden:true];</span><br><span class="line"></span><br><span class="line">    // IMPORTANT: Setting the GLView should be done after creating the RootViewController</span><br><span class="line"></span><br><span class="line">    cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)_viewController.view);</span><br><span class="line"></span><br><span class="line">    cocos2d::Director::getInstance()-&gt;setOpenGLView(glview);</span><br><span class="line"></span><br><span class="line">    //run the cocos2d-x game scene</span><br><span class="line"></span><br><span class="line">    app-&gt;run();</span><br><span class="line"></span><br><span class="line">    return YES;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此外initGLContextAttrs是cocos 的初始化核心方法，也就是启动js相关模块的初始化方法，核心方法都在AppDelegate.cpp类里边</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/79005203b9a641c7a2ffc9993983373e~tplv-k3u1fbpfcp-watermark.image" alt="Appowepate.png"></p>
+<p>同时可以看到applicationDidFinishLaunching 中的    ScriptingCore::getInstance()-&gt;runScript(“main.js”); 即为启动js模块的入口类</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e3b3cdefa49a4679995bbbbbf1e6691f~tplv-k3u1fbpfcp-watermark.image" alt="sc-9addRegisterCallback(reqister a1l cocos2dx experinontal video);.png"></p>
+<p>App前后台切换暂停 重启游戏都是通过原生调用cocos引擎来完成的</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/94280070849349a0800b7ce66b541987~tplv-k3u1fbpfcp-watermark.image" alt="NeoJavssoret Cmtses) c ogOwleame M AoroelesweescelcrionddrnlabLamching0.png"></p>
+<p>这里main.js 运行起来后 就开始了游戏的初始化流程了，我这里拿我之前做的项目来展示</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c6beb5d278bc4348abecb77ce6fe42ed~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 8.png"></p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3fc1a741ab8e40b381f1e6b059fc4cad~tplv-k3u1fbpfcp-watermark.image" alt="发行说明：1.8.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//load resources</span><br><span class="line"></span><br><span class="line">    cc.LoaderScene.preload(g_resources, function () &#123;</span><br><span class="line"></span><br><span class="line">        cc.director.runScene(new SXTHomePageScene());</span><br><span class="line"></span><br><span class="line">    &#125;, this);</span><br></pre></td></tr></table></figure>
+
+<p>即为第一个页面场景的类，在场景加载之前可以自定义的处理一些事情，如预加载资源，做屏幕适配等初始化等，后边我会详细讲下我之前项目的整体结构和大概功能点。</p>
+<h2 id="实战项目功能介绍"><a href="#实战项目功能介绍" class="headerlink" title="实战项目功能介绍"></a>实战项目功能介绍</h2><p>我这边会结合我之前做的项目 介绍下 cocos2d-js相关的开发 以及 cocos和 na交互能技术，包括cocos2d-js 功能代码结构等，以及 cocos 核心概念动画等。</p>
+<p>我这边拿部分功能举例</p>
+<h3 id="cocos2d-js项目结构"><a href="#cocos2d-js项目结构" class="headerlink" title="cocos2d-js项目结构"></a>cocos2d-js项目结构</h3><p>我这边不详细介绍游戏实现，主要说下项目模块的功能梳理和框架</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/52b178518c9a40798696421889e8f1ff~tplv-k3u1fbpfcp-watermark.image" alt="SHVRAOTONG.png"></p>
+<h3 id="游戏模块"><a href="#游戏模块" class="headerlink" title="游戏模块"></a>游戏模块</h3><h4 id="游戏网络请求"><a href="#游戏网络请求" class="headerlink" title="游戏网络请求"></a>游戏网络请求</h4><p>主要通过Api 实现游戏业务网络请求处理</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d0c8f2a04ed64cf5952135581d1627e9~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 11.png"></p>
+<p>统一通过Network 类实现网络请求处理</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1ed0a7cefe5c4347b87ccf8f8b2525a7~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 12.png"></p>
+<p>Cocos2d-js 网络请求用的是 cc.loader.getXMLHttpRequest()  ，此类主要是封装post 和get方法和业务明确的一些状态码以及加密解密数据的逻辑</p>
+<p><strong>代码如下</strong></p>
+<ol>
+<li>请求参数处理</li>
+</ol>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/19e677bae77743b7bbdcbde89e559209~tplv-k3u1fbpfcp-watermark.image" alt="Netvork.ajex - funetten (eot ions) (cot HoNs..png"></p>
+<ol start="2">
+<li>设置参数相关编码和预处理等</li>
+</ol>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8aaf89000a1d44abb32566758cb3992b~tplv-k3u1fbpfcp-watermark.image" alt="sgl1ons.da3e - ont 1cns.da3a + Eversf RdS (GecoseaklCongerent(or3.png"></p>
+<ol start="3">
+<li>真正的请求逻辑</li>
+</ol>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/914fc610868d4a88b0552746e2f0cb00~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 18.png"></p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/147cdee6b1634251a83c7819fa8d31ab~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 15.png"></p>
+<ol start="4">
+<li>错误超时的处理</li>
+</ol>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7ad3281d54164d3caad35809680b57a4~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 17.png"></p>
+<h4 id="游戏部分功能模块"><a href="#游戏部分功能模块" class="headerlink" title="游戏部分功能模块"></a>游戏部分功能模块</h4><p>游戏模块使用 layer scene 和script 来分层</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/834f4d576a15404fb70924cddf490bc9~tplv-k3u1fbpfcp-watermark.image" alt="Games.png"></p>
+<p>Layer 主要做ui的布局和交互逻辑</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ce0f2ed919bc4756a6e804cc5ff17d69~tplv-k3u1fbpfcp-watermark.image" alt="var SxTPLayFootba 1 UAnsaatHorLayer  cc. Layer.extend(.png"></p>
+<p>Scene 来做场景的切换和游戏逻辑处理 每个场景都会用一个layer来处理核心逻辑</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5d424e7d9761416d800549d3bc8a9873~tplv-k3u1fbpfcp-watermark.image" alt="〉Games 〉 playFootbMl 〉 Soene 〉 Js SXTPlaFootbalScene.ls  ke) SxTPayFootbalkayer.png"></p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ff34e8c268da43f4836487add6afd4de~tplv-k3u1fbpfcp-watermark.image" alt="Piyfooxbel 〉Scene〉p SxTPaayfootbu Seene i  0e SxTPlay footbonL D setupDispla.png"></p>
+<p>Script 就是对一些自定义精灵 的封装</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/710c23a8c5204b4ea0d5722ffe3f2e80~tplv-k3u1fbpfcp-watermark.image" alt="var ScTFootbaltSprite a cc.Sorite.ertendlt.png"></p>
+<p>场景的切换统一封装了route</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/71e771099f5946278a30a88a998405a2~tplv-k3u1fbpfcp-watermark.image" alt="SxIGoncBaute.opesGane - function (eae Typ. Jameld. 1sPutn, Jstrrercame).png"></p>
+<h5 id="游戏列表页面"><a href="#游戏列表页面" class="headerlink" title="游戏列表页面"></a>游戏列表页面</h5><p>列表页面使用的是ccui.ScrollView 实现的</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ae5779385d364d56adc0339c4867d6de~tplv-k3u1fbpfcp-watermark.image" alt="SetupListVlew functlon (listview).png"></p>
+<h5 id="游戏写字模块"><a href="#游戏写字模块" class="headerlink" title="游戏写字模块"></a>游戏写字模块</h5><p>1.轮廓绘制</p>
+<p>首先使用了一个开源的笔画数据，这个数据是每个文字的每一笔画的点，核心绘制笔画轮廓的部分代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">//绘制轮廓</span><br><span class="line"></span><br><span class="line">    makePath: function (strokeStr) &#123;</span><br><span class="line"></span><br><span class="line">        let strokeCommands = strokeStr.split(&quot; &quot;);</span><br><span class="line"></span><br><span class="line">        let offset = GC.h - this._Offset_y * this.getStrokeYRatio();</span><br><span class="line"></span><br><span class="line">        let lastPos = cc.p;</span><br><span class="line"></span><br><span class="line">        let outlineColor = cc.color(221, 113, 60);</span><br><span class="line"></span><br><span class="line">        let counter = 0;</span><br><span class="line"></span><br><span class="line">        while (counter &lt; strokeCommands.length) &#123;</span><br><span class="line"></span><br><span class="line">            let commend = strokeCommands[counter];</span><br><span class="line"></span><br><span class="line">            if (commend == &quot;M&quot;) &#123;</span><br><span class="line"></span><br><span class="line">                let x = this.scalePointX(strokeCommands[counter + 1]);</span><br><span class="line"></span><br><span class="line">                let y = this.scalePointY(strokeCommands[counter + 2]);</span><br><span class="line">                </span><br><span class="line">                this._m_drawNode.drawDot(cc.p(x, offset - y), 0, outlineColor);</span><br><span class="line"></span><br><span class="line">                lastPos = cc.p(x, offset - y);</span><br><span class="line"></span><br><span class="line">                counter += 3;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (commend == &quot;Q&quot;) &#123;</span><br><span class="line"></span><br><span class="line">                let x1 = this.scalePointX(strokeCommands[counter + 1]);</span><br><span class="line"></span><br><span class="line">                let y1 = this.scalePointY(strokeCommands[counter + 2]);</span><br><span class="line"></span><br><span class="line">                let x2 = this.scalePointX(strokeCommands[counter + 3]);</span><br><span class="line"></span><br><span class="line">                let y2 = this.scalePointY(strokeCommands[counter + 4]);</span><br><span class="line"></span><br><span class="line">                this._m_drawNode.drawQuadBezier(lastPos, cc.p(x1, offset - y1), cc.p(x2, offset - y2), 50, 1, outlineColor);</span><br><span class="line"></span><br><span class="line">                lastPos = cc.p(x2, offset - y2);</span><br><span class="line"></span><br><span class="line">                counter += 5;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (commend == &quot;C&quot;) &#123;</span><br><span class="line"></span><br><span class="line">                let control1x = this.scalePointX(strokeCommands[counter + 1]);</span><br><span class="line"></span><br><span class="line">                let control1y = this.scalePointY(strokeCommands[counter + 2]);</span><br><span class="line"></span><br><span class="line">                let control2x = this.scalePointX(strokeCommands[counter + 3]);</span><br><span class="line"></span><br><span class="line">                let control2y = this.scalePointY(strokeCommands[counter + 4]);</span><br><span class="line"></span><br><span class="line">                let destinationX = this.scalePointX(strokeCommands[counter + 5]);</span><br><span class="line"></span><br><span class="line">                let destinationY = this.scalePointY(strokeCommands[counter + 6]);</span><br><span class="line"></span><br><span class="line">                this._m_drawNode.drawCubicBezier(lastPos, cc.p(control1x, offset - control1y), cc.p(control2x, offset - control2y), cc.p(destinationX, offset - destinationY), 50, 1, outlineColor);</span><br><span class="line"></span><br><span class="line">                lastPos = cc.p(destinationX, offset - destinationY);</span><br><span class="line"></span><br><span class="line">                counter += 7;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (commend == &quot;L&quot;) &#123;</span><br><span class="line"></span><br><span class="line">                let x = this.scalePointX(strokeCommands[counter + 1]);</span><br><span class="line"></span><br><span class="line">                let y = this.scalePointY(strokeCommands[counter + 2]);</span><br><span class="line"></span><br><span class="line">                this._m_drawNode.drawSegment(lastPos, cc.p(x, offset - y), 1, outlineColor);</span><br><span class="line"></span><br><span class="line">                lastPos = cc.p(x, offset - y);</span><br><span class="line"></span><br><span class="line">                counter += 3;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (commend == &quot;Z&quot;) &#123;</span><br><span class="line"></span><br><span class="line">                break;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+<p>2.画笔处理</p>
+<p>通过自定义一个精灵元素，实现拖拽逻辑进行笔画绘制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">onTouchBegan : function (touch, event) &#123;</span><br><span class="line"></span><br><span class="line">        this. _enableTouch = true;</span><br><span class="line"></span><br><span class="line">        var target = event.getCurrentTarget();</span><br><span class="line"></span><br><span class="line">        if (false == target._enableMoved)&#123;</span><br><span class="line"></span><br><span class="line">            return;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (!target.isTouchInRect(touch))&#123;</span><br><span class="line"></span><br><span class="line">            return false</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        target._callback();</span><br><span class="line"></span><br><span class="line">        return true;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    onTouchMoved : function (touch, event) &#123;</span><br><span class="line"></span><br><span class="line">        var pos = touch.getLocation();</span><br><span class="line"></span><br><span class="line">        var target = event.getCurrentTarget();</span><br><span class="line"></span><br><span class="line">        var delta = touch.getDelta();</span><br><span class="line"></span><br><span class="line">        var point = target.parent.convertToNodeSpace(cc.p(target.x,target.y));</span><br><span class="line">        target.setPosition(cc.p(target.x+delta.x,target.y+delta.y));</span><br><span class="line"></span><br><span class="line">        target._callback();</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>在layer层通过移动的坐标点和 之前绘制出来目标点的位置进行碰撞检测cc.rectContainsPoint,如果绘制出的目标点最后一个被吃掉视为完成写字。</p>
+<h5 id="游戏场景模块"><a href="#游戏场景模块" class="headerlink" title="游戏场景模块"></a>游戏场景模块</h5><p>主要有打地鼠，推箱子，朗诵，连线等10几种小游戏。</p>
+<p>1.游戏音频播放</p>
+<p>短音频</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//播放</span><br><span class="line"></span><br><span class="line">this.audioId =audio.playEffect(res);</span><br><span class="line"></span><br><span class="line"> audio.setEffectsVolume(1);</span><br><span class="line"></span><br><span class="line">//停止</span><br><span class="line"></span><br><span class="line"> cc.audioEngine.stopEffect(audioID)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>长音频</p>
+<p>用的ccui.VideoPlayer()</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a17627041c384481bae97b46996fc566~tplv-k3u1fbpfcp-watermark.image" alt="Aadio.plaver e new ccul.VideopLaver().png"></p>
+<p>有些场景cocos的播放器不太好用，就通过原生封装了一个播放器，通过jsb调用实现，这里iOS 是单独用的iOS  avplayer播放器，安卓用的cocos系统的，其实系统底层也是用的原生播放器。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f1aa4c93581d49c2bda051ee22890126~tplv-k3u1fbpfcp-watermark.image" alt="Adfo.holdertode . sender.png"></p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/269d2ae9979b4a91ba6296ccbbba6ef0~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 29.png"></p>
+<h3 id="原生模块"><a href="#原生模块" class="headerlink" title="原生模块"></a>原生模块</h3><p>主要做语音评测 ，分享能力，登录能力 支付能力 以及一些竖屏用户学习数据展示列表页面等等。</p>
+<h3 id="原生游戏交互模块"><a href="#原生游戏交互模块" class="headerlink" title="原生游戏交互模块"></a>原生游戏交互模块</h3><p>1.核心调用是通过jsb.reflection实现的</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0280f4a8e1984f9e9166e9f7df4c2fea~tplv-k3u1fbpfcp-watermark.image" alt="ver Netioonetsod wtivethod 0.png"></p>
+<p>2.这里也处理了一下多方法调用原生，并且需要原生返回处理的逻辑</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/08e1e327cc824782a5d88d376d226f71~tplv-k3u1fbpfcp-watermark.image" alt="Caltbackranager • CallbackManager.png"></p>
+<p>譬如获取用户信息是异步的，会把js方法对象传递到native，最终端上处理完成回调到callbackmannager，通过传递生成的时间戳作对比找到回调</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/57a54f50cbd2402da868e067c215ac8b~tplv-k3u1fbpfcp-watermark.image" alt="Pasted Graphic 32.png"></p>
+<p>3.端上其实就是一个类方法实现</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/36370a5c850845ffab883d47b3c698bf~tplv-k3u1fbpfcp-watermark.image" alt="Qinterface JSewanager.png"></p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8c1aae63ff00411281a59f4932e27b9f~tplv-k3u1fbpfcp-watermark.image" alt="(void)getUserinfo(NSString acs11back(.png"></p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dfd7260cbb2b4a04a95d2c9e066e958f~tplv-k3u1fbpfcp-watermark.image" alt="Clnplenentation JseNanager.png"></p>
+<h1 id="三-官方学习资料"><a href="#三-官方学习资料" class="headerlink" title="三.官方学习资料"></a>三.官方学习资料</h1><p><a target="_blank" rel="noopener" href="https://docs.cocos.com/cocos2d-x/manual/zh/scripting/">https://docs.cocos.com/cocos2d-x/manual/zh/scripting/</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.cocos.com/cocos2d-x/manual/zh/">https://docs.cocos.com/cocos2d-x/manual/zh/</a></p>
+<p><strong>总结</strong>：</p>
+<p>以上为我在项目实战中的一些记录，有兴趣可以自己去尝试学习，希望也能对大家有一定的帮助，同时也是自己对过去的一个简要总结。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/cocos/" rel="tag"># cocos</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/07/28/iOS%E5%AE%89%E8%A3%85%E5%8C%85%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/" rel="prev" title="iOS安装包优化笔记">
+                  <i class="fa fa-chevron-left"></i> iOS安装包优化笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kyan</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
